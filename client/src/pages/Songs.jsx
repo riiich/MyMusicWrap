@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { default as clientCredentials } from "../credentials";
+import { clientCredentials } from "../credentials";
 
 const base_url = "https://api.spotify.com/v1";
 const spotify_acc_url = "https://accounts.spotify.com";

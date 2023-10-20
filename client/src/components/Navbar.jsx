@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import Dashboard from "./Dashboard";
+import {Dashboard} from "./Dashboard";
 
 // in the url, it looks for the query parameter 'code' and returns an object of the item after '?'
 const code = new URLSearchParams(window.location.search).get("code");
@@ -15,7 +15,6 @@ export const Navbar = () => {
 				) : (
 					<>
 						<Dashboard code={code} />
-						<Link to="/dashboard">Dashboard</Link>
 						<Link to="/songs">Songs</Link>
 						<Link to="/search">Search</Link>
 					</>

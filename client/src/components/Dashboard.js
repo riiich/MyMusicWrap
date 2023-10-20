@@ -1,10 +1,11 @@
 import React from "react";
-import clientCredentials from "../credentials";
+import {clientCredentials} from "../credentials";
 
-const Dashboard = ({code}) => {
+export const Dashboard = ({code}) => {
     const accessToken = clientCredentials(code);
+    console.log(accessToken);
 
-    return <div>{code}</div>
+    // return <div>{code}</div>
 }
 
-export default Dashboard
+// export default Dashboard
