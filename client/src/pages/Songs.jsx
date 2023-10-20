@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { default as clientCredentials } from "../credentials";
 
 const base_url = "https://api.spotify.com/v1";
 const spotify_acc_url = "https://accounts.spotify.com";
-const CLIENT_ID = "addd071529764e90bb548a5b11edc35f";
-const CLIENT_SECRET = "63ebd81f64e240bc80347eea1b7021b1";
+// const CLIENT_ID = "addd071529764e90bb548a5b11edc35f";
+// const CLIENT_SECRET = "63ebd81f64e240bc80347eea1b7021b1";
 const drakeId = "3TVXtAsR1Inumwj472S9r4?si=hCP5tOX6ThCnz_hacVo0mw";
 const latestDrakeAlbum = "4czdORdCWP9umpbhFXK2fW";
 
@@ -26,14 +27,16 @@ export const Songs = () => {
 		tracks: [],
 		popularity: 0,
 	});
+	const { userCreds, credError, loading } = clientCredentials();	
 	const [drakeID, setDrakeID] = useState("");
 
 	// gets one song
 	const getAccessToken = async () => {
+		// console.log(userCreds);
 		await axios
 			.post(
 				`${spotify_acc_url}/api/token`,
-				`grant_type=client_credentials&client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}`,
+				`grant_type=client_credentials&client_id=${userCreds.clientId}&client_secret=${userCreds.clientSecret}`,
 				{
 					headers: {
 						"Content-Type": "application/x-www-form-urlencoded",
@@ -45,7 +48,7 @@ export const Songs = () => {
 				setAccessToken(res.data.access_token);
 			})
 			.catch((err) => {
-				console.log(err);
+				console.log(credError);
 			});
 	};
 
@@ -58,11 +61,11 @@ export const Songs = () => {
 				},
 			})
 			.then((res) => {
-				console.log(res.data);
+				// console.log(res.data);
 				setArtist(res.data);
 				getGenres(res.data);
 				getDrakeID(res.data);
-				console.log(drakeID);
+				// console.log(drakeID);
 			})
 			.catch((err) => {
 				console.log(err);
@@ -94,7 +97,7 @@ export const Songs = () => {
 			.then((res) => {
 				// console.log(res.data);
 				getAlbum(res.data);
-				console.log(album);
+				// console.log(album);
 			})
 			.catch((err) => {
 				console.log(err);
