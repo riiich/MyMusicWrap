@@ -11,7 +11,10 @@ router.use((req, res, next) => {
 
 router.post("/", (req, res) => {
 	refreshToken = req.body.refreshToken;
-
+	console.log("before refreshToken");
+	console.log(refreshToken);
+	console.log("after refreshToken");
+ 
 	const credentials = {
 		clientId: process.env.CLIENT_ID,
 		clientSecret: process.env.CLIENT_SECRET,
@@ -29,7 +32,6 @@ router.post("/", (req, res) => {
 			console.log(result.body);
 			res.json({
 				accessToken: result.body.access_token,
-				refreshToken: result.body.refresh_token,
 				expiresIn: result.body.expires_in,
 			});
 		})

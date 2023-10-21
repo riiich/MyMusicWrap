@@ -8,8 +8,6 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Dashboard } from "./components/Dashboard";
 
-// const code = new URLSearchParams(window.location.search).get("code");
-
 function App() {
 	return (
 		<div className="App">
@@ -23,7 +21,6 @@ function App() {
 					<Route path="/songs" element={ <Songs /> } />
 				</Routes>
 			</Router>
-			{/* {!code ?? <Dashboard code={code} />} */}
 		</div>
 	);
 }
