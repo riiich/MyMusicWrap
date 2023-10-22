@@ -14,11 +14,11 @@ export const Navbar = () => {
 					<Link to="/login">Login</Link>
 				) : (
 					<>
-						<Dashboard code={code} />
 						<Link to="/songs">Songs</Link>
-						<Link to="/search">Search</Link>
+						{/* <Link to="/search">Search</Link> */}
 					</>
 				)}
+
 			</div>
 		</div>
 	);

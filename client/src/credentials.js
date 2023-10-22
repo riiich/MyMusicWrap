@@ -19,7 +19,10 @@ export const clientCredentials = (code) => {
 				setAccessToken(res.data.accessToken);
 				setRefreshToken(res.data.refreshToken);
 				setExpiresIn(res.data.expiresIn);
-				window.history.pushState({}, null, "/"); // removes the code from the url
+				console.log(res.data.msg);
+				setTimeout(() => {
+					window.history.pushState({}, null, "/"); // removes the code from the url
+				}, 1500);
 			})
 			.catch((err) => {
 				console.log(err);
@@ -51,11 +54,10 @@ export const clientCredentials = (code) => {
 					}, 2000);
 				});
 		}, (expiresIn - 60) * 1000);
-		
+
 		// clear the interval if there is any error where the refresh token or expiresIn changes before an actual refresh,
 		//   this makes it so that we don't potentially use an incorrect refresh token
-		return () => clearInterval(refreshInterval);	
-
+		return () => clearInterval(refreshInterval);
 	}, [refreshToken, expiresIn]);
 
 	return accessToken;

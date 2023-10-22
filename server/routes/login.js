@@ -30,6 +30,7 @@ router.post('/', (req, res) => {
                 accessToken: result.body.access_token,
                 refreshToken: result.body.refresh_token,
                 expiresIn: result.body.expires_in,
+                msg: "Sucessfully retrieved access token!",
             });
         })
         .catch(err => {
