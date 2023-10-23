@@ -30,6 +30,9 @@ app.use('/login', loginUser);
 const refresh = require('./routes/refresh');
 app.use('/refresh', refresh);
 
+const topUserPlaylist = require('./routes/userPlaylist');
+app.use('/mostlistened', topUserPlaylist);
+
 app.listen(process.env.PORT, () => {
 	console.log(`Listening on port ${process.env.PORT}`);
 });

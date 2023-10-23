@@ -5,7 +5,7 @@ import { Dashboard } from "./Dashboard";
 
 const base_url = "https://api.spotify.com/v1";
 
-export const SearchBar = () => {
+export const SearchBar = ({aToken}) => {
 	const [searchArtist, setSearchArtist] = useState("");
 	const [accessToken, setAccessToken] = useState("");
 
@@ -15,7 +15,7 @@ export const SearchBar = () => {
 
 	return (
 		<div className="search-bar">
-			Access Token: {accessToken}
+			Access Token: {aToken}
 
 			<input type="text" placeholder="Enter Artist..." />
 			<button>Enter</button>

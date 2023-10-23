@@ -32,7 +32,6 @@ export const Songs = () => {
 
 	// gets one song
 	const getAccessToken = async () => {
-		// console.log(userCreds);
 		await axios
 			.post(
 				`${spotify_acc_url}/api/token`,
