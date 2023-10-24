@@ -1,8 +1,11 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { Dashboard } from "./Dashboard";
 
 export const UserTopSongs = ({ accessToken }) => {
 	const [userInfo, setUserInfo] = useState([]);
+
+
 
 	useEffect(() => {
 		if (!accessToken) return;
@@ -32,9 +35,9 @@ export const UserTopSongs = ({ accessToken }) => {
 	<div>
 		<h1>Top Artists:</h1>
 		{
-			userInfo?.map(item => (
-				<p>{item}</p>
-			))
+			// userInfo?.map(item => (
+			// 	<p>{item}</p>
+			// ))
 		}
 	</div>
 	);
