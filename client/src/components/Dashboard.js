@@ -5,10 +5,6 @@ import { SearchBar } from "./SearchBar";
 import { UserTopSongs } from "./UserTopSongs";
 import { Container } from "react-bootstrap";
 
-/*
-    // grab user's playlist and get the top listened songs
-*/
-
 export const Dashboard = ({ code }) => {
 	const accessToken = clientCredentials(code); // this access token allows us to do things with spotify api
 

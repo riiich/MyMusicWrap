@@ -21,18 +21,25 @@ router.get('/', async (req, res) => {
             }
         })
         .then(response => {
-            console.log(response.data.items);
+            // console.log(response.data.items);
             response.data.items.map((item) => {
-                topArtists.push(item.name);
+                topArtists.push({
+                    artist: item.name, 
+                    image: item.images[0].url,
+                    id: item.id
+                });
             });
 
             res.json({
                 topArtists: topArtists,
+                
             });
         })
         .catch(err => {
+            console.log("ERROR GETTING USER PLAYLIST")
             console.log(err);
         })
 });
+
 
 module.exports = router;

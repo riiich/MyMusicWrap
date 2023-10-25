@@ -1,11 +1,12 @@
-import { UserTopSongs } from "../components/UserTopSongs";
 import "../styles/UserTopSongsStyles.css";
+import { UserTopSongs } from "../components/UserTopSongs";
+import { User } from "../components/User";
 
-export const Home = ({code}) => {
+export const Home = () => {
     return(
         <div className="home-container">
             <h1>Home Page</h1>
-
+            <User />
             <UserTopSongs />
         </div>
     );

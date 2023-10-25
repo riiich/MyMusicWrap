@@ -30,6 +30,9 @@ app.use('/login', loginUser);
 const refresh = require('./routes/refresh');
 app.use('/refresh', refresh);
 
+const authenticatedUser = require('./routes/userInfo');
+app.use('/user', authenticatedUser);
+
 const topUserPlaylist = require('./routes/userPlaylist');
 app.use('/mostlistened', topUserPlaylist);
 

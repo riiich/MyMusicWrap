@@ -8,6 +8,7 @@ import { ErrorPage } from "./pages/error";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Dashboard } from "./components/Dashboard";
 
+// in the url, it looks for the query parameter 'code' and returns an object of the item after '?'
 const code = new URLSearchParams(window.location.search).get("code");
 
 function App() {
@@ -16,19 +17,14 @@ function App() {
 			<Router>
 				<Navbar />
 				<Routes>
-					<Route path="/" element={<Home code={code} />} />
+					<Route path="/" element={<Home />} />
 					<Route path="/login" element={<Login />} />
-
-					{/* <Route path="/dashboard"  element={} /> */}
 					<Route path="/search" element={<SearchBar />} />
 					<Route path="/songs" element={<Songs />} />
-
 					<Route path="*" element={<ErrorPage />} />
 				</Routes>
-				{/* { !code ? <></> : <Dashboard code={code} /> } */}
 			</Router>
 			{!code ? <></> : <Dashboard code={code} />}
-			{/* <Dashboard code={code} /> */}
 		</div>
 	);
 }

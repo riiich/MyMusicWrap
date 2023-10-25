@@ -1,16 +1,13 @@
 import { Link } from "react-router-dom";
-import {Dashboard} from "./Dashboard";
-
-// in the url, it looks for the query parameter 'code' and returns an object of the item after '?'
-const code = new URLSearchParams(window.location.search).get("code");
+import { Dashboard } from "./Dashboard";
 
 export const Navbar = () => {
 	return (
 		<div className="navbar">
-			<h1>Spotify Compare</h1>
+			<h1><a href="http://localhost:3000/"><img src={require("../images/icon.png")} alt="app_logo" width={50} height={50} /></a> Spotify Compare</h1>
 			<div className="links">
 				<Link to="/">Home</Link>
-				{!code ? (
+				{!sessionStorage.getItem("accessToken") ? (
 					<Link to="/login">Login</Link>
 				) : (
 					<>
@@ -18,7 +15,6 @@ export const Navbar = () => {
 						{/* <Link to="/search">Search</Link> */}
 					</>
 				)}
-
 			</div>
 		</div>
 	);
