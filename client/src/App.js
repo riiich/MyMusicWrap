@@ -1,4 +1,4 @@
-import "./App.css";
+import "./styles/App.css";
 import { Songs } from "./pages/Songs";
 import { Navbar } from "./components/Navbar";
 import { Home } from "./pages/Home";
@@ -7,7 +7,6 @@ import { Login } from "./pages/Login";
 import { ErrorPage } from "./pages/error";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Dashboard } from "./components/Dashboard";
-import "bootstrap/dist/css/bootstrap.min.css";
 
 const code = new URLSearchParams(window.location.search).get("code");
 

@@ -1,11 +1,9 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { clientCredentials } from "../credentials";
 
 const base_url = "https://api.spotify.com/v1";
 const spotify_acc_url = "https://accounts.spotify.com";
-// const CLIENT_ID = "addd071529764e90bb548a5b11edc35f";
-// const CLIENT_SECRET = "63ebd81f64e240bc80347eea1b7021b1";
+
 const drakeId = "3TVXtAsR1Inumwj472S9r4?si=hCP5tOX6ThCnz_hacVo0mw";
 const latestDrakeAlbum = "4czdORdCWP9umpbhFXK2fW";
 
@@ -27,29 +25,7 @@ export const Songs = () => {
 		tracks: [],
 		popularity: 0,
 	});
-	const { userCreds, credError, loading } = clientCredentials();	
 	const [drakeID, setDrakeID] = useState("");
-
-	// gets one song
-	const getAccessToken = async () => {
-		await axios
-			.post(
-				`${spotify_acc_url}/api/token`,
-				`grant_type=client_credentials&client_id=${userCreds.clientId}&client_secret=${userCreds.clientSecret}`,
-				{
-					headers: {
-						"Content-Type": "application/x-www-form-urlencoded",
-					},
-				}
-			)
-			.then((res) => {
-				console.log(res.data);
-				setAccessToken(res.data.access_token);
-			})
-			.catch((err) => {
-				console.log(credError);
-			});
-	};
 
 	// get one artist based off their Spotify ID
 	const getArtist = async () => {
@@ -116,6 +92,13 @@ export const Songs = () => {
 		});
 	};
 
+	useEffect(() => {
+		setAccessToken(sessionStorage.getItem("accessToken"));
+
+		getArtist();
+		getAlbums();
+	}, [accessToken]);
+
 	return (
 		<div className="song-list">
 			{artist !== null ? <img src={artist?.images[0].url} alt="drake" width={300} height={300} /> : ""}
@@ -137,7 +120,7 @@ export const Songs = () => {
 				
 			</div>
 
-			<button onClick={getAccessToken}>Token!</button>
+			{/* <button onClick={getAccessToken}>Token!</button> */}
 			<button onClick={getArtist}>Artist!</button>
 			<button onClick={getAlbums}>Top Album!</button>
 			{/* {artist !== null ? <button onClick={getGenres}>Genres!</button> : ""} */}

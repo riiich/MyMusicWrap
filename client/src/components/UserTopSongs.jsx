@@ -1,44 +1,43 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { Dashboard } from "./Dashboard";
+import { List } from "./List";
 
-export const UserTopSongs = ({ accessToken }) => {
-	const [userInfo, setUserInfo] = useState([]);
-
-
+export const UserTopSongs = () => {
+	const [topArtists, setTopArtists] = useState([]);
+	const [topTracks, setTopTracks] = useState(["asjdknas", "asdljnk"]);
 
 	useEffect(() => {
-		if (!accessToken) return;
+		if (!sessionStorage.getItem("accessToken")) return;
 
-		// const retrieveTopSongsFromUser = async (aToken) => {
-		axios
-			.get("http://localhost:3001/mostlistened", {
-				params: {accessToken},
-			})
-			.then((res) => {
-				// console.log("anything1?");
-				// console.log(res.data.topArtists);
-				// console.log("anything2?");
-				setUserInfo(res.data.topArtists);
-			})
-			.catch((err) => {
-				console.log(err);
-			});
-		// };
+		// console.log(sessionStorage.getItem("accessToken"));
 
-		console.log(userInfo);
-			
-		// retrieveTopSongsFromUser(aToken);
-	}, [accessToken]);
+		const retrieveTopSongsFromUser = async (accessToken) => {
+			await axios
+				.get("http://localhost:3001/mostlistened", {
+					params: { accessToken },
+				})
+				.then((res) => {
+					setTopArtists(res.data.topArtists);
+				})
+				.catch((err) => {
+					console.log(err);
+				});
+		};
+
+		retrieveTopSongsFromUser(sessionStorage.getItem("accessToken"));
+	}, [sessionStorage.getItem("accessToken")]);
 
 	return (
-	<div>
-		<h1>Top Artists:</h1>
-		{
-			// userInfo?.map(item => (
-			// 	<p>{item}</p>
-			// ))
-		}
-	</div>
+		<div className="user-top-container">
+			<div className="user-top-artists">
+				<h1>Top Artists</h1>
+				<List userInfo={topArtists} />
+			</div>
+
+			<div className="user-top-tracks">
+				<h1>Top Tracks</h1>
+				<List userInfo={topTracks} />
+			</div>
+		</div>
 	);
 };

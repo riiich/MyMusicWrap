@@ -1,0 +1,39 @@
+.home-container{
+    margin: 0;
+    padding: 0;
+    border: 3px dotted black;
+}
+
+.home-container .user-top-container{
+    display: grid;
+    grid-template-columns: repeat(2, 2fr);
+    /* margin: 4%; */
+}
+
+.user-top-container .user-top-artists{
+    border: 1px dashed green; 
+    width: auto;
+    margin: 1% 10%;
+}
+
+.user-top-container .user-top-tracks{
+    border: 1px dashed blue; 
+    width: auto;
+}
+
+.list-container {
+    display: grid;
+    grid-template-columns: repeat(2, 2fr);
+    grid-column-gap: 1rem;
+    
+    padding: 0; 
+    border: 1px dashed green; 
+}
+
+@media screen and (max-width: 400px){
+    .list-container{
+        height: 200px;
+        overflow-y: scroll;
+        grid-template-columns: repeat(1, 1fr);
+    }
+}

@@ -15,23 +15,23 @@ router.get('/', async (req, res) => {
     const topArtists = [];
 
     await axios
-        .get('https://api.spotify.com/v1/me/playlists',{
+        .get('https://api.spotify.com/v1/me/top/artists?offset=0&limit=10',{
             headers: {
                 'Authorization': `Bearer ${accessToken}`,
             }
         })
         .then(response => {
-            console.log(response.data);
-            // response.data.items.map((item) => {
-            //     topArtists.push(item.name);
-            // });
+            console.log(response.data.items);
+            response.data.items.map((item) => {
+                topArtists.push(item.name);
+            });
 
-            // res.json({
-            //     topArtists: topArtists,
-            // });
+            res.json({
+                topArtists: topArtists,
+            });
         })
         .catch(err => {
-            // console.log(err);
+            console.log(err);
         })
 });
 
