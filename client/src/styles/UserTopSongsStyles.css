@@ -10,14 +10,14 @@
 .home-container .user-top-container {
 	display: grid;
 	grid-template-columns: repeat(2, 1fr);
+	width: 5%;
 }
 
 .user-top-container .user-top-artists {
 	border: 1px dashed green;
 	width: auto;
 	margin: 0 1rem 0 1rem;
-	align-items: center;
-	justify-content: center;
+	/* align-items: center; */
 }
 
 .user-top-container .user-top-tracks {
@@ -36,17 +36,17 @@
 	border: 1px dashed purple;
 }
 
-.list-container .single-artist {
+.list-container .single-item {
     display: flex;
     justify-content: center;
     align-self: center;
     border: 1px solid black;
 	margin: 3rem;
 	padding: 1rem;
-	width: 20rem;
+	width: 10rem;
 }
 
-.single-artist a {
+.single-item a {
 	text-decoration: none;
 	/* color: white; */
 }
@@ -60,13 +60,13 @@
 		/* width: 360px; */
 	}
 
-	.list-container .single-artist img {
+	.list-container .single-item img {
 		border-radius: 50%;
 		height: 75px;
 		width: 75px;
 	}
 
-	.list-container .single-artist {
+	.list-container .single-item {
 		width: 300px;
 	}
 }
@@ -78,7 +78,7 @@
 		grid-template-columns: repeat(1, 1fr);
 	}
 
-	.list-container .single-artist img {
+	.list-container .single-item img {
 		border-radius: 50%;
 		height: 75px;
 		width: 75px;
@@ -112,7 +112,7 @@
 		margin: 5% 0;
 	}
 
-	.list-container .single-artist {
+	.list-container .single-item {
 		width: 15rem;
 	}
 }

@@ -1,5 +1,5 @@
 import "./styles/App.css";
-import { Songs } from "./pages/Songs";
+import { PlaySongs } from "./pages/PlaySongs";
 import { Navbar } from "./components/Navbar";
 import { Home } from "./pages/Home";
 import { SearchBar } from "./components/SearchBar";
@@ -20,7 +20,7 @@ function App() {
 					<Route path="/" element={<Home />} />
 					<Route path="/login" element={<Login />} />
 					<Route path="/search" element={<SearchBar />} />
-					<Route path="/songs" element={<Songs />} />
+					<Route path="/songs" element={<PlaySongs />} />
 					<Route path="*" element={<ErrorPage />} />
 				</Routes>
 			</Router>

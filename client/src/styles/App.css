@@ -61,6 +61,11 @@ body {
 		font-size: xx-small;
 		justify-content: flex-end;
 	}
+
+	.navbar img {
+		width: 25px;
+		height: 25px;
+	}
 }
 
 .login .authorize {

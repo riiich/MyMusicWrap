@@ -1,15 +1,20 @@
 const router = require('express').Router();
 require('dotenv').config();
 const axios = require('axios');
-const SpotifyWebAPI = require("spotify-web-api-node");
 
 router.use((req, res, next) => {
+    if(!req.query.accessToken) {
+        res.json({
+            status: 401,
+            msg: "An invalid access token was received!",
+        });
+    }
 	console.log("Retrieving user's top most listened tracks!");
-	// res.json({msg: "Retrieving refresh token!"});
 
 	next();
 });
 
+// this route uses the spotify api raw, the other endpoints will use a spotify api library
 router.get('/', async (req, res) => {
     const accessToken = req.query.accessToken;
     const topArtists = [];

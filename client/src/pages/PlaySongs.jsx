@@ -1,18 +1,32 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-const base_url = "https://api.spotify.com/v1";
-const spotify_acc_url = "https://accounts.spotify.com";
+export const PlaySongs = () => {
+	
 
-const drakeId = "3TVXtAsR1Inumwj472S9r4?si=hCP5tOX6ThCnz_hacVo0mw";
-const latestDrakeAlbum = "4czdORdCWP9umpbhFXK2fW";
+	return (
+		<div>
+
+		</div>
+	);
+};
+
+
+/*
 
 // Spotify ID is the value that comes right after the 'open.spotify.com/artist' URI
 // Drake: https://open.spotify.com/artist/3TVXtAsR1Inumwj472S9r4?si=S60RiFjpR6yxiKQWlR0eQQ
 //https://open.spotify.com/artist/3TVXtAsR1Inumwj472S9r4?si=hCP5tOX6ThCnz_hacVo0mw
 
-export const Songs = () => {
-	const [artistGenre, setArtistGenre] = useState([]);
+GLOBAL----
+const base_url = "https://api.spotify.com/v1";
+const spotify_acc_url = "https://accounts.spotify.com";
+
+const drakeId = "3TVXtAsR1Inumwj472S9r4?si=hCP5tOX6ThCnz_hacVo0mw";
+const latestDrakeAlbum = "4czdORdCWP9umpbhFXK2fW";
+----
+
+const [artistGenre, setArtistGenre] = useState([]);
 	const [artist, setArtist] = useState(null);
 	const [accessToken, setAccessToken] = useState(""); // need access token in order to get data from spotify
 	const [album, setAlbum] = useState({
@@ -99,8 +113,9 @@ export const Songs = () => {
 		getAlbums();
 	}, [accessToken]);
 
-	return (
-		<div className="song-list">
+
+JSX----
+<div className="song-list">
 			{artist !== null ? <img src={artist?.images[0].url} alt="drake" width={300} height={300} /> : ""}
 			<p><strong>Artist: </strong>{artist?.name}</p>
 			<p><strong>Follower Count:</strong> {artist?.followers.total}</p>
@@ -120,10 +135,8 @@ export const Songs = () => {
 				
 			</div>
 
-			{/* <button onClick={getAccessToken}>Token!</button> */}
 			<button onClick={getArtist}>Artist!</button>
 			<button onClick={getAlbums}>Top Album!</button>
-			{/* {artist !== null ? <button onClick={getGenres}>Genres!</button> : ""} */}
 		</div>
-	);
-};
+---
+*/

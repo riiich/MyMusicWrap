@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import { Dashboard } from "./Dashboard";
 
 export const Navbar = () => {
 	return (
@@ -11,7 +10,7 @@ export const Navbar = () => {
 					<Link to="/login">Login</Link>
 				) : (
 					<>
-						<Link to="/songs">Songs</Link>
+						<Link to="/songs">Play Songs</Link>
 						{/* <Link to="/search">Search</Link> */}
 					</>
 				)}

@@ -1,4 +1,4 @@
-export const ListTracks = ({ userInfo }) => {
+export const RecommendedArtists = ({ userInfo }) => {
 	return (
 		<div className="list-container">
 			{userInfo?.map((item, i) => (
