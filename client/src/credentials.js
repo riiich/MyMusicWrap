@@ -46,6 +46,10 @@ export const clientCredentials = (code) => {
 				.then((res) => {
 					setAccessToken(res.data.accessToken);
 					setExpiresIn(res.data.expiresIn);
+					sessionStorage.clear();		// clear the session storage whenever the access token is expired
+				})
+				.then(res => {
+					sessionStorage.setItem("accessToken", res.data.accessToken);	// renew the access token to the new acess token
 				})
 				.catch((err) => {
 					console.log(err);

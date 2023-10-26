@@ -9,7 +9,7 @@
 
 .home-container .user-top-container {
 	display: grid;
-	grid-template-columns: repeat(2, 1fr);
+	grid-template-columns: repeat(3, 1fr);
 	width: 5%;
 }
 
@@ -21,6 +21,12 @@
 }
 
 .user-top-container .user-top-tracks {
+	border: 1px dashed blue;
+	width: auto;
+	margin: 0 1rem 0 1rem;
+}
+
+.user-top-container .user-recommended-artists {
 	border: 1px dashed blue;
 	width: auto;
 	margin: 0 1rem 0 1rem;
@@ -82,6 +88,7 @@
 		border-radius: 50%;
 		height: 75px;
 		width: 75px;
+		margin-bottom: 1rem;
 	}
 }
 
