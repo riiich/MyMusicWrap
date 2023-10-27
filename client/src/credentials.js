@@ -18,7 +18,8 @@ export const clientCredentials = (code) => {
 				// console.log(res.data);
 				setAccessToken(res.data.accessToken);
 				setRefreshToken(res.data.refreshToken);
-				setExpiresIn(res.data.expiresIn);
+				setExpiresIn(61);
+				console.log("hi");
 				console.log(res.data.msg);
 				setTimeout(() => {
 					window.history.pushState({}, null, "/"); // removes the code from the url
@@ -45,12 +46,15 @@ export const clientCredentials = (code) => {
 				})
 				.then((res) => {
 					setAccessToken(res.data.accessToken);
-					setExpiresIn(res.data.expiresIn);
-					sessionStorage.clear();		// clear the session storage whenever the access token is expired
+					setExpiresIn(61);
+					console.log("hi1");
+					console.log(expiresIn);
+					localStorage.removeItem("accessToken"); // clear the session storage whenever the access token is expired
+					window.dispatchEvent(new Event("storage"));
 				})
-				.then(res => {
-					sessionStorage.setItem("accessToken", res.data.accessToken);	// renew the access token to the new acess token
-				})
+				// .then((res) => {
+				// 	localStorage.setItem("accessToken", res.data.accessToken); // renew the access token to the new acess token
+				// })
 				.catch((err) => {
 					console.log(err);
 					setTimeout(() => {

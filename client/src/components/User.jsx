@@ -7,8 +7,8 @@ export const User = () => {
     useEffect(() => {
         if(!sessionStorage.getItem("accessToken")) return;
 
-        const getUserInfo = async (accessToken) => {
-            await axios
+        const getUserInfo =  (accessToken) => {
+            axios
                 .get('http://localhost:3001/user', {
                     params: {accessToken},
                 })

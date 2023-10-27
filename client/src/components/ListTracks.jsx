@@ -4,7 +4,11 @@ export const ListTracks = ({ userInfo }) => {
 			{userInfo?.map((item, i) => (
 				<div className="single-item" key={i}>
 					<a href="#">
-						<p>{item}</p>
+						<img src={item?.image} alt="track_pic" width={75} height={75} />
+						<p>{item?.artists?.name}</p>
+						<p>
+							{i + 1}. {item?.title}
+						</p>
 					</a>
 				</div>
 			))}

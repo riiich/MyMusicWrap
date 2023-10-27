@@ -10,6 +10,9 @@ import { Dashboard } from "./components/Dashboard";
 
 // in the url, it looks for the query parameter 'code' and returns an object of the item after '?'
 const code = new URLSearchParams(window.location.search).get("code");
+// localStorage.setItem("code", code);
+// const localCode = localStorage.getItem("code");
+// console.log(localCode);
 
 function App() {
 	return (
