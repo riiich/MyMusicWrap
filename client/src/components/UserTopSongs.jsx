@@ -38,11 +38,11 @@ export const UserTopSongs = () => {
 	}
 
 	useEffect(() => {
-		if (!localStorage.getItem("accessToken")) return;
+		if (!sessionStorage.getItem("accessToken")) return;
 
-		retrieveTopArtistsFromUser(localStorage.getItem("accessToken"));
-		retrieveTopTracksFromUser(localStorage.getItem("accessToken"));
-	}, [localStorage.getItem("accessToken")]);
+		retrieveTopArtistsFromUser(sessionStorage.getItem("accessToken"));
+		retrieveTopTracksFromUser(sessionStorage.getItem("accessToken"));
+	}, [sessionStorage.getItem("accessToken")]);
 
 	return (
 		<div className="user-top-container">

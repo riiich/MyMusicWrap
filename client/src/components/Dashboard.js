@@ -8,6 +8,6 @@ export const Dashboard = ({ code }) => {
 		// Try to store the access token in *local storage* here so that it can be accessed
 		//	anywhere within the application through the local storage. Try this solution to
 		//	avoid adding all components into this component just to access the access token
-		localStorage.setItem("accessToken", accessToken);
+		sessionStorage.setItem("accessToken", accessToken);
 	}
 };

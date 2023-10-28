@@ -1,6 +1,6 @@
 export const ListTracks = ({ userInfo }) => {
 	return (
-		<div className="list-container">
+		<div className="tracks-container">
 			{userInfo?.map((item, i) => (
 				<div className="single-item" key={i}>
 					<a href="#">

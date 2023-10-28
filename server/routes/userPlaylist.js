@@ -54,11 +54,11 @@ router.get("/tracks", async (req, res) => {
 		.getMyTopTracks({ offset: 0, limit: 10 })
 		.then((data) => {
 			// console.log("BODY");
-			// console.log(data.body);
+			console.log(data.body.items[0].artists);
 			data.body.items.map((item) => {
 				// console.log(item);
 				topTracks.push({
-					artists: item.artists[0],
+					artists: item.artists,	// object: important info: externals_urls{spotify}, id, name
 					id: item.id,
 					title: item.name,
 					album: item.album,
