@@ -3,6 +3,8 @@ import { clientCredentials } from "../credentials";
 export const Dashboard = ({ code }) => {
 	const accessToken = clientCredentials(code); // this access token allows us to do things with spotify api
 
+	console.log(code)
+
 	if (!accessToken) return;
 	else {
 		// Try to store the access token in *local storage* here so that it can be accessed

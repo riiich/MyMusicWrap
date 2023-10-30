@@ -20,6 +20,7 @@ router.post('/', (req, res) => {
     const spotifyAPI = new SpotifyWebAPI(credentials);
 
     const code = req.body.code;
+    // console.log("CODE", code);
     
     spotifyAPI.authorizationCodeGrant(code)
         .then(result => {

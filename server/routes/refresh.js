@@ -21,7 +21,7 @@ router.post("/", (req, res) => {
 		redirectUri: process.env.REDIRECT_URI,
 		refreshToken,
 	};
-
+	
 	const spotifyAPI = new SpotifyWebAPI(credentials);
 
 	spotifyAPI

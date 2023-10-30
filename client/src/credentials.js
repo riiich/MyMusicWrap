@@ -6,6 +6,10 @@ export const clientCredentials = (code) => {
 	const [accessToken, setAccessToken] = useState();
 	const [refreshToken, setRefreshToken] = useState();
 	const [expiresIn, setExpiresIn] = useState();
+	const spotifyUserCode = code;
+
+	// console.log(spotifyUserCode);
+	// console.log(code);
 
 	// runs this function every time there is a new url code
 	useEffect(() => {
@@ -19,6 +23,7 @@ export const clientCredentials = (code) => {
 				setAccessToken(res.data.accessToken);
 				setRefreshToken(res.data.refreshToken);
 				setExpiresIn(res.data.expiresIn);
+				// setExpiresIn(70);
 				console.log("hi");
 				console.log(res.data.msg);
 				setTimeout(() => {
@@ -47,10 +52,10 @@ export const clientCredentials = (code) => {
 				.then((res) => {
 					setAccessToken(res.data.accessToken);
 					setExpiresIn(res.data.expiresIn);
+					// setExpiresIn(70);
 					console.log("hi1");
-					console.log(expiresIn);
-					sessionStorage.removeItem("accessToken"); // clear the session storage whenever the access token is expired
-					window.dispatchEvent(new Event("storage"));
+					// sessionStorage.removeItem("accessToken"); // clear the session storage whenever the access token is expired
+					// window.dispatchEvent(new Event("storage"));
 				})
 				// .then((res) => {
 				// 	localStorage.setItem("accessToken", res.data.accessToken); // renew the access token to the new acess token
