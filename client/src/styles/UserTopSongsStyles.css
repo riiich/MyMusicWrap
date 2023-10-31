@@ -57,14 +57,14 @@
 	/* color: white; */
 }
 
-.tracks-container{
+.tracks-container {
 	display: flex;
 	justify-content: center;
 	flex-direction: column;
 	width: 33vw;
 }
 
-.tracks-container .single-item a{
+.tracks-container .single-item a {
 	display: flex;
 	justify-content: center;
 	align-items: center;

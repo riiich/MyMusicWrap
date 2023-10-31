@@ -8,11 +8,15 @@ export const UserTopSongs = () => {
 	const [topArtists, setTopArtists] = useState([]);
 	const [topTracks, setTopTracks] = useState([]);
 	const [recommendedArtists, setRecommendedArtists] = useState([]);
-
+	const [recommendedTracks, setRecommendedTracks] = useState([]);
+	const accessToken = sessionStorage.getItem("accessToken");
+	
 	// refactor the below to only async/await (rmb that using async/await eliminates promise chaining)
 	const retrieveTopArtistsFromUser = async (accessToken) => {
 		try {
-			const response = await axios.get("http://localhost:3001/mostlistened/artists", { params: { accessToken }});
+			const response = await axios.get("http://localhost:3001/mostlistened/artists", {
+				params: { accessToken },
+			});
 
 			setTopArtists(response.data.topArtists);
 		} catch (err) {
@@ -20,40 +24,39 @@ export const UserTopSongs = () => {
 		}
 	};
 
-	// const retrieveTopArtistsFromUser = async (accessToken) => {
-	// 	await axios
-	// 		.get("http://localhost:3001/mostlistened/artists", {
-	// 			params: { accessToken },
-	// 		})
-	// 		.then((res) => {
-	// 			setTopArtists(res.data.topArtists);
-	// 			// console.log(res.data);
-	// 		})
-	// 		.catch((err) => {
-	// 			console.log(err);
-	// 		});
-	// };
-
 	const retrieveTopTracksFromUser = async (accessToken) => {
-		await axios
-			.get("http://localhost:3001/mostlistened/tracks", {
+		try {
+			const response = await axios.get("http://localhost:3001/mostlistened/tracks", {
 				params: { accessToken },
-			})
-			.then((res) => {
-				setTopTracks(res.data.topTracks);
-				console.log(res.data.msg);
-			})
-			.catch((err) => {
-				console.log(err);
 			});
+
+			setTopTracks(response.data.topTracks);
+			console.log(response.data.msg);
+		} catch (err) {
+			console.log(err);
+		}
+	};
+
+	const retrieveRecommendedTracks = async (accessToken) => {
+		try {
+			const response = await axios.get("http://localhost:3001/mostlistened/recommended", {
+				params: { accessToken },
+			});
+
+			// console.log(response.data);
+			// setRecommendedArtists(response.data);
+		} catch (err) {
+			console.log(err);
+		}
 	};
 
 	useEffect(() => {
-		if (!sessionStorage.getItem("accessToken")) return;
+		if (!accessToken) return;
 
-		retrieveTopArtistsFromUser(sessionStorage.getItem("accessToken"));
-		retrieveTopTracksFromUser(sessionStorage.getItem("accessToken"));
-	}, [sessionStorage.getItem("accessToken")]);
+		retrieveTopArtistsFromUser(accessToken);
+		retrieveTopTracksFromUser(accessToken);
+		retrieveRecommendedTracks(accessToken);
+	}, [accessToken]);
 
 	return (
 		<div className="user-top-container">
@@ -67,10 +70,10 @@ export const UserTopSongs = () => {
 				<ListTracks userInfo={topTracks} />
 			</div>
 
-			<div className="user-recommended-artists">
+			{/* <div className="user-recommended-artists">
 				<h1>Recommended Artists</h1>
 				<RecommendedArtists userInfo={recommendedArtists} />
-			</div>
+			</div> */}
 		</div>
 	);
 };

@@ -7,6 +7,8 @@ export const clientCredentials = (code) => {
 	const [refreshToken, setRefreshToken] = useState();
 	const [expiresIn, setExpiresIn] = useState();
 	const spotifyUserCode = code;
+	const today = new Date();
+	const currentTime = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
 
 	// console.log(spotifyUserCode);
 	// console.log(code);
@@ -19,13 +21,12 @@ export const clientCredentials = (code) => {
 				code, // passing the code through the api call
 			})
 			.then((res) => {
-				// console.log(res.data);
 				setAccessToken(res.data.accessToken);
 				setRefreshToken(res.data.refreshToken);
 				setExpiresIn(res.data.expiresIn);
 				// setExpiresIn(70);
-				console.log("hi");
 				console.log(res.data.msg);
+				console.log(currentTime);
 				setTimeout(() => {
 					window.history.pushState({}, null, "/"); // removes the code from the url
 				}, 1500);
@@ -36,7 +37,7 @@ export const clientCredentials = (code) => {
 					window.location = "/"; // redirects back to home page if there is an error
 				}, 2000);
 			});
-	}, [code]);
+	}, [code, currentTime]);
 
 	// refresh token used when current token is expiring
 	useEffect(() => {
@@ -50,6 +51,7 @@ export const clientCredentials = (code) => {
 					refreshToken, // passing the refresh token through the api call
 				})
 				.then((res) => {
+					console.log(currentTime);
 					setAccessToken(res.data.accessToken);
 					setExpiresIn(res.data.expiresIn);
 					// setExpiresIn(70);
