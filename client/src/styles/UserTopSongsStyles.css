@@ -36,17 +36,17 @@
 	display: grid;
 	grid-template-columns: repeat(2, 1fr);
 	grid-column-gap: 1em;
-    /* justify-items: center; */
-    place-items: center;
+	/* justify-items: center; */
+	place-items: center;
 	padding: 0;
 	border: 1px dashed purple;
 }
 
 .list-container .single-item {
-    display: flex;
-    justify-content: center;
-    align-self: center;
-    border: 1px solid black;
+	display: flex;
+	justify-content: center;
+	align-self: center;
+	border: 1px solid black;
 	margin: 3rem;
 	padding: 1rem;
 	width: 10rem;
@@ -163,4 +163,3 @@
 		margin: 5% 0;
 	}
 }
-

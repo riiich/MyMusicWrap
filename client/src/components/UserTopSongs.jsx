@@ -9,8 +9,11 @@ export const UserTopSongs = () => {
 	const [topTracks, setTopTracks] = useState([]);
 	const [recommendedArtists, setRecommendedArtists] = useState([]);
 	const [recommendedTracks, setRecommendedTracks] = useState([]);
+	const [loadingArtists, setLoadingArtists] = useState(true);
+	const [loadingTracks, setLoadingTracks] = useState(true);
+	const [loadingRecommended, setLoadingRecommended] = useState(true);
 	const accessToken = sessionStorage.getItem("accessToken");
-	
+
 	// refactor the below to only async/await (rmb that using async/await eliminates promise chaining)
 	const retrieveTopArtistsFromUser = async (accessToken) => {
 		try {
@@ -19,8 +22,10 @@ export const UserTopSongs = () => {
 			});
 
 			setTopArtists(response.data.topArtists);
+			setLoadingArtists(false);
 		} catch (err) {
-			console.log(err);
+			console.error(err);
+			setLoadingArtists(false);
 		}
 	};
 
@@ -31,30 +36,53 @@ export const UserTopSongs = () => {
 			});
 
 			setTopTracks(response.data.topTracks);
+			setLoadingTracks(false);
 			console.log(response.data.msg);
 		} catch (err) {
-			console.log(err);
+			console.error(err);
 		}
 	};
 
 	const retrieveRecommendedTracks = async (accessToken) => {
 		try {
-			const response = await axios.get("http://localhost:3001/mostlistened/recommended", {
+			const response = await axios.get("http://localhost:3001/mostlistened/recommendedtracks", {
 				params: { accessToken },
 			});
 
-			// console.log(response.data);
+			console.log(response.data);
 			// setRecommendedArtists(response.data);
 		} catch (err) {
-			console.log(err);
+			console.error(err);
 		}
 	};
 
 	useEffect(() => {
 		if (!accessToken) return;
 
+		console.log("useEffect1 triggered");
+
 		retrieveTopArtistsFromUser(accessToken);
+		setLoadingArtists(true);
+		// retrieveTopTracksFromUser(accessToken);
+		// retrieveRecommendedTracks(accessToken);
+	}, [accessToken]);
+
+	useEffect(() => {
+		if (!accessToken) return;
+
+		console.log("useEffect2 triggered");
+		// retrieveTopArtistsFromUser(accessToken);
 		retrieveTopTracksFromUser(accessToken);
+		setLoadingTracks(true);
+		// retrieveRecommendedTracks(accessToken);
+	}, [accessToken]);
+
+	useEffect(() => {
+		if (!accessToken) return;
+
+		console.log("useEffect3 triggered");
+		// retrieveTopArtistsFromUser(accessToken);
+		// retrieveTopTracksFromUser(accessToken);
 		retrieveRecommendedTracks(accessToken);
 	}, [accessToken]);
 
@@ -62,18 +90,25 @@ export const UserTopSongs = () => {
 		<div className="user-top-container">
 			<div className="user-top-artists">
 				<h1>Your Top 10 Artists</h1>
-				<ListArtists userInfo={topArtists} />
+				<ListArtists userInfo={topArtists} loading={loadingArtists} />
 			</div>
 
 			<div className="user-top-tracks">
 				<h1>Top Tracks</h1>
-				<ListTracks userInfo={topTracks} />
+				<ListTracks userInfo={topTracks} loading={loadingTracks} />
 			</div>
 
-			{/* <div className="user-recommended-artists">
-				<h1>Recommended Artists</h1>
+			<div className="user-recommended-artists">
+				<h1>Recommended Tracks</h1>
+				<button
+					onClick={() => {
+						retrieveRecommendedTracks(accessToken);
+					}}
+				>
+					Load More
+				</button>
 				<RecommendedArtists userInfo={recommendedArtists} />
-			</div> */}
+			</div>
 		</div>
 	);
 };

@@ -36,6 +36,7 @@ router.get("/artists", async (req, res) => {
 					artist: item.name,
 					image: item.images[0].url,
 					id: item.id,
+					artistURL: item.external_urls.spotify,
 				});
 
 				// add each genre into a map and its number of occurence in a map
@@ -156,6 +157,7 @@ router.get("/tracks", async (req, res) => {
 					title: item.name, // name of song
 					album: item.album, // album that the song is in
 					image: item.album.images[0].url, // image of the song
+					trackURL: item.external_urls.spotify,
 					albumURL: item.album.external_urls.spotify, // link to the song from Spotify
 					artistProfile: item.album.artists[0].external_urls.spotify, // link to the artist profile on Spotify
 					previewSong: item.preview_url, // 30-second clip of the song
@@ -193,11 +195,11 @@ const delay = (time) => {
 	return new Promise((resolve) => setTimeout(resolve, time));
 };
 
-router.get("/recommended", (req, res) => {
+router.get("/recommendedtracks", (req, res) => {
 	try {
 		const recommended = []; // use the genres that the user listens to in order to look for recommended songs
 		const mostListenedTrackGenres = []; // store genres from the user's track/song history that appeat more than twice
-		const time = 500;
+		const time = 1000;
 
 		// have to use a setTimeout b/c topTrackGenres is used in other endpoints which make an API call, so it takes time to get the
 		//  data, so if this setTimeout is omitted, it will run this before the API call is finished, resulting in no data in topTrackGenres
@@ -224,24 +226,39 @@ router.get("/recommended", (req, res) => {
 					mostListenedTrackGenres[3],
 					mostListenedTrackGenres[4],
 				],
-				limit: 5,
+				limit: 8,
 			});
 
-			data.body.tracks.map((track) => {
+			data.body.tracks.map((track, i) => {
+				recommended.push({
+					artists: track.artists,
+					track_title: track.name,
+					spotify_url: track.external_urls.spotify,
+					id: track.id,
+					image: track.album.images[0].url,
+					duration: {
+						minutes: Math.floor(track.duration_ms / (1000 * 60)),
+						seconds: Math.floor((track.duration_ms / 1000) % 60),
+					}, // song length
+				});
+
+				console.log(i+1);
 				console.log("Artist(s): ");
 				track?.artists.map((artist, i) => {
 					console.log(`${i + 1}. ${artist.name}`);
 				});
-				console.log(`Artist: ${track?.name}`);
+				console.log(`Track title: ${track?.name}`);
 				console.log(`Spotify Link: ${track?.external_urls.spotify}`);
 				console.log(`Popularity: ${track?.popularity}`);
+				console.log(`Image: ${track?.album.images[0].url}`);
 				console.log("-------");
 			});
 
 			console.log("============");
 
 			res.json({
-				test: "kand",
+				recommended: recommended,
+				status: 200,
 			});
 		}, time);
 	} catch (err) {
