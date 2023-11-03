@@ -49,8 +49,10 @@ export const UserTopSongs = () => {
 				params: { accessToken },
 			});
 
+			setRecommendedArtists([]);
 			console.log(response.data);
-			// setRecommendedArtists(response.data);
+			setRecommendedArtists(response.data.recommended);
+			setLoadingRecommended(false);
 		} catch (err) {
 			console.error(err);
 		}
@@ -79,12 +81,19 @@ export const UserTopSongs = () => {
 
 	useEffect(() => {
 		if (!accessToken) return;
-
+		
 		console.log("useEffect3 triggered");
 		// retrieveTopArtistsFromUser(accessToken);
 		// retrieveTopTracksFromUser(accessToken);
 		retrieveRecommendedTracks(accessToken);
+		setLoadingRecommended(true);
 	}, [accessToken]);
+
+	/*
+		TO-DOS:
+			- set a timer before the user is able to reload the recommended tracks so that they aren't
+				 able to make so many requests at once (rate limit to 1 reload / 3s)
+	*/
 
 	return (
 		<div className="user-top-container">
@@ -107,7 +116,7 @@ export const UserTopSongs = () => {
 				>
 					Load More
 				</button>
-				<RecommendedArtists userInfo={recommendedArtists} />
+				<RecommendedArtists userInfo={recommendedArtists} loading={loadingRecommended} />
 			</div>
 		</div>
 	);

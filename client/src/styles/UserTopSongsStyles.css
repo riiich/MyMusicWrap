@@ -10,14 +10,13 @@
 .home-container .user-top-container {
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
-	width: 5%;
+	width: 3%;
 }
 
 .user-top-container .user-top-artists {
 	border: 1px dashed green;
 	width: auto;
 	margin: 0 1rem 0 1rem;
-	/* align-items: center; */
 }
 
 .user-top-container .user-top-tracks {
@@ -66,11 +65,12 @@
 
 .tracks-container .single-item a {
 	display: flex;
-	justify-content: center;
+	justify-content: flex-start;
 	align-items: center;
 	border: 1px black solid;
 	border-radius: 20px;
 	margin: 2%;
+	padding: 2%;
 	transition: 0.5s;
 }
 
@@ -80,6 +80,53 @@
 
 .tracks-container .single-item img {
 	border-radius: 25%;
+}
+
+.recommended-container {
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	width: 33vw;
+}
+
+.recommended-container .single-item a {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	border: 1px black solid;
+	border-radius: 20px;
+	margin: 2%;
+	padding: 2%;
+	transition: 0.5s;
+}
+
+.recommended-container .single-item p {
+	margin: 0;
+}
+
+.recommended-container .single-item .track-title {
+	display: flex;
+	justify-content: flex-start;
+}
+
+.recommended-container .single-item .artists {
+	display: flex;
+	flex-direction: row;
+	font-size: smaller;
+}
+
+/* adds a comma after every word except the last one */
+.artists p:not(:last-child)::after {
+	content: ", ";
+}
+
+.recommended-container .single-item a:hover {
+	background-color: rgb(241, 227, 227);
+}
+
+.recommended-container .single-item img {
+	border-radius: 25%;
+	margin-right: 2%;
 }
 
 /* MEDIA QUERIES */

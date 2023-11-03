@@ -204,15 +204,21 @@ router.get("/recommendedtracks", (req, res) => {
 		// have to use a setTimeout b/c topTrackGenres is used in other endpoints which make an API call, so it takes time to get the
 		//  data, so if this setTimeout is omitted, it will run this before the API call is finished, resulting in no data in topTrackGenres
 		setTimeout(async () => {
-			if (topTrackGenres) {
-				// get genres where the number of occurrences is at least 2
-				for (const genre in topTrackGenres) {
-					if (topTrackGenres[genre][1] > 1) {
-						// console.log(topTrackGenres[genre]);
-						mostListenedTrackGenres.push(topTrackGenres[genre][0]);
-					}
+			if (!topTrackGenres) {
+				res.status(500).json({
+					msg: "There is no data to be found",
+					status: 500,
+				});
+				return;
+			} else {
+			// get genres where the number of occurrences is at least 2
+			for (const genre in topTrackGenres) {
+				if (topTrackGenres[genre][1] > 0) {
+					// console.log(topTrackGenres[genre]);
+					mostListenedTrackGenres.push(topTrackGenres[genre][0]);
 				}
 			}
+
 			console.log("IN RECOMMENDED ENDPOINT");
 			console.log(mostListenedTrackGenres);
 
@@ -242,7 +248,7 @@ router.get("/recommendedtracks", (req, res) => {
 					}, // song length
 				});
 
-				console.log(i+1);
+				console.log(i + 1);
 				console.log("Artist(s): ");
 				track?.artists.map((artist, i) => {
 					console.log(`${i + 1}. ${artist.name}`);
@@ -260,6 +266,7 @@ router.get("/recommendedtracks", (req, res) => {
 				recommended: recommended,
 				status: 200,
 			});
+			}
 		}, time);
 	} catch (err) {
 		console.log("THERE WAS AN ERROR GETTING RECOMMENDED SONGS", err);
