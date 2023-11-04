@@ -68,7 +68,7 @@ router.get("/artists", async (req, res) => {
 		});
 });
 
-let topTrackGenres = null; // will store a hashmap that contains the genres and number of occurrences from the tracks
+let topTrackGenres = null; // will store an object that contains the genres and number of occurrences from the tracks
 
 // get user's top listened tracks
 router.get("/tracks", async (req, res) => {
@@ -195,6 +195,8 @@ const delay = (time) => {
 	return new Promise((resolve) => setTimeout(resolve, time));
 };
 
+// this endpoint depends on the artists and tracks endpoints, so it needs to be a bit delayed to retrieve data from 
+//	spotify API to fill topArtistGenres and topTrackGenres
 router.get("/recommendedtracks", (req, res) => {
 	try {
 		const recommended = []; // use the genres that the user listens to in order to look for recommended songs
@@ -219,8 +221,8 @@ router.get("/recommendedtracks", (req, res) => {
 				}
 			}
 
-			console.log("IN RECOMMENDED ENDPOINT");
-			console.log(mostListenedTrackGenres);
+			// console.log("IN RECOMMENDED ENDPOINT");
+			// console.log(mostListenedTrackGenres);
 
 			await delay(time);
 
@@ -248,16 +250,16 @@ router.get("/recommendedtracks", (req, res) => {
 					}, // song length
 				});
 
-				console.log(i + 1);
-				console.log("Artist(s): ");
-				track?.artists.map((artist, i) => {
-					console.log(`${i + 1}. ${artist.name}`);
-				});
-				console.log(`Track title: ${track?.name}`);
-				console.log(`Spotify Link: ${track?.external_urls.spotify}`);
-				console.log(`Popularity: ${track?.popularity}`);
-				console.log(`Image: ${track?.album.images[0].url}`);
-				console.log("-------");
+				// console.log(i + 1);
+				// console.log("Artist(s): ");
+				// track?.artists.map((artist, i) => {
+				// 	console.log(`${i + 1}. ${artist.name}`);
+				// });
+				// console.log(`Track title: ${track?.name}`);
+				// console.log(`Spotify Link: ${track?.external_urls.spotify}`);
+				// console.log(`Popularity: ${track?.popularity}`);
+				// console.log(`Image: ${track?.album.images[0].url}`);
+				// console.log("-------");
 			});
 
 			console.log("============");

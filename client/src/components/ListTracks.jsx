@@ -7,11 +7,17 @@ export const ListTracks = ({ userInfo, loading }) => {
 				userInfo?.map((item, i) => (
 					<div className="single-item" key={i}>
 						<a href={item.trackURL} target="_blank" rel="noopener noreferrer">
-							<img src={item?.image} alt="track_pic" width={65} height={65} />
-							<p>{item?.artists?.name}</p>
-							<p>
-								{i + 1}. {item?.title}
-							</p>
+							<img src={item?.image} alt="track_pic" width={55} height={55} />
+							<div key={item.id}>
+								<p className="top-track-title">
+									<strong>{i + 1}. {item?.title}</strong>
+								</p>
+								<div className="top-track-artists">
+									{item?.artists.map((artist) => (
+										<p>&nbsp;{artist.name}</p>
+									))}
+								</div>
+							</div>
 						</a>
 					</div>
 				))

@@ -1,11 +1,16 @@
 body {
 	margin: 0;
 	padding: 0;
-	background-color: rgb(177, 250, 197);
+	/* background-color: rgb(177, 250, 197); */
+	background-color: burlywood;
 }
 
 .App {
 	text-align: center;
+}
+
+.user-intro img {
+	border-radius: 50%;
 }
 
 .song-list {
