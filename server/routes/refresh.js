@@ -29,7 +29,7 @@ router.post("/", (req, res) => {
 		.then((result) => {
 			console.log(result.body);
 			spotifyAPI.setAccessToken(result.body.access_token);
-
+			
 			res.json({
 				accessToken: result.body.access_token,
 				expiresIn: result.body.expires_in,

@@ -50,6 +50,14 @@ body {
 	color: rgb(127, 224, 29);
 }
 
+.navbar button {
+	border-radius: 7px;
+	margin-right: 1rem;
+	padding: 5px;
+	background-color: rgb(230, 100, 100);
+	color: #fffefe;
+}
+
 @media screen and (max-width: 600px) {
 	.navbar h1 {
 		font-size:large;

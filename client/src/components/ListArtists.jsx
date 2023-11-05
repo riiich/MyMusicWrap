@@ -1,6 +1,6 @@
 export const ListArtists = ({ userInfo, loading }) => {
 	return (
-		<div className="list-container">
+		<div className="top-artists-container">
 			{loading ? (
 				<h3>Loading...</h3>
 			) : (

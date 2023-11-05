@@ -27,6 +27,8 @@ router.post('/', (req, res) => {
             spotifyAPI.setAccessToken(result.body.access_token);
             spotifyAPI.setRefreshToken(result.body.refresh_token);
 
+            // console.log("the refresh token", result.body.refresh_token);
+
             res.json({
                 accessToken: result.body.access_token,
                 refreshToken: result.body.refresh_token,

@@ -1,5 +1,5 @@
 import "./styles/App.css";
-import { useState } from 'react';
+import { useState } from "react";
 import { PlaySongs } from "./pages/PlaySongs";
 import { Navbar } from "./components/Navbar";
 import { Home } from "./pages/Home";
@@ -13,15 +13,24 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 const code = new URLSearchParams(window.location.search).get("code");
 
 function App() {
-	const [spotifyCode, setSpotifyCode] = useState("");
+	const [spotifyCode, setSpotifyCode] = useState();
+	const [codeExists, setCodeExists] = useState(false);
 
 	// save the code in a state before the code becomes empty from the url
-	if(code && spotifyCode.length === 0) {
+	if (!codeExists) {
 		setSpotifyCode(code);
+		setCodeExists(true);
 	}
 
-	// console.log(code);
-	// console.log(spotifyCode);
+	/*
+	POSSIBLE PROBLEM WITH THE REFRESH TOKEN PROBLEM
+		The code gets saved from the url at when the user initially authorizes, but when the page is changed or
+			an action is made, the code becomes null because there is no code in the url anymore since
+			we made it disappear in credentials.js in the userLogin function
+	*/
+
+	console.log(code);
+	console.log(spotifyCode);
 
 	return (
 		<div className="App">
@@ -35,8 +44,7 @@ function App() {
 					<Route path="*" element={<ErrorPage />} />
 				</Routes>
 			</Router>
-			{/* PROBLEM IS THAT THE  */}
-			{!spotifyCode ? <></> : <Dashboard code={spotifyCode} />}
+ 			{!spotifyCode ? <></> : <Dashboard code={spotifyCode} />}
 		</div>
 	);
 }

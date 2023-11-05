@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { ListArtists } from "./ListArtists";
 import { ListTracks } from "./ListTracks";
-import { RecommendedArtists } from "./RecommendedArtists";
+import { RecommendedTracks } from "./RecommendedArtists";
 
 export const UserTopSongs = () => {
 	const [topArtists, setTopArtists] = useState([]);
@@ -49,9 +49,9 @@ export const UserTopSongs = () => {
 				params: { accessToken },
 			});
 
-			setRecommendedArtists([]);
+			
 			console.log(response.data);
-			setRecommendedArtists(response.data.recommended);
+			setRecommendedTracks(response.data.recommended);
 			setLoadingRecommended(false);
 		} catch (err) {
 			console.error(err);
@@ -81,7 +81,7 @@ export const UserTopSongs = () => {
 
 	useEffect(() => {
 		if (!accessToken) return;
-		
+		setRecommendedTracks([]);
 		console.log("useEffect3 triggered");
 		// retrieveTopArtistsFromUser(accessToken);
 		// retrieveTopTracksFromUser(accessToken);
@@ -116,7 +116,7 @@ export const UserTopSongs = () => {
 				>
 					Load More
 				</button>
-				<RecommendedArtists userInfo={recommendedArtists} loading={loadingRecommended} />
+				<RecommendedTracks userInfo={recommendedTracks} loading={loadingRecommended} />
 			</div>
 		</div>
 	);
