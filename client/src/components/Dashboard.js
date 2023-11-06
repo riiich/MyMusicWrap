@@ -4,7 +4,7 @@ export const Dashboard = ({ code }) => {
 	// if(!sessionStorage.getItem("code")) sessionStorage.setItem("code", code);
 	// else return;
 
-	// sessionStorage.setItem("code", code);
+	sessionStorage.setItem("code", code);
 
 	// const sessionCode = sessionStorage.getItem("code");
 	const accessToken = clientCredentials(code); // this access token allows us to do things with spotify api

@@ -27,7 +27,8 @@ export const clientCredentials = (code) => {
 			// setExpiresIn(response.data.expiresIn);
 			setExpiresIn(70);
 			console.log(currentTime);
-			
+
+			// *********** WORK ON THE CODE, ACCESS TOKEN, AND REFRESH TOKEN
 			setTimeout(() => {
 				sessionStorage.setItem("refreshToken", response.data.refreshToken);
 				window.history.pushState({}, null, "/"); // removes the code from the url
@@ -93,7 +94,7 @@ export const clientCredentials = (code) => {
 				window.location = "/"; // redirects back to home page if there is an error
 			}, 2000);
 		}
-	}
+	};
 
 	// refresh token used when current token is expiring
 	useEffect(() => {

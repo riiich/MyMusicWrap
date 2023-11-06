@@ -4,7 +4,6 @@ require("dotenv").config();
 
 router.use((req, res, next) => {
 	console.log("New Token!");
-	// res.json({msg: "Retrieving refresh token!"});
 
 	next();
 });

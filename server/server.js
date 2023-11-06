@@ -33,8 +33,11 @@ app.use("/refresh", refresh);
 const authenticatedUser = require("./routes/userInfo");
 app.use("/user", authenticatedUser);
 
-const topUserPlaylist = require("./routes/userPlaylist");
-app.use("/mostlistened", topUserPlaylist);
+const topUserInfo = require("./routes/topUserInfo");
+app.use("/mostlistened", topUserInfo);
+
+const userPlaylists = require("./routes/userPlaylists");
+app.use("/myplaylists", userPlaylists);
 
 app.listen(process.env.PORT, () => {
 	console.log(`Listening on port ${process.env.PORT}`);

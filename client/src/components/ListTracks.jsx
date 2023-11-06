@@ -10,7 +10,7 @@ export const ListTracks = ({ userInfo, loading }) => {
 							<img src={item?.image} alt="track_pic" width={55} height={55} />
 							<div>
 								<p className="top-track-title">
-									<strong>{i + 1}. {item?.title}</strong>
+									<strong>{item?.title}</strong>
 								</p>
 								<div className="top-track-artists">
 									{item?.artists.map((artist) => (

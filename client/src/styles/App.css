@@ -2,7 +2,9 @@ body {
 	margin: 0;
 	padding: 0;
 	/* background-color: rgb(177, 250, 197); */
-	background-color: burlywood;
+	/* background-color: burlywood; */
+	background-color: #BAE4AC;
+	/* background-color: #56704C; */
 }
 
 .App {

@@ -1,7 +1,6 @@
 const router = require("express").Router();
-require("dotenv").config();
-const axios = require("axios");
 const SpotifyWebAPI = require("spotify-web-api-node");
+require("dotenv").config();
 
 const spotifyAPI = new SpotifyWebAPI();
 
@@ -10,10 +9,10 @@ router.use((req, res, next) => {
 	if (!req.query.accessToken) {
 		res.json({
 			status: 401,
-			msg: "An invalid access token was received!",
+			msg: "An invalid or no access token was provided!",
 		});
 	}
-	console.log("Retrieving user's top most listened artists and tracks!");
+	console.log("Retrieving user's top most listened artists and tracks! Also recommending some songs based on top tracks");
 	spotifyAPI.setAccessToken(req.query.accessToken); // set access token
 
 	next();
@@ -74,6 +73,8 @@ let topTrackGenres = null; // will store an object that contains the genres and 
 router.get("/tracks", async (req, res) => {
 	try {
 		const topTracks = [];
+		const trackGenres = {};
+		
 		// get the genres of the top songs the user listens to through the TRACKS
 		// a map that will map the genre to the amount of occurrences
 		// const trackGenres = new Map();
@@ -124,8 +125,11 @@ router.get("/tracks", async (req, res) => {
 		// 				);
 		// 			})
 		// 		);
-		const trackGenres = {};
+		
 
+		
+		
+		
 		// time_range - long_term (several years), medium_term (~last 6 months), short_term (~last 4 weeks)
 		const data = await spotifyAPI.getMyTopTracks({ offset: 0, limit: 8, time_range: "medium_term" });
 
@@ -244,6 +248,7 @@ router.get("/recommendedtracks", (req, res) => {
 					spotify_url: track.external_urls.spotify,
 					id: track.id,
 					image: track.album.images[0].url,
+					previewSong: track.preview_url,
 					duration: {
 						minutes: Math.floor(track.duration_ms / (1000 * 60)),
 						seconds: Math.floor((track.duration_ms / 1000) % 60),

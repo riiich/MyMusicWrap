@@ -116,7 +116,7 @@ export const UserTopSongs = () => {
 				>
 					Load More
 				</button>
-				<RecommendedTracks userInfo={recommendedTracks} loading={loadingRecommended} />
+				<RecommendedTracks userInfo={recommendedTracks} loading={loadingRecommended} accessToken={accessToken} />
 			</div>
 		</div>
 	);
