@@ -50,7 +50,7 @@ export const UserTopSongs = () => {
 			});
 
 			
-			console.log(response.data);
+			// console.log(response.data);
 			setRecommendedTracks(response.data.recommended);
 			setLoadingRecommended(false);
 		} catch (err) {
@@ -116,7 +116,7 @@ export const UserTopSongs = () => {
 				>
 					Load More
 				</button>
-				<RecommendedTracks userInfo={recommendedTracks} loading={loadingRecommended} accessToken={accessToken} />
+				<RecommendedTracks recommendedTracks={recommendedTracks} loading={loadingRecommended} accessToken={accessToken} />
 			</div>
 		</div>
 	);

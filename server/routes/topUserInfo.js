@@ -149,7 +149,7 @@ router.get("/tracks", async (req, res) => {
 									// else trackGenres.set(genre, [genre , trackGenres.get(genre) + 1]);
 								});
 							});
-						} catch (err) {
+						} catch (err) { 
 							console.error("Error getting artist information:", err);
 						}
 					})
@@ -207,6 +207,8 @@ router.get("/recommendedtracks", (req, res) => {
 		const mostListenedTrackGenres = []; // store genres from the user's track/song history that appeat more than twice
 		const time = 1000;
 
+		// console.log(topTrackGenres);
+
 		// have to use a setTimeout b/c topTrackGenres is used in other endpoints which make an API call, so it takes time to get the
 		//  data, so if this setTimeout is omitted, it will run this before the API call is finished, resulting in no data in topTrackGenres
 		setTimeout(async () => {
@@ -231,7 +233,7 @@ router.get("/recommendedtracks", (req, res) => {
 			await delay(time);
 
 			const data = await spotifyAPI.getRecommendations({
-				seed_genres: [
+				seed_genres: [ 
 					mostListenedTrackGenres[0],
 					mostListenedTrackGenres[1],
 					mostListenedTrackGenres[2],
@@ -249,6 +251,7 @@ router.get("/recommendedtracks", (req, res) => {
 					id: track.id,
 					image: track.album.images[0].url,
 					previewSong: track.preview_url,
+					uri: track.uri,
 					duration: {
 						minutes: Math.floor(track.duration_ms / (1000 * 60)),
 						seconds: Math.floor((track.duration_ms / 1000) % 60),

@@ -18,6 +18,7 @@ router.use((req, res, next) => {
 	next();
 });
 
+// retrieves the user's playlists
 router.get("/", async (req, res) => {
 	try {
 		const accessToken = req.query.accessToken;
@@ -74,4 +75,10 @@ router.get("/", async (req, res) => {
 	}
 });
 
+// adds the song into a certain playlist
+router.post("/addToPlaylist", (req, res) => {
+
+});
+
 module.exports = router;
+ 
