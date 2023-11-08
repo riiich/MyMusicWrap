@@ -1,10 +1,12 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
+import { SongPlayer } from "./SongPlayer";
 
 export const RecommendedTracks = ({ recommendedTracks, loading, accessToken }) => {
 	const [playlists, setPlaylists] = useState([]);
 	const [playlistsExist, setPlaylistExists] = useState(false);
-	const [selectedPlaylistId, setSelectedPlaylistId] = useState({ playlistID: null, trackURI: null });
+	const [selectedTrackURI, setSelectedTrackURI] = useState("");
+	const [selectedPlaylistId, setSelectedPlaylistId] = useState({ playlistId: null, trackURI: null });
 	// const [selectedPlaylistId, setSelectedPlaylistId] = useState({});
 
 	const plExists = (e) => {
@@ -14,19 +16,23 @@ export const RecommendedTracks = ({ recommendedTracks, loading, accessToken }) =
 
 			// check to see if the value had any value in it (have to check, otherwise there will be an error relating to json)
 			if (e.target.value) {
-				const parsedInfo = JSON.parse(e.target.value);		// in order to use the json, have to parse it back to object b/c it was stringified json
+				const parsedInfo = JSON.parse(e.target.value); // in order to use the json, have to parse it back to object b/c it was stringified json
 				// console.log(e.target.value);
 				// console.log(parsedInfo.playlistId);
 				// setSelectedPlaylistId(e.target.value);
 				setSelectedPlaylistId({
-					playlistID: parsedInfo.playlistId,
+					playlistId: parsedInfo.playlistId,
 					trackURI: parsedInfo.trackURI,
 				});
-				// console.log(selectedPlaylistId);
 			}
 		} catch (err) {
 			console.log(err);
 		}
+	};
+
+	const getURI = (e) => {
+		console.log(e);
+		setSelectedTrackURI(e);
 	};
 
 	useEffect(() => {
@@ -50,11 +56,21 @@ export const RecommendedTracks = ({ recommendedTracks, loading, accessToken }) =
 
 	useEffect(() => {
 		const addTrackToPlaylist = async () => {
-			const response = await axios.post("http://localhost:3001/myplaylists/addToPlaylist", {
-				selectedPlaylistId,
-			});
+			try {
+				await axios.post("http://localhost:3001/myplaylists/addToPlaylist", {
+					accessToken,
+					selectedPlaylistId,
+				});
+			} catch (err) {
+				console.log(err);
+			}
 		};
-	}, [selectedPlaylistId]);
+
+		if (accessToken && !playlistsExist) {
+			console.log("6969696969699696969");
+			addTrackToPlaylist();
+		}
+	}, [accessToken, playlistsExist, selectedPlaylistId]);
 
 	return (
 		<div className="recommended-container">
@@ -78,14 +94,21 @@ export const RecommendedTracks = ({ recommendedTracks, loading, accessToken }) =
 								</div>
 							</a>
 							<div className="preview-add-buttons">
-								<button className="recommended-preview-song-button">Preview Song</button>
+								<button
+									className="recommended-preview-song-button"
+									onClick={(e) => getURI(item?.uri)}
+								>
+									Preview Song
+								</button>
 								<button className="recommended-add-song-button" onClick={plExists}>
 									Add song
 								</button>
 								{playlistsExist ? (
 									<select className="playlists" name="selectedPlaylist" onChange={plExists}>
+										<option value="" disabled>
+											Select a playlist
+										</option>
 										{playlists?.map((playlist) => (
-											// <div>
 											<option
 												value={JSON.stringify({
 													playlistId: playlist?.playlistId,
@@ -95,7 +118,6 @@ export const RecommendedTracks = ({ recommendedTracks, loading, accessToken }) =
 											>
 												{playlist?.playlistName}
 											</option>
-											// </div>
 										))}
 									</select>
 								) : (
@@ -105,6 +127,11 @@ export const RecommendedTracks = ({ recommendedTracks, loading, accessToken }) =
 						</div>
 					</div>
 				))
+			)}
+			{selectedTrackURI ? (
+				<SongPlayer accessToken={accessToken} trackURI={selectedTrackURI} />
+			) : (
+				<p>Choose a track</p>
 			)}
 		</div>
 	);

@@ -9,8 +9,9 @@ const AUTH_URL = `https://accounts.spotify.com/authorize?
 							%20user-read-playback-state%20user-modify-playback-state
 							%20user-follow-read%20playlist-read-private
 							%20playlist-read-collaborative%20playlist-modify-public
-							%20user-read-playback-position%20user-top-read
-							%20user-read-recently-played`;
+							%20playlist-modify-private%20user-read-playback-position
+							%20user-top-read%20user-read-recently-played
+							%20streaming`;
 
 export const Login = () => {
 	return (

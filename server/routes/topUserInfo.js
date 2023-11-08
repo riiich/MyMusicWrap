@@ -12,7 +12,9 @@ router.use((req, res, next) => {
 			msg: "An invalid or no access token was provided!",
 		});
 	}
-	console.log("Retrieving user's top most listened artists and tracks! Also recommending some songs based on top tracks");
+	console.log(
+		"Retrieving user's top most listened artists and tracks! Also recommending some songs based on top tracks"
+	);
 	spotifyAPI.setAccessToken(req.query.accessToken); // set access token
 
 	next();
@@ -74,7 +76,7 @@ router.get("/tracks", async (req, res) => {
 	try {
 		const topTracks = [];
 		const trackGenres = {};
-		
+
 		// get the genres of the top songs the user listens to through the TRACKS
 		// a map that will map the genre to the amount of occurrences
 		// const trackGenres = new Map();
@@ -125,13 +127,9 @@ router.get("/tracks", async (req, res) => {
 		// 				);
 		// 			})
 		// 		);
-		
 
-		
-		
-		
 		// time_range - long_term (several years), medium_term (~last 6 months), short_term (~last 4 weeks)
-		const data = await spotifyAPI.getMyTopTracks({ offset: 0, limit: 8, time_range: "medium_term" });
+		const data = await spotifyAPI.getMyTopTracks({ offset: 0, limit: 8, time_range: "long_term" });
 
 		await Promise.all(
 			data.body.items.map(async (item) => {
@@ -149,7 +147,7 @@ router.get("/tracks", async (req, res) => {
 									// else trackGenres.set(genre, [genre , trackGenres.get(genre) + 1]);
 								});
 							});
-						} catch (err) { 
+						} catch (err) {
 							console.error("Error getting artist information:", err);
 						}
 					})
@@ -199,7 +197,7 @@ const delay = (time) => {
 	return new Promise((resolve) => setTimeout(resolve, time));
 };
 
-// this endpoint depends on the artists and tracks endpoints, so it needs to be a bit delayed to retrieve data from 
+// this endpoint depends on the artists and tracks endpoints, so it needs to be a bit delayed to retrieve data from
 //	spotify API to fill topArtistGenres and topTrackGenres
 router.get("/recommendedtracks", (req, res) => {
 	try {
@@ -212,6 +210,8 @@ router.get("/recommendedtracks", (req, res) => {
 		// have to use a setTimeout b/c topTrackGenres is used in other endpoints which make an API call, so it takes time to get the
 		//  data, so if this setTimeout is omitted, it will run this before the API call is finished, resulting in no data in topTrackGenres
 		setTimeout(async () => {
+			// console.log(topTrackGenres); 
+
 			if (!topTrackGenres) {
 				res.status(500).json({
 					msg: "There is no data to be found",
@@ -219,63 +219,66 @@ router.get("/recommendedtracks", (req, res) => {
 				});
 				return;
 			} else {
-			// get genres where the number of occurrences is at least 2
-			for (const genre in topTrackGenres) {
-				if (topTrackGenres[genre][1] > 0) {
-					// console.log(topTrackGenres[genre]);
-					mostListenedTrackGenres.push(topTrackGenres[genre][0]);
+				// get genres where the number of occurrences is at least 2
+				for (const genre in topTrackGenres) {
+					if (topTrackGenres[genre][1] > 0) {
+						// console.log(topTrackGenres[genre]);
+						mostListenedTrackGenres.push(topTrackGenres[genre][0]);
+					}
 				}
-			}
 
-			// console.log("IN RECOMMENDED ENDPOINT");
-			// console.log(mostListenedTrackGenres);
+				// console.log("IN RECOMMENDED ENDPOINT");
+				// console.log(mostListenedTrackGenres);
 
-			await delay(time);
+				await delay(time);
 
-			const data = await spotifyAPI.getRecommendations({
-				seed_genres: [ 
-					mostListenedTrackGenres[0],
-					mostListenedTrackGenres[1],
-					mostListenedTrackGenres[2],
-					mostListenedTrackGenres[3],
-					mostListenedTrackGenres[4],
-				],
-				limit: 8,
-			});
-
-			data.body.tracks.map((track, i) => {
-				recommended.push({
-					artists: track.artists,
-					track_title: track.name,
-					spotify_url: track.external_urls.spotify,
-					id: track.id,
-					image: track.album.images[0].url,
-					previewSong: track.preview_url,
-					uri: track.uri,
-					duration: {
-						minutes: Math.floor(track.duration_ms / (1000 * 60)),
-						seconds: Math.floor((track.duration_ms / 1000) % 60),
-					}, // song length
+				const data = await spotifyAPI.getRecommendations({
+					seed_genres: [
+						mostListenedTrackGenres[0],
+						mostListenedTrackGenres[1],
+						mostListenedTrackGenres[2],
+						mostListenedTrackGenres[3],
+						mostListenedTrackGenres[4],
+					],
+					limit: 8,
 				});
 
-				// console.log(i + 1);
-				// console.log("Artist(s): ");
-				// track?.artists.map((artist, i) => {
-				// 	console.log(`${i + 1}. ${artist.name}`);
-				// });
-				// console.log(`Track title: ${track?.name}`);
-				// console.log(`Spotify Link: ${track?.external_urls.spotify}`);
-				// console.log(`Popularity: ${track?.popularity}`);
-				// console.log(`Image: ${track?.album.images[0].url}`);
-				// console.log("-------");
-			});
+				// console.log(data.body.tracks);
 
-			console.log("============");
+				data.body.tracks.map((track, i) => {
+					recommended.push({
+						artists: track.artists,
+						track_title: track.name,
+						spotify_url: track.external_urls.spotify,
+						id: track.id,
+						image: track.album.images[0].url,
+						previewSong: track.preview_url,
+						uri: track.uri,
+						duration: {
+							minutes: Math.floor(track.duration_ms / (1000 * 60)),
+							seconds: Math.floor((track.duration_ms / 1000) % 60),
+						}, // song length
+					});
 
-			res.json({
-				recommended: recommended,
-				status: 200,
-			});
+					// console.log(i + 1);
+					// console.log("Artist(s): ");
+					// track?.artists.map((artist, i) => {
+					// 	console.log(`${i + 1}. ${artist.name}`);
+					// });
+					// console.log(`Track title: ${track?.name}`);
+					// console.log(`Spotify Link: ${track?.external_urls.spotify}`);
+					// console.log(`Popularity: ${track?.popularity}`);
+					// console.log(`Image: ${track?.album.images[0].url}`);
+					// console.log("-------");
+				});
+
+				// console.log(recommended);
+				// console.log("============");
+
+				res.json({
+					recommended: recommended,
+					status: 200,
+				});
 			}
 		}, time);
 	} catch (err) {
