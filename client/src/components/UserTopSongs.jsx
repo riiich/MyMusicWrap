@@ -7,8 +7,10 @@ import { RecommendedTracks } from "./RecommendedArtists";
 export const UserTopSongs = () => {
 	const [topArtists, setTopArtists] = useState([]);
 	const [topTracks, setTopTracks] = useState([]);
+	const topTrackTimeRange = sessionStorage.getItem("time_range");
 	const [recommendedArtists, setRecommendedArtists] = useState([]);
 	const [recommendedTracks, setRecommendedTracks] = useState([]);
+	const [recommendedTracksMsg, setRecommendedTracksMsg] = useState("");
 	const [loadingArtists, setLoadingArtists] = useState(true);
 	const [loadingTracks, setLoadingTracks] = useState(true);
 	const [loadingRecommended, setLoadingRecommended] = useState(true);
@@ -29,10 +31,22 @@ export const UserTopSongs = () => {
 		}
 	};
 
+	// change the time frame to get tracks within certain time frames (long(~1+ yrs), medium(~6 months), and short(~4 wks) term)
+	const changeTimeRange = (e) => {
+		sessionStorage.setItem("time_range", e.target.value);
+		// setTopTrackTimeRange(sessionStorage.getItem("time_range"));
+
+		setTimeout(() => {
+			window.location.reload();
+		}, 500);
+	};
+
+	// ********************* ADD SOME MORE FUNCTIONS THAT GET THE LONG, MEDIUM, and SHORT TERM ***************************
 	const retrieveTopTracksFromUser = async (accessToken) => {
 		try {
+			// console.log(topTrackTimeRange);
 			const response = await axios.get("http://localhost:3001/mostlistened/tracks", {
-				params: { accessToken },
+				params: { accessToken, topTrackTimeRange },
 			});
 
 			setTopTracks(response.data.topTracks);
@@ -49,9 +63,8 @@ export const UserTopSongs = () => {
 				params: { accessToken },
 			});
 
-			
-			// console.log(response.data);
 			setRecommendedTracks(response.data.recommended);
+			setRecommendedTracksMsg(response.data.msg);
 			setLoadingRecommended(false);
 		} catch (err) {
 			console.error(err);
@@ -103,7 +116,19 @@ export const UserTopSongs = () => {
 			</div>
 
 			<div className="user-top-tracks">
-				<h1>Top Tracks</h1>
+				<h1>Top Tracks in the {sessionStorage.getItem("time_range")} Term</h1>
+				<select
+					classname="short-medium-long-tracks"
+					name="selected-time-range"
+					onChange={changeTimeRange}
+				>
+					<option disabled="" selected="">
+						Select a time frame...
+					</option>
+					<option value="long">~1+ years</option>
+					<option value="medium">~6 months</option>
+					<option value="short">~4 weeks</option>
+				</select>
 				<ListTracks userInfo={topTracks} loading={loadingTracks} />
 			</div>
 
@@ -116,7 +141,12 @@ export const UserTopSongs = () => {
 				>
 					Load More
 				</button>
-				<RecommendedTracks recommendedTracks={recommendedTracks} loading={loadingRecommended} accessToken={accessToken} />
+				<RecommendedTracks
+					recommendedTracks={recommendedTracks}
+					loading={loadingRecommended}
+					accessToken={accessToken}
+					message={recommendedTracksMsg}
+				/>
 			</div>
 		</div>
 	);

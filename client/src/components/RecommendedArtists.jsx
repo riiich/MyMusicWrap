@@ -2,12 +2,11 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { SongPlayer } from "./SongPlayer";
 
-export const RecommendedTracks = ({ recommendedTracks, loading, accessToken }) => {
+export const RecommendedTracks = ({ recommendedTracks, loading, accessToken, message }) => {
 	const [playlists, setPlaylists] = useState([]);
 	const [playlistsExist, setPlaylistExists] = useState(false);
 	const [selectedTrackURI, setSelectedTrackURI] = useState("");
 	const [selectedPlaylistId, setSelectedPlaylistId] = useState({ playlistId: null, trackURI: null });
-	// const [selectedPlaylistId, setSelectedPlaylistId] = useState({});
 
 	const plExists = (e) => {
 		try {
@@ -30,9 +29,8 @@ export const RecommendedTracks = ({ recommendedTracks, loading, accessToken }) =
 		}
 	};
 
-	const getURI = (e) => {
-		console.log(e);
-		setSelectedTrackURI(e);
+	const getURI = (uri) => {
+		setSelectedTrackURI(uri);
 	};
 
 	useEffect(() => {
@@ -67,7 +65,6 @@ export const RecommendedTracks = ({ recommendedTracks, loading, accessToken }) =
 		};
 
 		if (accessToken && !playlistsExist) {
-			console.log("6969696969699696969");
 			addTrackToPlaylist();
 		}
 	}, [accessToken, playlistsExist, selectedPlaylistId]);
@@ -105,8 +102,8 @@ export const RecommendedTracks = ({ recommendedTracks, loading, accessToken }) =
 								</button>
 								{playlistsExist ? (
 									<select className="playlists" name="selectedPlaylist" onChange={plExists}>
-										<option value="" disabled>
-											Select a playlist
+										<option disabled="" selected="">
+											Select a playlist...
 										</option>
 										{playlists?.map((playlist) => (
 											<option
@@ -131,7 +128,7 @@ export const RecommendedTracks = ({ recommendedTracks, loading, accessToken }) =
 			{selectedTrackURI ? (
 				<SongPlayer accessToken={accessToken} trackURI={selectedTrackURI} />
 			) : (
-				<p>Choose a track</p>
+				<p>{message}</p>
 			)}
 		</div>
 	);

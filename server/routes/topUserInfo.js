@@ -130,7 +130,7 @@ router.get("/tracks", async (req, res) => {
 
 		// time_range - long_term (several years), medium_term (~last 6 months), short_term (~last 4 weeks)
 		const data = await spotifyAPI.getMyTopTracks({ offset: 0, limit: 8, time_range: "long_term" });
-
+ 
 		await Promise.all(
 			data.body.items.map(async (item) => {
 				const artistIDS = item.artists.map((artist) => artist.id);
@@ -210,7 +210,7 @@ router.get("/recommendedtracks", (req, res) => {
 		// have to use a setTimeout b/c topTrackGenres is used in other endpoints which make an API call, so it takes time to get the
 		//  data, so if this setTimeout is omitted, it will run this before the API call is finished, resulting in no data in topTrackGenres
 		setTimeout(async () => {
-			// console.log(topTrackGenres); 
+			// console.log(topTrackGenres);
 
 			if (!topTrackGenres) {
 				res.status(500).json({
@@ -275,10 +275,20 @@ router.get("/recommendedtracks", (req, res) => {
 				// console.log(recommended);
 				// console.log("============");
 
-				res.json({
-					recommended: recommended,
-					status: 200,
-				});
+				if (recommended.length > 0) {
+					res.json({
+						recommended: recommended,
+						status: 200,
+						msg: "Choose a track",
+					});
+				}
+				else{
+					res.json({
+						recommended: recommended,
+						status: 200,
+						msg: "No recommended songs are available due to not enough data =(",
+					})
+				}
 			}
 		}, time);
 	} catch (err) {
@@ -288,7 +298,7 @@ router.get("/recommendedtracks", (req, res) => {
 		});
 	}
 });
-
+ 
 module.exports = router;
 
 /*
