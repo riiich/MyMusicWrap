@@ -39,7 +39,7 @@ const postRequests = (req, res, next) => {
 	spotifyAPI.setAccessToken(req.body.accessToken);
 	next();
 };
-
+ 
 // retrieves all of the user's playlists
 router.get("/", getRequests, async (req, res) => {
 	try {
@@ -99,15 +99,20 @@ router.get("/", getRequests, async (req, res) => {
 // adds the song into a certain playlist
 router.post("/addToPlaylist", postRequests, async (req, res) => {
 	try {
-		console.log(req.body.selectedPlaylistId.playlistId);
-		await spotifyAPI.addTracksToPlaylist(req.body.selectedPlaylistId.playlistId, [
-			req.body.selectedPlaylistId.trackURI,
-		]);
-
-		res.json({
-			status: 200,
-			msg: "Successfully added the track in the playlist!",
-		})
+		if(req.body.selectedPlaylistId.playlistId){
+			console.log("adding to playlist with id: ", req.body.selectedPlaylistId.playlistId);
+			await spotifyAPI.addTracksToPlaylist(req.body.selectedPlaylistId.playlistId, [
+				req.body.selectedPlaylistId.trackURI,
+			]);
+	
+			res.json({
+				status: 200,
+				msg: "Successfully added the track in the playlist!",
+			});
+		}
+		else{
+			console.log("no playlist selected");
+		}
 	} catch (err) {
 		console.log(err);
 	}

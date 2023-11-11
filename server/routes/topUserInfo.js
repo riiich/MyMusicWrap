@@ -28,9 +28,10 @@ router.get("/artists", async (req, res) => {
 	// get the genres of the top songs the user listens to through the ARTISTS
 	// a map that will map the genre to the amount of occurences
 	const artistGenres = new Map();
+	const time_range = req.query.topArtistTimeRange;
 
 	await spotifyAPI
-		.getMyTopArtists({ offset: 0, limit: 8, time_range: "medium_term" }) // get 10 artists
+		.getMyTopArtists({ offset: 0, limit: 8, time_range: `${time_range}_term` }) // get 10 artists
 		.then((data) => {
 			data.body.items.map((item) => {
 				topArtists.push({
@@ -46,7 +47,7 @@ router.get("/artists", async (req, res) => {
 					else artistGenres.set(genre, [genre, artistGenres.get(genre)[1] + 1]);
 				});
 			});
-
+ 
 			// sorted map based on number of occurences of genre
 			const sortedTopArtistGenres = new Map(
 				[...artistGenres.entries()].sort((a, b) => b[1][1] - a[1][1])
@@ -70,12 +71,15 @@ router.get("/artists", async (req, res) => {
 });
 
 let topTrackGenres = null; // will store an object that contains the genres and number of occurrences from the tracks
+let topTrackIds = null;
 
 // get user's top listened tracks
 router.get("/tracks", async (req, res) => {
 	try {
 		const topTracks = [];
+		const trackIds = [];
 		const trackGenres = {};
+		const time_range = req.query.topTrackTimeRange;
 
 		// get the genres of the top songs the user listens to through the TRACKS
 		// a map that will map the genre to the amount of occurrences
@@ -129,7 +133,7 @@ router.get("/tracks", async (req, res) => {
 		// 		);
 
 		// time_range - long_term (several years), medium_term (~last 6 months), short_term (~last 4 weeks)
-		const data = await spotifyAPI.getMyTopTracks({ offset: 0, limit: 8, time_range: "long_term" });
+		const data = await spotifyAPI.getMyTopTracks({ offset: 0, limit: 8, time_range: `${time_range}_term` });
  
 		await Promise.all(
 			data.body.items.map(async (item) => {
@@ -170,6 +174,8 @@ router.get("/tracks", async (req, res) => {
 					}, // song length
 					popularity: item.popularity, // popularity score from 0 - 100
 				});
+
+				trackIds.push(item.id);
 			})
 		);
 
@@ -180,6 +186,8 @@ router.get("/tracks", async (req, res) => {
 		// const sortedTopTrackGenres = [...trackGenres.entries()].sort((a, b) => b[1] - a[1]);
 
 		topTrackGenres = sortedTopTrackGenres;
+		topTrackIds = trackIds;
+
 		// console.log("FROM TRACKS ENDPOINT");
 		// console.log(topTrackGenres);
 
@@ -203,9 +211,11 @@ router.get("/recommendedtracks", (req, res) => {
 	try {
 		const recommended = []; // use the genres that the user listens to in order to look for recommended songs
 		const mostListenedTrackGenres = []; // store genres from the user's track/song history that appeat more than twice
-		const time = 1000;
+		const time = 1500;
 
-		// console.log(topTrackGenres);
+		// setTimeout(() => {
+		// 	console.log(topTrackGenres);
+		// }, 4000);
 
 		// have to use a setTimeout b/c topTrackGenres is used in other endpoints which make an API call, so it takes time to get the
 		//  data, so if this setTimeout is omitted, it will run this before the API call is finished, resulting in no data in topTrackGenres
@@ -228,19 +238,29 @@ router.get("/recommendedtracks", (req, res) => {
 				}
 
 				// console.log("IN RECOMMENDED ENDPOINT");
+				// console.log("GENRES");
 				// console.log(mostListenedTrackGenres);
+				// console.log("TRACK IDS");
+				// console.log(topTrackIds);
 
 				await delay(time);
 
 				const data = await spotifyAPI.getRecommendations({
-					seed_genres: [
-						mostListenedTrackGenres[0],
-						mostListenedTrackGenres[1],
-						mostListenedTrackGenres[2],
-						mostListenedTrackGenres[3],
-						mostListenedTrackGenres[4],
-					],
-					limit: 8,
+					// seed_genres: [
+					// 	mostListenedTrackGenres[0],
+					// 	mostListenedTrackGenres[1],
+					// 	mostListenedTrackGenres[2],
+					// 	mostListenedTrackGenres[3],
+					// 	mostListenedTrackGenres[4], 
+					// ],
+					seed_tracks: [
+						topTrackIds[0],
+						topTrackIds[1],
+						topTrackIds[2],
+						topTrackIds[3],
+						topTrackIds[4],
+					],	
+					limit: 8, 
 				});
 
 				// console.log(data.body.tracks);

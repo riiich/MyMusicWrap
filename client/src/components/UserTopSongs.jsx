@@ -2,12 +2,13 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { ListArtists } from "./ListArtists";
 import { ListTracks } from "./ListTracks";
-import { RecommendedTracks } from "./RecommendedArtists";
+import { RecommendedTracks } from "./RecommendedTracks";
 
 export const UserTopSongs = () => {
 	const [topArtists, setTopArtists] = useState([]);
+	const topArtistTimeRange = sessionStorage.getItem("artist_time_range");
 	const [topTracks, setTopTracks] = useState([]);
-	const topTrackTimeRange = sessionStorage.getItem("time_range");
+	const topTrackTimeRange = sessionStorage.getItem("track_time_range");
 	const [recommendedArtists, setRecommendedArtists] = useState([]);
 	const [recommendedTracks, setRecommendedTracks] = useState([]);
 	const [recommendedTracksMsg, setRecommendedTracksMsg] = useState("");
@@ -16,11 +17,19 @@ export const UserTopSongs = () => {
 	const [loadingRecommended, setLoadingRecommended] = useState(true);
 	const accessToken = sessionStorage.getItem("accessToken");
 
+	const changeArtistTimeRange = (e) => {
+		sessionStorage.setItem("artist_time_range", e.target.value);
+
+		setTimeout(() => {
+			window.location.reload();
+		}, 500);
+	};
+
 	// refactor the below to only async/await (rmb that using async/await eliminates promise chaining)
 	const retrieveTopArtistsFromUser = async (accessToken) => {
 		try {
 			const response = await axios.get("http://localhost:3001/mostlistened/artists", {
-				params: { accessToken },
+				params: { accessToken, topArtistTimeRange },
 			});
 
 			setTopArtists(response.data.topArtists);
@@ -32,16 +41,14 @@ export const UserTopSongs = () => {
 	};
 
 	// change the time frame to get tracks within certain time frames (long(~1+ yrs), medium(~6 months), and short(~4 wks) term)
-	const changeTimeRange = (e) => {
-		sessionStorage.setItem("time_range", e.target.value);
-		// setTopTrackTimeRange(sessionStorage.getItem("time_range"));
+	const changeTrackTimeRange = (e) => {
+		sessionStorage.setItem("track_time_range", e.target.value);
 
 		setTimeout(() => {
 			window.location.reload();
 		}, 500);
 	};
 
-	// ********************* ADD SOME MORE FUNCTIONS THAT GET THE LONG, MEDIUM, and SHORT TERM ***************************
 	const retrieveTopTracksFromUser = async (accessToken) => {
 		try {
 			// console.log(topTrackTimeRange);
@@ -112,15 +119,27 @@ export const UserTopSongs = () => {
 		<div className="user-top-container">
 			<div className="user-top-artists">
 				<h1>Your Top 10 Artists</h1>
+				<select
+					classname="short-medium-long-artists"
+					name="selected-artists-time-range"
+					onChange={changeArtistTimeRange}
+				>
+					<option disabled="" selected="">
+						Select a time frame...
+					</option>
+					<option value="long">~1+ years</option>
+					<option value="medium">~6 months</option>
+					<option value="short">~4 weeks</option>
+				</select>
 				<ListArtists userInfo={topArtists} loading={loadingArtists} />
 			</div>
 
 			<div className="user-top-tracks">
-				<h1>Top Tracks in the {sessionStorage.getItem("time_range")} Term</h1>
+				<h1>Top Tracks in the {sessionStorage.getItem("track_time_range")} term</h1>
 				<select
 					classname="short-medium-long-tracks"
-					name="selected-time-range"
-					onChange={changeTimeRange}
+					name="selected-tracks-time-range"
+					onChange={changeTrackTimeRange}
 				>
 					<option disabled="" selected="">
 						Select a time frame...
@@ -131,6 +150,8 @@ export const UserTopSongs = () => {
 				</select>
 				<ListTracks userInfo={topTracks} loading={loadingTracks} />
 			</div>
+
+			
 
 			<div className="user-recommended-artists">
 				<h1>Recommended Tracks</h1>

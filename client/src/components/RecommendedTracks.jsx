@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { SongPlayer } from "./SongPlayer";
+import { Modal } from "./Modal";
 
 export const RecommendedTracks = ({ recommendedTracks, loading, accessToken, message }) => {
 	const [playlists, setPlaylists] = useState([]);
@@ -75,54 +76,61 @@ export const RecommendedTracks = ({ recommendedTracks, loading, accessToken, mes
 				<h3>Loading...</h3>
 			) : (
 				recommendedTracks?.map((item, i) => (
-					<div className="single-item" key={item.id}>
-						<div className="recommended-buttons">
-							<a href={item.spotify_url} target="_blank" rel="noopener noreferrer">
-								<img src={item.image} alt="track_img" width={55} height={55} />
-								<div>
-									<p className="recommended-track-title">
-										<strong>{item.track_title}</strong>
-									</p>
-									<div className="recommended-track-artists">
-										{item?.artists.map((artist) => (
-											<p key={artist.id}>&nbsp;{artist.name}</p>
-										))}
+					<>
+						<Modal />
+						<div className="single-item" key={item.id}>
+							<div className="recommended-buttons">
+								<a href={item.spotify_url} target="_blank" rel="noopener noreferrer">
+									<img src={item.image} alt="track_img" width={55} height={55} />
+									<div>
+										<p className="recommended-track-title">
+											<strong>{item.track_title}</strong>
+										</p>
+										<div className="recommended-track-artists">
+											{item?.artists.map((artist) => (
+												<p key={artist.id}>&nbsp;{artist.name}</p>
+											))}
+										</div>
 									</div>
-								</div>
-							</a>
-							<div className="preview-add-buttons">
-								<button
-									className="recommended-preview-song-button"
-									onClick={(e) => getURI(item?.uri)}
-								>
-									Preview Song
-								</button>
-								<button className="recommended-add-song-button" onClick={plExists}>
-									Add song
-								</button>
-								{playlistsExist ? (
-									<select className="playlists" name="selectedPlaylist" onChange={plExists}>
-										<option disabled="" selected="">
-											Select a playlist...
-										</option>
-										{playlists?.map((playlist) => (
-											<option
-												value={JSON.stringify({
-													playlistId: playlist?.playlistId,
-													trackURI: item?.uri,
-												})}
-												key={playlist.playlistId}
-											>
-												{playlist?.playlistName}
+								</a>
+								<div className="preview-add-buttons">
+									<button
+										className="recommended-preview-song-button"
+										onClick={(e) => getURI(item?.uri)}
+									>
+										Preview Song
+									</button>
+									<button className="recommended-add-song-button" onClick={plExists}>
+										Add song
+									</button>
+									{playlistsExist ? (
+										<select
+											className="playlists"
+											name="selectedPlaylist"
+											onChange={plExists}
+										>
+											<option disabled="" selected="">
+												Select a playlist...
 											</option>
-										))}
-									</select>
-								) : (
-									<></>
-								)}
+											{playlists?.map((playlist) => (
+												<option
+													value={JSON.stringify({
+														playlistId: playlist?.playlistId,
+														trackURI: item?.uri,
+													})}
+													key={playlist.playlistId}
+												>
+													{playlist?.playlistName}
+												</option>
+											))}
+										</select>
+									) : (
+										<></>
+									)}
+								</div>
 							</div>
 						</div>
-					</div>
+					</>
 				))
 			)}
 			{selectedTrackURI ? (
