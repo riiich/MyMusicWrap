@@ -5,25 +5,48 @@ import { Modal } from "./Modal";
 
 export const RecommendedTracks = ({ recommendedTracks, loading, accessToken, message }) => {
 	const [playlists, setPlaylists] = useState([]);
-	const [playlistsExist, setPlaylistExists] = useState(false);
+	// const [playlistsExist, setPlaylistExists] = useState(false);
+	const [playlistsExist, setPlaylistExists] = useState([]);
 	const [selectedTrackURI, setSelectedTrackURI] = useState("");
 	const [selectedPlaylistId, setSelectedPlaylistId] = useState({ playlistId: null, trackURI: null });
+	const [isModal, setIsModal] = useState(false);
+	const [lyrics, setLyrics] = useState("");
+	const [trackArtist, setTrackArtist] = useState({ track: "", artist: "" });
 
-	const plExists = (e) => {
+	const setModal = (e) => {
+		setIsModal((prev) => !prev);
+		// setTrackArtist();
+		console.log(e.target.value);
+	};
+
+	const getSongLyrics = async () => {
+		const data = await axios.get("http://localhost:3001/lyrics", {
+			params: {},
+		});
+	};
+
+	useEffect(() => {
+		setPlaylistExists(Array(recommendedTracks.length).fill(false));
+	}, [recommendedTracks]);
+
+	const plExists = (e, index) => {
 		try {
-			setPlaylistExists((prev) => !prev);
-			console.log(playlistsExist);
-
-			// check to see if the value had any value in it (have to check, otherwise there will be an error relating to json)
-			if (e.target.value) {
-				const parsedInfo = JSON.parse(e.target.value); // in order to use the json, have to parse it back to object b/c it was stringified json
-				// console.log(e.target.value);
-				// console.log(parsedInfo.playlistId);
-				// setSelectedPlaylistId(e.target.value);
-				setSelectedPlaylistId({
-					playlistId: parsedInfo.playlistId,
-					trackURI: parsedInfo.trackURI,
-				});
+			// setPlaylistExists((prev) => !prev);
+			if (e.target.className === "recommended-add-song-button") {
+				setPlaylistExists((prevShowPlaylists) => {
+                    const updatedShowPlaylists = [...prevShowPlaylists];
+                    updatedShowPlaylists[index] = !updatedShowPlaylists[index];
+                    return updatedShowPlaylists;
+                });
+			} else if (e.target.className === "playlists") {
+				// check to see if the value had any value in it (have to check, otherwise there will be an error relating to json)
+				if (e.target.value) {
+					const parsedInfo = JSON.parse(e.target.value); // in order to use the json, have to parse it back to object b/c it was stringified json
+					setSelectedPlaylistId({
+						playlistId: parsedInfo.playlistId,
+						trackURI: parsedInfo.trackURI,
+					});
+				}
 			}
 		} catch (err) {
 			console.log(err);
@@ -77,8 +100,14 @@ export const RecommendedTracks = ({ recommendedTracks, loading, accessToken, mes
 			) : (
 				recommendedTracks?.map((item, i) => (
 					<>
-						<Modal />
 						<div className="single-item" key={item.id}>
+							<Modal
+								isModal={isModal}
+								showModal={setModal}
+								track={item?.track_title}
+								artist={item?.artists[0]?.name}
+							/>
+
 							<div className="recommended-buttons">
 								<a href={item.spotify_url} target="_blank" rel="noopener noreferrer">
 									<img src={item.image} alt="track_img" width={55} height={55} />
@@ -94,20 +123,21 @@ export const RecommendedTracks = ({ recommendedTracks, loading, accessToken, mes
 									</div>
 								</a>
 								<div className="preview-add-buttons">
+									<button onClick={setModal}>Lyrics</button>
 									<button
 										className="recommended-preview-song-button"
 										onClick={(e) => getURI(item?.uri)}
 									>
 										Preview Song
 									</button>
-									<button className="recommended-add-song-button" onClick={plExists}>
+									<button className="recommended-add-song-button" onClick={(e) => plExists(e, i)}>
 										Add song
 									</button>
-									{playlistsExist ? (
+									{playlistsExist[i] ? (
 										<select
 											className="playlists"
 											name="selectedPlaylist"
-											onChange={plExists}
+											onChange={(e) => plExists(e, i)}
 										>
 											<option disabled="" selected="">
 												Select a playlist...

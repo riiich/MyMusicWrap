@@ -3,7 +3,7 @@ const SpotifyWebAPI = require("spotify-web-api-node");
 const axios = require("axios");
 
 const spotifyAPI = new SpotifyWebAPI();
-
+ 
 // middleware for all routes
 router.use((req, res, next) => {
 	console.log("Performing an operation with the user's playlist!");
@@ -39,7 +39,7 @@ const postRequests = (req, res, next) => {
 	spotifyAPI.setAccessToken(req.body.accessToken);
 	next();
 };
- 
+  
 // retrieves all of the user's playlists
 router.get("/", getRequests, async (req, res) => {
 	try {
