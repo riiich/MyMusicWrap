@@ -9,35 +9,22 @@ export const RecommendedTracks = ({ recommendedTracks, loading, accessToken, mes
 	const [playlistsExist, setPlaylistExists] = useState([]);
 	const [selectedTrackURI, setSelectedTrackURI] = useState("");
 	const [selectedPlaylistId, setSelectedPlaylistId] = useState({ playlistId: null, trackURI: null });
-	const [isModal, setIsModal] = useState(false);
-	const [lyrics, setLyrics] = useState("");
-	const [trackArtist, setTrackArtist] = useState({ track: "", artist: "" });
+	// const [isModal, setIsModal] = useState(false);
 
-	const setModal = (e) => {
-		setIsModal((prev) => !prev);
-		// setTrackArtist();
-		console.log(e.target.value);
-	};
-
-	const getSongLyrics = async () => {
-		const data = await axios.get("http://localhost:3001/lyrics", {
-			params: {},
-		});
-	};
-
-	useEffect(() => {
-		setPlaylistExists(Array(recommendedTracks.length).fill(false));
-	}, [recommendedTracks]);
+	// const setModal = (e) => {
+	// 	setIsModal((prev) => !prev);
+	// };
 
 	const plExists = (e, index) => {
 		try {
 			// setPlaylistExists((prev) => !prev);
 			if (e.target.className === "recommended-add-song-button") {
-				setPlaylistExists((prevShowPlaylists) => {
-                    const updatedShowPlaylists = [...prevShowPlaylists];
-                    updatedShowPlaylists[index] = !updatedShowPlaylists[index];
-                    return updatedShowPlaylists;
-                });
+				setPlaylistExists((prev) => !prev)
+				// setPlaylistExists((prevShowPlaylists) => {
+				// 	const updatedShowPlaylists = [...prevShowPlaylists];
+				// 	updatedShowPlaylists[index] = !updatedShowPlaylists[index];
+				// 	return updatedShowPlaylists;
+				// });
 			} else if (e.target.className === "playlists") {
 				// check to see if the value had any value in it (have to check, otherwise there will be an error relating to json)
 				if (e.target.value) {
@@ -99,41 +86,36 @@ export const RecommendedTracks = ({ recommendedTracks, loading, accessToken, mes
 				<h3>Loading...</h3>
 			) : (
 				recommendedTracks?.map((item, i) => (
-					<>
-						<div className="single-item" key={item.id}>
-							<Modal
-								isModal={isModal}
-								showModal={setModal}
-								track={item?.track_title}
-								artist={item?.artists[0]?.name}
-							/>
-
-							<div className="recommended-buttons">
-								<a href={item.spotify_url} target="_blank" rel="noopener noreferrer">
-									<img src={item.image} alt="track_img" width={55} height={55} />
-									<div>
-										<p className="recommended-track-title">
-											<strong>{item.track_title}</strong>
-										</p>
-										<div className="recommended-track-artists">
-											{item?.artists.map((artist) => (
-												<p key={artist.id}>&nbsp;{artist.name}</p>
-											))}
-										</div>
+					<div className="single-item" key={item.id}>
+						<div className="recommended-buttons">
+							<a href={item.spotify_url} target="_blank" rel="noopener noreferrer">
+								<img src={item.image} alt="track_img" width={55} height={55} />
+								<div>
+									<p className="recommended-track-title">
+										<strong>{item.track_title}</strong>
+									</p>
+									<div className="recommended-track-artists">
+										{item?.artists.map((artist) => (
+											<p key={artist.id}>&nbsp;{artist.name}</p>
+										))}
 									</div>
-								</a>
-								<div className="preview-add-buttons">
-									<button onClick={setModal}>Lyrics</button>
-									<button
-										className="recommended-preview-song-button"
-										onClick={(e) => getURI(item?.uri)}
-									>
-										Preview Song
-									</button>
-									<button className="recommended-add-song-button" onClick={(e) => plExists(e, i)}>
-										Add song
-									</button>
-									{playlistsExist[i] ? (
+								</div>
+							</a>
+							<div className="preview-add-buttons">
+								<button
+									className="recommended-preview-song-button"
+									onClick={(e) => getURI(item?.uri)}
+								>
+									Preview Song
+								</button>
+								<button
+									className="recommended-add-song-button"
+									onClick={(e) => plExists(e, i)}
+								>
+									Add song
+								</button>
+								{playlistsExist[i] ? (
+									<>
 										<select
 											className="playlists"
 											name="selectedPlaylist"
@@ -154,13 +136,13 @@ export const RecommendedTracks = ({ recommendedTracks, loading, accessToken, mes
 												</option>
 											))}
 										</select>
-									) : (
-										<></>
-									)}
-								</div>
+									</>
+								) : (
+									<></>
+								)}
 							</div>
 						</div>
-					</>
+					</div>
 				))
 			)}
 			{selectedTrackURI ? (

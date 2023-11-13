@@ -12,6 +12,7 @@ app.use(
 );
 
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get("/", (req, res) => {
 	res.json({
@@ -38,6 +39,9 @@ app.use("/mostlistened", topUserInfo);
 
 const userPlaylists = require("./routes/userPlaylists");
 app.use("/myplaylists", userPlaylists);
+
+// const songLyrics = require("./routes/lyrics");
+// app.use("/lyrics", songLyrics);
 
 app.listen(process.env.PORT, () => {
 	console.log(`Listening on port ${process.env.PORT}`);
