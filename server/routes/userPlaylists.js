@@ -95,7 +95,7 @@ router.get("/", getRequests, async (req, res) => {
 		res.status(400).json({ msg: "Error getting user playlist!" });
 	}
 });
-
+ 
 // adds the song into a certain playlist
 router.post("/addToPlaylist", postRequests, async (req, res) => {
 	try {
