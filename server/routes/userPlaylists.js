@@ -24,7 +24,7 @@ const getRequests = (req, res, next) => {
 	spotifyAPI.setAccessToken(req.query.accessToken);
 	next();
 };
-
+ 
 // middleware for POST requests
 const postRequests = (req, res, next) => {
 	if (!req.body.accessToken) {
@@ -39,7 +39,7 @@ const postRequests = (req, res, next) => {
 	spotifyAPI.setAccessToken(req.body.accessToken);
 	next();
 };
-  
+    
 // retrieves all of the user's playlists
 router.get("/", getRequests, async (req, res) => {
 	try {

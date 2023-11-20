@@ -1,14 +1,15 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { SongPlayer } from "./SongPlayer";
-import { Modal } from "./Modal";
+// import { Modal } from "./Modal";
 
 export const RecommendedTracks = ({ recommendedTracks, loading, accessToken, message }) => {
 	const [playlists, setPlaylists] = useState([]);
-	// const [playlistsExist, setPlaylistExists] = useState(false);
-	const [playlistsExist, setPlaylistExists] = useState(Array(recommendedTracks.length).fill(false));
+	const [playlistsExist, setPlaylistExists] = useState(false);
+	// const [playlistsExist, setPlaylistExists] = useState(Array(recommendedTracks.length).fill(false));
 	const [selectedTrackURI, setSelectedTrackURI] = useState("");
 	const [selectedPlaylistId, setSelectedPlaylistId] = useState({ playlistId: null, trackURI: null });
+	const [selectedTrackIndex, setSelectedTrackIndex] = useState(null);
 	// const [isModal, setIsModal] = useState(false);
 
 	// const setModal = (e) => {
@@ -19,15 +20,19 @@ export const RecommendedTracks = ({ recommendedTracks, loading, accessToken, mes
 		try {
 			console.log(playlistsExist);
 			// setPlaylistExists((prev) => !prev);
-			if (e.target.className === "recommended-add-song-button") {
-				// setPlaylistExists((prev) => !prev);
-				setPlaylistExists((prevShowPlaylists) => {
-					const updatedShowPlaylists = [...prevShowPlaylists];
-					updatedShowPlaylists[index] = !updatedShowPlaylists[index];
-					return updatedShowPlaylists;
-				});
-			} else if (e.target.className === "playlists") {
-				// check to see if the value had any value in it (have to check, otherwise there will be an error relating to json)
+			// if (e.target.className === "recommended-add-song-button") {
+			setPlaylistExists((prev) => !prev);
+			// 	setSelectedTrackIndex(index);
+			// 	console.log(selectedTrackIndex);
+			// 	setPlaylistExists((prevShowPlaylists) => {
+			// 		console.log(selectedTrackIndex);
+			// 		const updatedShowPlaylists = [...prevShowPlaylists];
+			// 		updatedShowPlaylists[index] = !updatedShowPlaylists[index];
+			// 		console.log(updatedShowPlaylists);
+			// 		return updatedShowPlaylists;
+			// 	});
+			// } else if (e.target.className === "playlists") {
+			// 	// check to see if the value had any value in it (have to check, otherwise there will be an error relating to json)
 				if (e.target.value) {
 					const parsedInfo = JSON.parse(e.target.value); // in order to use the json, have to parse it back to object b/c it was stringified json
 					setSelectedPlaylistId({
@@ -35,7 +40,7 @@ export const RecommendedTracks = ({ recommendedTracks, loading, accessToken, mes
 						trackURI: parsedInfo.trackURI,
 					});
 				}
-			}
+			// }
 		} catch (err) {
 			console.log(err);
 		}
@@ -57,50 +62,63 @@ export const RecommendedTracks = ({ recommendedTracks, loading, accessToken, mes
 				});
 
 				setPlaylists(response.data.playlists);
-				// setPlaylistExists(true);
+				setPlaylistExists(true);
 
-				setPlaylistExists((prevPlaylistExists) => {
-					const updatedPlaylistExists = [...prevPlaylistExists];
-					recommendedTracks.forEach((track, index) => {
-						updatedPlaylistExists[index] = trackHasPlaylists(track, response.data.playlists);
-					});
-					return updatedPlaylistExists; 
-				});
+				// setPlaylistExists((prevPlaylistExists) => {
+				// 	const updatedPlaylistExists = [...prevPlaylistExists];
+				// 	recommendedTracks.forEach((track, index) => {
+				// 		updatedPlaylistExists[index] = trackHasPlaylists(track, response.data.playlists);
+				// 	});
+				// 	return updatedPlaylistExists;
+				// });
 			} catch (err) {
 				console.log(err);
 			}
 		};
-		
-		console.log(playlistsExist);
-		// if (accessToken && playlistsExist) {
-		// 	getUserPlaylists();
-		// }
 
-		if (accessToken) {
+		console.log(playlistsExist);
+		if (accessToken && playlistsExist) {
 			getUserPlaylists();
 		}
-	}, [accessToken, recommendedTracks]);
+
+		// if (accessToken) {
+		// 	getUserPlaylists();
+		// }
+	}, [accessToken, playlistsExist, recommendedTracks]);
 
 	useEffect(() => {
 		const addTrackToPlaylist = async () => {
 			try {
+				// console.log(selectedTrackIndex);
+
+				// if (selectedTrackIndex !== null) {
 				await axios.post("http://localhost:3001/myplaylists/addToPlaylist", {
 					accessToken,
 					selectedPlaylistId,
 				});
+
+				// await new Promise((resolve) => {
+				// 	setPlaylistExists((prevShowPlaylists) => {
+				// 		const updatedPlaylistExists = [...prevShowPlaylists];
+				// 		updatedPlaylistExists[selectedTrackIndex] =
+				// 		console.log(updatedPlaylistExists);
+				// 		console.log(playlistsExist);
+				// 		return updatedPlaylistExists;
+				// 	}, resolve);
+				// });
+				// }
 			} catch (err) {
 				console.log(err);
 			}
 		};
-
-		// if (accessToken && !playlistsExist) {
-		// 	addTrackToPlaylist();
-		// }
 
 		if (accessToken && !playlistsExist) {
 			addTrackToPlaylist();
 		}
 
+		// if (accessToken && !playlistsExist[selectedTrackIndex]) {
+		// 	addTrackToPlaylist();
+		// }
 	}, [accessToken, playlistsExist, selectedPlaylistId]);
 
 	return (
@@ -129,7 +147,7 @@ export const RecommendedTracks = ({ recommendedTracks, loading, accessToken, mes
 									className="recommended-preview-song-button"
 									onClick={(e) => getURI(item?.uri)}
 								>
-									Preview Song
+									Play Song
 								</button>
 								<button
 									className="recommended-add-song-button"
@@ -137,7 +155,7 @@ export const RecommendedTracks = ({ recommendedTracks, loading, accessToken, mes
 								>
 									Add song
 								</button>
-								{playlistsExist[i] ? (
+								{playlistsExist ? (
 									<>
 										<select
 											className="playlists"

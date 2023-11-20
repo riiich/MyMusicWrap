@@ -14,7 +14,7 @@ export const UserTopSongs = () => {
 	const [recommendedTracksMsg, setRecommendedTracksMsg] = useState("");
 	const [loadingArtists, setLoadingArtists] = useState(true);
 	const [loadingTracks, setLoadingTracks] = useState(true);
-	const [loadingRecommended, setLoadingRecommended] = useState(true);
+	const [loadingRecommended, setLoadingRecommended] = useState(false);
 	const accessToken = sessionStorage.getItem("accessToken");
 
 	const changeArtistTimeRange = (e) => {
@@ -109,12 +109,6 @@ export const UserTopSongs = () => {
 		setLoadingRecommended(true);
 	}, [accessToken]);
 
-	/*
-		TO-DOS:
-			- set a timer before the user is able to reload the recommended tracks so that they aren't
-				 able to make so many requests at once (rate limit to 1 reload / 3s)
-	*/
-
 	return (
 		<div className="user-top-container">
 			<div className="user-top-artists">
@@ -159,6 +153,7 @@ export const UserTopSongs = () => {
 					onClick={() => {
 						retrieveRecommendedTracks(accessToken);
 					}}
+					disabled={loadingRecommended}
 				>
 					Load More
 				</button>

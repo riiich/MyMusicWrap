@@ -1,8 +1,15 @@
 const router = require("express").Router();
 const SpotifyWebAPI = require("spotify-web-api-node");
+const rateLimit = require("express-rate-limit");
 require("dotenv").config();
 
 const spotifyAPI = new SpotifyWebAPI();
+
+const recommendedTrackLimiter = rateLimit({
+	windowMs: 1.5 * 1000,
+	limit: 1,	// 1 request per windowMs time
+	postMessage: "Stop spamming me holy shit!",
+});
 
 // middleware that sets checks to see if there's an access token provided
 router.use((req, res, next) => {
@@ -31,7 +38,7 @@ router.get("/artists", async (req, res) => {
 	const time_range = req.query.topArtistTimeRange;
 
 	await spotifyAPI
-		.getMyTopArtists({ offset: 0, limit: 8, time_range: `${time_range}_term` }) // get 10 artists
+		.getMyTopArtists({ offset: 0, limit: 10, time_range: `${time_range}_term` }) // get 10 artists
 		.then((data) => {
 			data.body.items.map((item) => {
 				topArtists.push({
@@ -207,15 +214,11 @@ const delay = (time) => {
 
 // this endpoint depends on the artists and tracks endpoints, so it needs to be a bit delayed to retrieve data from
 //	spotify API to fill topArtistGenres and topTrackGenres
-router.get("/recommendedtracks", (req, res) => {
+router.get("/recommendedtracks", recommendedTrackLimiter, (req, res) => {
 	try {
 		const recommended = []; // use the genres that the user listens to in order to look for recommended songs
 		const mostListenedTrackGenres = []; // store genres from the user's track/song history that appeat more than twice
 		const time = 1500;
-
-		// setTimeout(() => {
-		// 	console.log(topTrackGenres);
-		// }, 4000);
 
 		// have to use a setTimeout b/c topTrackGenres is used in other endpoints which make an API call, so it takes time to get the
 		//  data, so if this setTimeout is omitted, it will run this before the API call is finished, resulting in no data in topTrackGenres
@@ -237,12 +240,6 @@ router.get("/recommendedtracks", (req, res) => {
 					}
 				}
 
-				// console.log("IN RECOMMENDED ENDPOINT");
-				// console.log("GENRES");
-				// console.log(mostListenedTrackGenres);
-				// console.log("TRACK IDS");
-				// console.log(topTrackIds);
-
 				await delay(time);
 
 				const data = await spotifyAPI.getRecommendations({
@@ -252,7 +249,7 @@ router.get("/recommendedtracks", (req, res) => {
 					// 	mostListenedTrackGenres[2],
 					// 	mostListenedTrackGenres[3],
 					// 	mostListenedTrackGenres[4], 
-					// ],
+					// ], 
 					seed_tracks: [
 						topTrackIds[0],
 						topTrackIds[1],
@@ -260,10 +257,9 @@ router.get("/recommendedtracks", (req, res) => {
 						topTrackIds[3],
 						topTrackIds[4],
 					],	
+					min_popularity: 80,
 					limit: 8, 
 				});
-
-				// console.log(data.body.tracks);
 
 				data.body.tracks.map((track, i) => {
 					recommended.push({
