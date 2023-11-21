@@ -4,13 +4,14 @@ const rateLimit = require("express-rate-limit");
 require("dotenv").config();
 
 const spotifyAPI = new SpotifyWebAPI();
-
+ 
+// rate limit for the recommended track endpoint
 const recommendedTrackLimiter = rateLimit({
-	windowMs: 1.5 * 1000,
-	limit: 1,	// 1 request per windowMs time
-	postMessage: "Stop spamming me holy shit!",
+	windowMs: 5 * 1000,	// 5s
+	limit: 3,	// 3 request per windowMs time (5s)
+	message: "Stop spamming me!",
 });
-
+ 
 // middleware that sets checks to see if there's an access token provided
 router.use((req, res, next) => {
 	if (!req.query.accessToken) {
@@ -18,7 +19,7 @@ router.use((req, res, next) => {
 			status: 401,
 			msg: "An invalid or no access token was provided!",
 		});
-	}
+	} 
 	console.log(
 		"Retrieving user's top most listened artists and tracks! Also recommending some songs based on top tracks"
 	);
@@ -36,7 +37,7 @@ router.get("/artists", async (req, res) => {
 	// a map that will map the genre to the amount of occurences
 	const artistGenres = new Map();
 	const time_range = req.query.topArtistTimeRange;
-
+    
 	await spotifyAPI
 		.getMyTopArtists({ offset: 0, limit: 10, time_range: `${time_range}_term` }) // get 10 artists
 		.then((data) => {
@@ -197,9 +198,9 @@ router.get("/tracks", async (req, res) => {
 
 		// console.log("FROM TRACKS ENDPOINT");
 		// console.log(topTrackGenres);
-
+ 
 		res.json({
-			topTracks: topTracks,
+			topTracks: topTracks, 
 			msg: "You have some songs that you enjoy listening to!",
 		});
 	} catch (err) {
@@ -239,7 +240,7 @@ router.get("/recommendedtracks", recommendedTrackLimiter, (req, res) => {
 						mostListenedTrackGenres.push(topTrackGenres[genre][0]);
 					}
 				}
-
+ 
 				await delay(time);
 
 				const data = await spotifyAPI.getRecommendations({
@@ -257,10 +258,10 @@ router.get("/recommendedtracks", recommendedTrackLimiter, (req, res) => {
 						topTrackIds[3],
 						topTrackIds[4],
 					],	
-					min_popularity: 80,
+					// min_popularity: 80,
 					limit: 8, 
 				});
-
+ 
 				data.body.tracks.map((track, i) => {
 					recommended.push({
 						artists: track.artists,
@@ -275,7 +276,7 @@ router.get("/recommendedtracks", recommendedTrackLimiter, (req, res) => {
 							seconds: Math.floor((track.duration_ms / 1000) % 60),
 						}, // song length
 					});
-
+ 
 					// console.log(i + 1);
 					// console.log("Artist(s): ");
 					// track?.artists.map((artist, i) => {
@@ -305,7 +306,7 @@ router.get("/recommendedtracks", recommendedTrackLimiter, (req, res) => {
 						msg: "No recommended songs are available due to not enough data =(",
 					})
 				}
-			}
+			} 
 		}, time);
 	} catch (err) {
 		console.log("THERE WAS AN ERROR GETTING RECOMMENDED SONGS", err);

@@ -123,7 +123,7 @@ export const RecommendedTracks = ({ recommendedTracks, loading, accessToken, mes
 
 	return (
 		<div className="recommended-container">
-			{loading ? (
+			{!loading ? (
 				<h3>Loading...</h3>
 			) : (
 				recommendedTracks?.map((item, i) => (

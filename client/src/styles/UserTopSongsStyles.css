@@ -435,6 +435,30 @@
 		width: 75px;
 		margin-bottom: 1rem;
 	}
+
+	.top-tracks-container .single-item {
+		width: 80vw;
+	}
+
+	.top-tracks-container .single-item .top-track-title {
+		width: 50vw;
+	}
+
+	.top-tracks-container .single-item .top-track-artists {
+		width: 50vw;
+	}
+
+	.recommended-container .single-item {
+		width: 80vw;
+	}
+
+	.recommended-container .single-item .recommended-track-title {
+		width: 50vw;
+	}
+
+	.recommended-container .single-item .recommended-track-artists {
+		width: 50vw;
+	}
 }
 
 @media screen and (max-width: 670px) {

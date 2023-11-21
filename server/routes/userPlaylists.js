@@ -95,7 +95,7 @@ router.get("/", getRequests, async (req, res) => {
 		res.status(400).json({ msg: "Error getting user playlist!" });
 	}
 });
- 
+    
 // adds the song into a certain playlist
 router.post("/addToPlaylist", postRequests, async (req, res) => {
 	try {
@@ -104,7 +104,7 @@ router.post("/addToPlaylist", postRequests, async (req, res) => {
 			await spotifyAPI.addTracksToPlaylist(req.body.selectedPlaylistId.playlistId, [
 				req.body.selectedPlaylistId.trackURI,
 			]);
-	
+	 
 			res.json({
 				status: 200,
 				msg: "Successfully added the track in the playlist!",
@@ -114,6 +114,7 @@ router.post("/addToPlaylist", postRequests, async (req, res) => {
 			console.log("no playlist selected");
 		}
 	} catch (err) {
+		console.log("ERROR ADDING TRACK TO PLAYLIST!");
 		console.log(err);
 	}
 });

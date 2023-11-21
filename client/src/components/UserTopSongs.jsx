@@ -93,20 +93,23 @@ export const UserTopSongs = () => {
 		if (!accessToken) return;
 
 		console.log("useEffect2 triggered");
-		// retrieveTopArtistsFromUser(accessToken);
 		retrieveTopTracksFromUser(accessToken);
 		setLoadingTracks(true);
-		// retrieveRecommendedTracks(accessToken);
 	}, [accessToken]);
 
 	useEffect(() => {
 		if (!accessToken) return;
 		setRecommendedTracks([]);
+		if(recommendedTracks.length === 0){
+			console.log("IT IS CURRENTLY EMPTY");
+		}
 		console.log("useEffect3 triggered");
-		// retrieveTopArtistsFromUser(accessToken);
-		// retrieveTopTracksFromUser(accessToken);
 		retrieveRecommendedTracks(accessToken);
 		setLoadingRecommended(true);
+
+		if(recommendedTracks.length > 0){
+			console.log("IT IS NOT EMPTY ANYMORE");
+		}
 	}, [accessToken]);
 
 	return (
@@ -153,7 +156,7 @@ export const UserTopSongs = () => {
 					onClick={() => {
 						retrieveRecommendedTracks(accessToken);
 					}}
-					disabled={loadingRecommended}
+					/*disabled={loadingRecommended}*/
 				>
 					Load More
 				</button>
