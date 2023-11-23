@@ -72,7 +72,7 @@ export const UserTopSongs = () => {
 
 			setRecommendedTracks(response.data.recommended);
 			setRecommendedTracksMsg(response.data.msg);
-			setLoadingRecommended(false);
+			setLoadingRecommended(true);
 		} catch (err) {
 			console.error(err);
 		}
@@ -99,13 +99,16 @@ export const UserTopSongs = () => {
 
 	useEffect(() => {
 		if (!accessToken) return;
+
 		setRecommendedTracks([]);
+
 		if(recommendedTracks.length === 0){
 			console.log("IT IS CURRENTLY EMPTY");
 		}
+
 		console.log("useEffect3 triggered");
 		retrieveRecommendedTracks(accessToken);
-		setLoadingRecommended(true);
+		setLoadingRecommended(false);
 
 		if(recommendedTracks.length > 0){
 			console.log("IT IS NOT EMPTY ANYMORE");
@@ -150,7 +153,7 @@ export const UserTopSongs = () => {
 
 			
 
-			<div className="user-recommended-artists">
+			<div className="user-recommended-tracks">
 				<h1>Recommended Tracks</h1>
 				<button
 					onClick={() => {

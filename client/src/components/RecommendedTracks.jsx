@@ -19,28 +19,16 @@ export const RecommendedTracks = ({ recommendedTracks, loading, accessToken, mes
 	const plExists = (e, index) => {
 		try {
 			console.log(playlistsExist);
-			// setPlaylistExists((prev) => !prev);
-			// if (e.target.className === "recommended-add-song-button") {
+
 			setPlaylistExists((prev) => !prev);
-			// 	setSelectedTrackIndex(index);
-			// 	console.log(selectedTrackIndex);
-			// 	setPlaylistExists((prevShowPlaylists) => {
-			// 		console.log(selectedTrackIndex);
-			// 		const updatedShowPlaylists = [...prevShowPlaylists];
-			// 		updatedShowPlaylists[index] = !updatedShowPlaylists[index];
-			// 		console.log(updatedShowPlaylists);
-			// 		return updatedShowPlaylists;
-			// 	});
-			// } else if (e.target.className === "playlists") {
-			// 	// check to see if the value had any value in it (have to check, otherwise there will be an error relating to json)
-				if (e.target.value) {
-					const parsedInfo = JSON.parse(e.target.value); // in order to use the json, have to parse it back to object b/c it was stringified json
-					setSelectedPlaylistId({
-						playlistId: parsedInfo.playlistId,
-						trackURI: parsedInfo.trackURI,
-					});
-				}
-			// }
+			// check to see if the value had any value in it (have to check, otherwise there will be an error relating to json)
+			if (e.target.value) {
+				const parsedInfo = JSON.parse(e.target.value); // in order to use the json, have to parse it back to object b/c it was stringified json
+				setSelectedPlaylistId({
+					playlistId: parsedInfo.playlistId,
+					trackURI: parsedInfo.trackURI,
+				});
+			}
 		} catch (err) {
 			console.log(err);
 		}
@@ -63,14 +51,6 @@ export const RecommendedTracks = ({ recommendedTracks, loading, accessToken, mes
 
 				setPlaylists(response.data.playlists);
 				setPlaylistExists(true);
-
-				// setPlaylistExists((prevPlaylistExists) => {
-				// 	const updatedPlaylistExists = [...prevPlaylistExists];
-				// 	recommendedTracks.forEach((track, index) => {
-				// 		updatedPlaylistExists[index] = trackHasPlaylists(track, response.data.playlists);
-				// 	});
-				// 	return updatedPlaylistExists;
-				// });
 			} catch (err) {
 				console.log(err);
 			}
@@ -96,17 +76,6 @@ export const RecommendedTracks = ({ recommendedTracks, loading, accessToken, mes
 					accessToken,
 					selectedPlaylistId,
 				});
-
-				// await new Promise((resolve) => {
-				// 	setPlaylistExists((prevShowPlaylists) => {
-				// 		const updatedPlaylistExists = [...prevShowPlaylists];
-				// 		updatedPlaylistExists[selectedTrackIndex] =
-				// 		console.log(updatedPlaylistExists);
-				// 		console.log(playlistsExist);
-				// 		return updatedPlaylistExists;
-				// 	}, resolve);
-				// });
-				// }
 			} catch (err) {
 				console.log(err);
 			}
@@ -120,6 +89,8 @@ export const RecommendedTracks = ({ recommendedTracks, loading, accessToken, mes
 		// 	addTrackToPlaylist();
 		// }
 	}, [accessToken, playlistsExist, selectedPlaylistId]);
+
+	// console.log(recommendedTracks);
 
 	return (
 		<div className="recommended-container">
@@ -187,7 +158,9 @@ export const RecommendedTracks = ({ recommendedTracks, loading, accessToken, mes
 				))
 			)}
 			{selectedTrackURI ? (
-				<SongPlayer accessToken={accessToken} trackURI={selectedTrackURI} />
+				<div className="song-player">
+					<SongPlayer accessToken={accessToken} trackURI={selectedTrackURI} />
+				</div>
 			) : (
 				<p>{message}</p>
 			)}

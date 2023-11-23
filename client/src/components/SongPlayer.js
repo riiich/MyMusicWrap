@@ -4,7 +4,7 @@ export const SongPlayer = ({ accessToken, trackURI }) => {
 	if (!accessToken) return null;
 
 	return (
-		//<div className="song-player">
+		// <div className="song-player">
 		<SpotifyPlayer
 			token={accessToken}
 			showSaveIcon
@@ -21,6 +21,6 @@ export const SongPlayer = ({ accessToken, trackURI }) => {
 				trackNameColor: "#fff",
 			}}
 		/>
-		//</div>
+		// </div>
 	);
 };
