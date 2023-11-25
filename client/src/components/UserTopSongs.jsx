@@ -151,8 +151,6 @@ export const UserTopSongs = () => {
 				<ListTracks userInfo={topTracks} loading={loadingTracks} />
 			</div>
 
-			
-
 			<div className="user-recommended-tracks">
 				<h1>Recommended Tracks</h1>
 				<button

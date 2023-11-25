@@ -25,7 +25,7 @@
 	margin: 0 1rem 0 1rem;
 }
 
-.user-top-container .user-recommended-artists {
+.user-top-container .user-recommended-tracks {
 	border: 1px dashed blue;
 	width: auto;
 	margin: 0 1rem 0 1rem;
@@ -604,7 +604,7 @@
 	}
 }
 
-@media screen and (max-width: 830px) {
+@media screen and (max-width: 829px) {
 	.home-container .user-top-container {
 		grid-template-columns: repeat(1, 2fr);
 	}
@@ -620,16 +620,126 @@
 	.top-artists-container .single-item {
 		width: 15rem;
 	}
+}	
+
+@media screen and (min-width: 830px) and (max-width: 1150px) {
+	.home-container .user-top-container {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);		
+		height: fit-content;
+	}
+
+	.user-top-container .user-top-artists .top-artists-container {
+		display: grid;
+		place-items: center;
+	}
+
+	.user-top-container .user-top-artists .top-artists-container .single-item {
+		width: min-content;
+		height: min-content;
+		margin: 1em;
+	}
+
+	.user-top-container .user-top-tracks .top-tracks-container {
+		width: 100%;
+	}
+
+	.user-top-container .user-top-tracks .top-tracks-container .single-item {
+		width: calc(100% - 10%);
+	}
+
+	.user-top-container .user-recommended-tracks .recommended-container {
+		width: 100%;
+	}
+
+	.user-top-container .user-recommended-tracks .recommended-container .single-item {
+		width: calc(100% - 10%);
+	}
+
+	.recommended-container .preview-add-buttons .recommended-preview-song-button {
+		text-indent: -9999px;
+		line-height: 0;
+	}
+
+	.recommended-preview-song-button::after {
+		content: "Play";
+		color: black;
+		text-indent: 0;
+		display: block;
+		line-height: initial;
+	}
+
+	.recommended-container .preview-add-buttons .recommended-add-song-button {
+		text-indent: -9999px;
+		line-height: 0;
+	}
+
+	.recommended-add-song-button::after {
+		content: "Add";
+		color: black;
+		text-indent: 0;
+		display: block;
+		line-height: initial;
+	}
+
+	.recommended-container .song-player {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		padding: 5%;
+		margin: 0 1em 1em 0.5em;
+		width: calc(100vw - 60vw);
+		border: 4px white dotted;
+	}
 }
 
-@media screen and (min-width: 1700px) and (max-width: 1910px) {
+@media screen and (min-width: 1151px) and (max-width: 1884px) {
+	.user-top-container .user-top-artists .top-artists-container {
+		display: grid;
+		place-items: center;
+	}
+
+	.user-top-container .user-top-artists .top-artists-container .single-item {
+		width: min-content;
+		height: min-content;
+		margin: 1em;
+	}
+
+	.recommended-container .preview-add-buttons .recommended-preview-song-button {
+		text-indent: -9999px;
+		line-height: 0;
+	}
+
+	.recommended-preview-song-button::after {
+		content: "Play";
+		color: black;
+		text-indent: 0;
+		display: block;
+		line-height: initial;
+	}
+
+	.recommended-container .preview-add-buttons .recommended-add-song-button {
+		text-indent: -9999px;
+		line-height: 0;
+	}
+
+	.recommended-add-song-button::after {
+		content: "Add";
+		color: black;
+		text-indent: 0;
+		display: block;
+		line-height: initial;
+	}
+}
+
+@media screen and (min-width: 1885px) {
 	.home-container .user-top-container {
-		grid-template-columns: repeat(2, 2fr);
+		grid-template-columns: repeat(3, 1fr);
 	}
 
 	.user-top-artists {
 		margin: 1rem 0;
-		width: 980px;
+		width: 600px;
 	}
 
 	.user-top-tracks {
@@ -637,6 +747,8 @@
 	}
 
 	.user-recommended-tracks {
-		margin: 5% 0;
+		margin-top: 20px;
+		border-top: 5px chartreuse dashed;
+		/* margin: 5% 0; */
 	}
 }
