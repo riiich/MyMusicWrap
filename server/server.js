@@ -1,7 +1,9 @@
 const express = require("express");
 const app = express();
+const mongoose = require("mongoose");
 const cors = require("cors");
 const bodyParser = require("body-parser");
+const connectDB = require("./database/connectDatabase");
 require("dotenv").config();
 
 app.use(
@@ -19,6 +21,9 @@ app.get("/", (req, res) => {
 		msg: "YOU HAVE REACHED THE SERVER!",
 	});
 });
+
+// attempt to connect to database
+connectDB();
 
 // returns the user client id and client secret from their spotify account
 const credentials = require("./routes/credentials");
@@ -40,9 +45,9 @@ app.use("/mostlistened", topUserInfo);
 const userPlaylists = require("./routes/userPlaylists");
 app.use("/myplaylists", userPlaylists);
 
-// const songLyrics = require("./routes/lyrics");
-// app.use("/lyrics", songLyrics);
-
-app.listen(process.env.PORT, () => {
-	console.log(`Listening on port ${process.env.PORT}`);
+mongoose.connection.once("open", () => {
+	console.log("Connected to MongoDB!");
+	app.listen(process.env.PORT, () => {
+		console.log(`Listening on port ${process.env.PORT}`);
+	});
 });

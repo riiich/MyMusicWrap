@@ -1,7 +1,8 @@
 import "./styles/App.css";
 import { useState } from "react";
-import { PlaySongs } from "./pages/PlaySongs";
+import { Feedback } from "./components/Feedback";
 import { Navbar } from "./components/Navbar";
+import { Footer } from "./components/Footer";
 import { Home } from "./pages/Home";
 import { SearchBar } from "./components/SearchBar";
 import { Login } from "./pages/Login";
@@ -40,10 +41,11 @@ function App() {
 					<Route path="/" element={<Home />} />
 					<Route path="/login" element={<Login />} />
 					<Route path="/search" element={<SearchBar />} />
-					<Route path="/songs" element={<PlaySongs />} />
+					<Route path="/feedback" element={<Feedback />} />
 					<Route path="*" element={<ErrorPage />} />
 				</Routes>
 			</Router>
+			<Footer />
  			{!spotifyCode ? <></> : <Dashboard code={spotifyCode} />}
 		</div>
 	);

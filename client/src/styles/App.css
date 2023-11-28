@@ -60,6 +60,22 @@ body {
 	color: #fffefe;
 }
 
+.footer {
+	width: 100%;
+	position: absolute;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    background-color: #1d4423;
+    color: #ffffff;
+  }
+  
+
 @media screen and (max-width: 600px) {
 	.navbar h1 {
 		font-size:large;
