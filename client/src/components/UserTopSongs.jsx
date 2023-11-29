@@ -17,6 +17,8 @@ export const UserTopSongs = () => {
 	const [loadingRecommended, setLoadingRecommended] = useState(false);
 	const accessToken = sessionStorage.getItem("accessToken");
 
+	// ************************ IF USER HASN"T SELECTED A TIME-FRAME IN THE ARTIST OR TRACKS, RETURN 
+
 	const changeArtistTimeRange = (e) => {
 		sessionStorage.setItem("artist_time_range", e.target.value);
 

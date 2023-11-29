@@ -41,7 +41,7 @@ function App() {
 					<Route path="/" element={<Home />} />
 					<Route path="/login" element={<Login />} />
 					<Route path="/search" element={<SearchBar />} />
-					<Route path="/feedback" element={<Feedback />} />
+					<Route path="/userfeedback" element={<Feedback />} />
 					<Route path="*" element={<ErrorPage />} />
 				</Routes>
 			</Router>

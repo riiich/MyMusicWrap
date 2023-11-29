@@ -1,6 +1,14 @@
+html {
+	height: 100%;
+	/* box-sizing: border-box; */
+}
+
 body {
 	margin: 0;
-	padding: 0;
+	padding-bottom: 5rem;
+	position: relative;
+	min-height: 100%;
+	/* box-sizing: inherit; */
 	/* background-color: rgb(177, 250, 197); */
 	/* background-color: burlywood; */
 	background-color: #BAE4AC;
@@ -63,14 +71,17 @@ body {
 .footer {
 	width: 100%;
 	position: absolute;
-    display: -webkit-box;
+    /* display: -webkit-box;
     display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
     -webkit-box-pack: center;
     -ms-flex-pack: center;
     -webkit-justify-content: center;
-    justify-content: center;
+    justify-content: center; */
+	left: 0;
+	right: 0;
+	bottom: 0;
     background-color: #1d4423;
     color: #ffffff;
   }

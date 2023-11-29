@@ -10,6 +10,8 @@ export const User = () => {
 				params: { accessToken },
 			});
 			setUser(res.data);
+			sessionStorage.setItem("userName", res.data.name);
+			sessionStorage.setItem("userID", res.data.id);
 		} catch (err) {
 			console.log("Error getting user info", err);
 		}

@@ -1,8 +1,12 @@
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export const Navbar = () => {
+	const navigate = new useNavigate();
+
 	const signOut = () => {
 		sessionStorage.clear();
+		navigate("/");
 		window.location.reload();
 	};
 
@@ -20,7 +24,7 @@ export const Navbar = () => {
 					<Link to="/login">Login</Link>
 				) : (
 					<>
-						<Link to="/feedback">Feedback</Link>
+						<Link to="/userfeedback">Feedback</Link>
 						<button onClick={signOut}>Sign out</button>
 					</>
 				)}

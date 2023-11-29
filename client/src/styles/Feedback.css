@@ -1,0 +1,59 @@
+.user-feedback {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.user-feedback .feedback-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 2%;
+    width: fit-content;
+}
+
+.user-feedback .feedback-content textarea {
+    border-radius: 5px;
+}
+
+.user-feedback .feedback-content #feedback-prompt {
+    margin-bottom: 1em;
+}
+
+.user-feedback .user-rating {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: fit-content;
+}
+
+.user-feedback .user-rating select {
+    border-radius: 10px;
+    height: 1.5rem;
+    max-width: 7rem;
+    margin-top: 1rem;
+}
+
+.user-feedback .user-rating option {
+    height: 5rem;
+    margin: 5px;
+}
+
+.user-feedback input {
+    margin: 1%;
+    border-radius: 5px;
+    padding: 8px;
+}
+
+@media screen and (min-width: 350px) and (max-width: 450px) {
+    .user-feedback .feedback-content textarea {
+        width: 85%;
+    }
+
+    .user-feedback input {
+        margin-top: 5rem;
+    }
+}

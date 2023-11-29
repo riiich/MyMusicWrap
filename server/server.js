@@ -45,6 +45,9 @@ app.use("/mostlistened", topUserInfo);
 const userPlaylists = require("./routes/userPlaylists");
 app.use("/myplaylists", userPlaylists);
 
+const feedback = require("./routes/userFeedback");
+app.use("/feedback", feedback);
+
 mongoose.connection.once("open", () => {
 	console.log("Connected to MongoDB!");
 	app.listen(process.env.PORT, () => {
