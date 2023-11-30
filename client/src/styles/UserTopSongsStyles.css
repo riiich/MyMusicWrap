@@ -3,42 +3,60 @@
 .home-container {
 	margin: 0;
 	padding: 0;
-	border: 3px dotted black;
 	height: 100%;
+	/* border: 5px dotted black; */
 }
 
 .home-container .user-top-container {
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
-	border: 10px dashed white;
+	/* border: 10px dashed white; */
 }
 
 .user-top-container .user-top-artists {
-	border: 1px dashed green;
+	/* border: 2px dashed green; */
+	background-color: rgb(87, 163, 128);
+	border-radius: 2rem;
 	width: auto;
-	margin: 0 1rem 0 1rem;
+	margin: 2rem 1rem 3rem 1rem;
+}
+
+.user-top-container .user-top-artists select {
+	border-radius: 7px;
+    height: 1.5rem;
+    width: 10rem;
 }
 
 .user-top-container .user-top-tracks {
-	border: 1px dashed blue;
+	/* border: 2px dashed blue; */
+	background-color: rgb(87, 163, 128);
+	border-radius: 2rem;
 	width: auto;
-	margin: 0 1rem 0 1rem;
+	height:fit-content;
+	margin: 2rem 1rem 3rem 1rem;
+}
+
+.user-top-container .user-top-tracks select {
+	border-radius: 7px;
+    height: 1.5rem;
+    width: 10rem;
 }
 
 .user-top-container .user-recommended-tracks {
-	border: 1px dashed blue;
+	/* border: 2px dashed blue; */
+	background-color: rgb(87, 163, 128);
+	border-radius: 2rem;
 	width: auto;
-	margin: 0 1rem 0 1rem;
+	/* height: fit-content; */
+	/* height: calc(100% - 5%); */
+	margin: 2rem 1rem 3rem 1rem;
 }
 
 .top-artists-container {
 	display: grid;
 	grid-template-columns: repeat(2, 1fr);
-	grid-column-gap: 1em;
-	/* justify-items: center; */
+	/* grid-column-gap: 1em; */
 	place-items: center;
-	padding: 0;
-	/* border: 1px dashed purple; */
 }
 
 .top-artists-container .single-item {
@@ -46,18 +64,30 @@
 	justify-content: center;
 	align-self: center;
 	border: 1px solid black;
-	margin: 3rem;
+	border-radius: 10%;
+	/* margin: 3rem 0 1rem 0; */
+	margin: 1rem;
 	padding: 1rem;
 	width: 11.5rem;
+	/* color: black; */
+	transition: 0.6s;
+}
+
+.top-artists-container .single-item:hover {
+	background-color: rgb(151, 200, 243);
+	box-shadow: 6px 6px 50px 5px rgb(0, 195, 255); /* in order: x offset, y offset, blur size, spread size, color */
 }
 
 .single-item a {
 	text-decoration: none;
-	/* color: white; */
+}
+
+.top-artists-container .single-item a {
+	color: rgb(0, 0, 0);
 }
 
 .single-item .recommended-buttons a {
-	width: 25rem;
+	width: 28rem;
 }
 
 .single-item .recommended-buttons {
@@ -123,7 +153,8 @@
 	white-space: nowrap;
 	overflow-x: auto;
 	padding-bottom: 5px;
-	color: rgb(91, 179, 142);
+	color:rgb(0, 0, 0);
+	/* color: rgb(91, 179, 142); */
 
 	&::-webkit-scrollbar {
 		width: 10px;
@@ -153,7 +184,7 @@
 	overflow-x: auto;
 	font-size: smaller;
 	padding-bottom: 5px;
-	color: rgb(0, 0, 0);
+	color: rgb(43, 49, 44);
 
 	&::-webkit-scrollbar {
 		width: 10px;
@@ -266,7 +297,8 @@
 	white-space: nowrap;
 	overflow-x: auto;
 	padding-bottom: 5px;
-	color: rgb(91, 179, 142);
+	color:rgb(0, 0, 0);
+	/* color: rgb(91, 179, 142); */
 
 	&::-webkit-scrollbar {
 		width: 10px;
@@ -296,7 +328,7 @@
 	overflow-x: auto;
 	font-size: smaller;
 	padding-bottom: 5px;
-	color: rgb(0, 0, 0);
+	color: rgb(43, 49, 44);
 
 	&::-webkit-scrollbar {
 		width: 10px;
@@ -336,10 +368,11 @@
 	border-radius: 20px;
 	height: 2em;
 	z-index: 1;
+	transition: 0.6s;
 }
 
 .recommended-container .single-item .recommended-preview-song-button:hover {
-	background-color: aquamarine;
+	background-color: rgb(182, 194, 190);
 }
 
 .recommended-container .single-item .recommended-add-song-button {
@@ -347,10 +380,11 @@
 	border-radius: 20px;
 	pointer-events: auto;
 	/* z-index: 1; */
+	transition: 0.6s;
 }
 
 .recommended-container .single-item .recommended-add-song-button:hover {
-	background-color: greenyellow;
+	background-color: rgb(182, 194, 190);
 }
 
 &::-webkit-scrollbar {
@@ -368,6 +402,15 @@
 &::-webkit-scrollbar-thumb {
 	background: rgb(137, 138, 136, 150);
 	border-radius: 10px;
+}
+
+.recommended-container .song-player {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 5%;
+	margin: 0 1em 1em 0.5em;
+	width: calc(100% - 20%);
 }
 
 /* MEDIA QUERIES */
@@ -505,10 +548,8 @@
 		align-items: center;
 		padding: 5%;
 		width: calc(100vw - 30vw);
-		border: 4px white dotted;
+		/* border: 4px white dotted; */
 	}
-
-	 
 }
 
 /* @media screen and (min-width: 350px) and (max-width: 450px) {
@@ -604,7 +645,7 @@
 		padding: 5%;
 		margin: 0 1em 1em 0.5em;
 		width: calc(100vw - 20vw);
-		border: 4px white dotted;
+		/* border: 4px white dotted; */
 	}
 }
 
@@ -710,7 +751,7 @@
 		padding: 5%;
 		margin: 0 1em 1em 0.5em;
 		width: calc(100vw - 60vw);
-		border: 4px white dotted;
+		/* border: 4px white dotted; */
 	}
 }
 
@@ -769,7 +810,6 @@
 
 	.user-recommended-tracks {
 		margin-top: 20px;
-		border-top: 5px chartreuse dashed;
 		/* margin: 5% 0; */
 	}
 }

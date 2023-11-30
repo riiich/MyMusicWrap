@@ -17,7 +17,7 @@ export const UserTopSongs = () => {
 	const [loadingRecommended, setLoadingRecommended] = useState(false);
 	const accessToken = sessionStorage.getItem("accessToken");
 
-	// ************************ IF USER HASN"T SELECTED A TIME-FRAME IN THE ARTIST OR TRACKS, RETURN 
+	// ************************ IF USER HASN"T SELECTED A TIME-FRAME IN THE ARTIST OR TRACKS, RETURN
 
 	const changeArtistTimeRange = (e) => {
 		sessionStorage.setItem("artist_time_range", e.target.value);
@@ -30,6 +30,9 @@ export const UserTopSongs = () => {
 	// refactor the below to only async/await (rmb that using async/await eliminates promise chaining)
 	const retrieveTopArtistsFromUser = async (accessToken) => {
 		try {
+			// if the user hasn't selected a time range, don't do anything
+			if (!topArtistTimeRange) return;
+
 			const response = await axios.get("http://localhost:3001/mostlistened/artists", {
 				params: { accessToken, topArtistTimeRange },
 			});
@@ -53,6 +56,8 @@ export const UserTopSongs = () => {
 
 	const retrieveTopTracksFromUser = async (accessToken) => {
 		try {
+			if (!topTrackTimeRange) return;
+
 			// console.log(topTrackTimeRange);
 			const response = await axios.get("http://localhost:3001/mostlistened/tracks", {
 				params: { accessToken, topTrackTimeRange },
@@ -68,6 +73,8 @@ export const UserTopSongs = () => {
 
 	const retrieveRecommendedTracks = async (accessToken) => {
 		try {
+			if(!topTrackTimeRange) return;
+
 			const response = await axios.get("http://localhost:3001/mostlistened/recommendedtracks", {
 				params: { accessToken },
 			});
@@ -83,20 +90,17 @@ export const UserTopSongs = () => {
 	useEffect(() => {
 		if (!accessToken) return;
 
-		console.log("useEffect1 triggered");
-
 		retrieveTopArtistsFromUser(accessToken);
 		setLoadingArtists(true);
-		// retrieveTopTracksFromUser(accessToken);
-		// retrieveRecommendedTracks(accessToken);
+		console.log("useEffect1 triggered");
 	}, [accessToken]);
 
 	useEffect(() => {
 		if (!accessToken) return;
 
-		console.log("useEffect2 triggered");
 		retrieveTopTracksFromUser(accessToken);
 		setLoadingTracks(true);
+		console.log("useEffect2 triggered");
 	}, [accessToken]);
 
 	useEffect(() => {
@@ -104,15 +108,15 @@ export const UserTopSongs = () => {
 
 		setRecommendedTracks([]);
 
-		if(recommendedTracks.length === 0){
+		if (recommendedTracks.length === 0) {
 			console.log("IT IS CURRENTLY EMPTY");
 		}
 
-		console.log("useEffect3 triggered");
 		retrieveRecommendedTracks(accessToken);
 		setLoadingRecommended(false);
+		console.log("useEffect3 triggered");
 
-		if(recommendedTracks.length > 0){
+		if (recommendedTracks.length > 0) {
 			console.log("IT IS NOT EMPTY ANYMORE");
 		}
 	}, [accessToken]);

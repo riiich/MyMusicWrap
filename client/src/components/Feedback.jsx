@@ -29,10 +29,11 @@ export const Feedback = () => {
 				feedback: appFeedback,
 				userName: sessionStorage?.getItem("userName"),
 				userID: sessionStorage?.getItem("userID"),
+				spotifyURL: sessionStorage?.getItem("userSpotifyURL"),
 				rating: rating,
 			});
 
-			if (data.data.msg) {
+			if (data.data.msg === "Stored") {
 				setAppFeedback("");
 
 				console.log(data.data.msg);

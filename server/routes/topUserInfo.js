@@ -4,14 +4,14 @@ const rateLimit = require("express-rate-limit");
 require("dotenv").config();
 
 const spotifyAPI = new SpotifyWebAPI();
- 
+
 // rate limit for the recommended track endpoint
 const recommendedTrackLimiter = rateLimit({
-	windowMs: 5 * 1000,	// 5s
-	limit: 3,	// 3 request per windowMs time (5s)
+	windowMs: 5 * 1000, // 5s
+	limit: 3, // 3 request per windowMs time (5s)
 	message: "Stop spamming me!",
 });
- 
+
 // middleware that sets checks to see if there's an access token provided
 router.use((req, res, next) => {
 	if (!req.query.accessToken) {
@@ -19,7 +19,7 @@ router.use((req, res, next) => {
 			status: 401,
 			msg: "An invalid or no access token was provided!",
 		});
-	} 
+	}
 	console.log(
 		"Retrieving user's top most listened artists and tracks! Also recommending some songs based on top tracks"
 	);
@@ -37,7 +37,7 @@ router.get("/artists", async (req, res) => {
 	// a map that will map the genre to the amount of occurences
 	const artistGenres = new Map();
 	const time_range = req.query.topArtistTimeRange;
-    
+
 	await spotifyAPI
 		.getMyTopArtists({ offset: 0, limit: 10, time_range: `${time_range}_term` }) // get 10 artists
 		.then((data) => {
@@ -55,7 +55,7 @@ router.get("/artists", async (req, res) => {
 					else artistGenres.set(genre, [genre, artistGenres.get(genre)[1] + 1]);
 				});
 			});
- 
+
 			// sorted map based on number of occurences of genre
 			const sortedTopArtistGenres = new Map(
 				[...artistGenres.entries()].sort((a, b) => b[1][1] - a[1][1])
@@ -89,60 +89,13 @@ router.get("/tracks", async (req, res) => {
 		const trackGenres = {};
 		const time_range = req.query.topTrackTimeRange;
 
-		// get the genres of the top songs the user listens to through the TRACKS
-		// a map that will map the genre to the amount of occurrences
-		// const trackGenres = new Map();
-		// const trackGenres = {};
-
 		// time_range - long_term (several years), medium_term (~last 6 months), short_term (~last 4 weeks)
-		// await spotifyAPI
-		// 	.getMyTopTracks({ offset: 0, limit: 10, time_range: "medium_term" }) // gets the top 10 tracks that the user has recently listend to
-		// 	.then(async (data) => {
-		// 		// waits for all the promises to resolve
-		// 		await Promise.all(
-		// 			data.body.items.map(async (item) => {
-		// 				topTracks.push({
-		// 					artists: item.artists, // object: important info: externals_urls{spotify}, id, name
-		// 					id: item.id, // id of song
-		// 					title: item.name, // name of song
-		// 					album: item.album, // album that the song is in
-		// 					image: item.album.images[0].url, // image of the song
-		// 					albumURL: item.album.external_urls.spotify, // link to the song from Spotify
-		// 					artistProfile: item.album.artists[0].external_urls.spotify, // link to the artist profile on Spotify
-		// 					previewSong: item.preview_url, // 30-second clip of the song
-		// 					trackNumber: item.track_number, // track number in the album
-		// 					duration: {
-		// 						// hour: Math.floor(),
-		// 						minutes: Math.floor(item.duration_ms / (1000 * 60)),
-		// 						seconds: Math.floor((item.duration_ms / 1000) % 60),
-		// 					}, // song length
-		// 					popularity: item.popularity, // popularity score from 0 - 100
-		// 				});
+		const data = await spotifyAPI.getMyTopTracks({
+			offset: 0,
+			limit: 8,
+			time_range: `${time_range}_term`,
+		});
 
-		// 				const artistIDS = item.artists.map((artist) => artist.id); // get all the ids of the artists from the tracks
-
-		// 				//
-		// 				await Promise.all(
-		// 					artistIDS.map(async (artistID) => {
-		// 						try {
-		// 							const artist = await spotifyAPI.getArtists([artistID]);
-		// 							artist.body.artists.forEach((artistInfo) => {
-		// 								artistInfo.genres.forEach((genre) => {
-		//                                     if(!trackGenres[genre]) trackGenres[genre] = [genre, 1];
-		//                                     else trackGenres[genre][1] ++;
-		// 								});
-		// 							});
-		// 						} catch (err) {
-		// 							console.log(err);
-		// 						}
-		// 					})
-		// 				);
-		// 			})
-		// 		);
-
-		// time_range - long_term (several years), medium_term (~last 6 months), short_term (~last 4 weeks)
-		const data = await spotifyAPI.getMyTopTracks({ offset: 0, limit: 8, time_range: `${time_range}_term` });
- 
 		await Promise.all(
 			data.body.items.map(async (item) => {
 				const artistIDS = item.artists.map((artist) => artist.id);
@@ -198,9 +151,9 @@ router.get("/tracks", async (req, res) => {
 
 		// console.log("FROM TRACKS ENDPOINT");
 		// console.log(topTrackGenres);
- 
+
 		res.json({
-			topTracks: topTracks, 
+			topTracks: topTracks,
 			msg: "You have some songs that you enjoy listening to!",
 		});
 	} catch (err) {
@@ -240,7 +193,7 @@ router.get("/recommendedtracks", recommendedTrackLimiter, (req, res) => {
 						mostListenedTrackGenres.push(topTrackGenres[genre][0]);
 					}
 				}
-            
+
 				await delay(time);
 
 				const data = await spotifyAPI.getRecommendations({
@@ -249,48 +202,34 @@ router.get("/recommendedtracks", recommendedTrackLimiter, (req, res) => {
 					// 	mostListenedTrackGenres[1],
 					// 	mostListenedTrackGenres[2],
 					// 	mostListenedTrackGenres[3],
-					// 	mostListenedTrackGenres[4], 
-					// ], 
+					// 	mostListenedTrackGenres[4],
+					// ],
 					seed_tracks: [
 						topTrackIds[0],
 						topTrackIds[1],
 						topTrackIds[2],
 						topTrackIds[3],
 						topTrackIds[4],
-					],	
+					],
 					// min_popularity: 80,
-					limit: 8, 
-				});
- 
-				data.body.tracks.map((track, i) => {
-					recommended.push({
-						artists: track.artists,
-						track_title: track.name,
-						spotify_url: track.external_urls.spotify,
-						id: track.id,
-						image: track.album.images[0].url,
-						previewSong: track.preview_url,
-						uri: track.uri,
-						duration: {
-							minutes: Math.floor(track.duration_ms / (1000 * 60)),
-							seconds: Math.floor((track.duration_ms / 1000) % 60),
-						}, // song length
-					});
- 
-					// console.log(i + 1);
-					// console.log("Artist(s): ");
-					// track?.artists.map((artist, i) => {
-					// 	console.log(`${i + 1}. ${artist.name}`);
-					// });
-					// console.log(`Track title: ${track?.name}`);
-					// console.log(`Spotify Link: ${track?.external_urls.spotify}`);
-					// console.log(`Popularity: ${track?.popularity}`);
-					// console.log(`Image: ${track?.album.images[0].url}`);
-					// console.log("-------");
+					limit: 8,
 				});
 
-				// console.log(recommended);
-				// console.log("============");
+				data.body.tracks.map((track, i) => {
+					recommended.push({
+						artists: track?.artists,
+						track_title: track?.name,
+						spotify_url: track?.external_urls.spotify,
+						id: track?.id,
+						image: track?.album.images[0].url,
+						previewSong: track?.preview_url,
+						uri: track?.uri,
+						duration: {
+							minutes: Math.floor(track?.duration_ms / (1000 * 60)),
+							seconds: Math.floor((track?.duration_ms / 1000) % 60),
+						}, // song length
+					});
+				});
 
 				if (recommended.length > 0) {
 					res.json({
@@ -298,15 +237,14 @@ router.get("/recommendedtracks", recommendedTrackLimiter, (req, res) => {
 						status: 200,
 						msg: "Choose a track",
 					});
-				}
-				else{
+				} else {
 					res.json({
 						recommended: recommended,
 						status: 200,
 						msg: "No recommended songs are available due to not enough data =(",
-					})
+					});
 				}
-			} 
+			}
 		}, time);
 	} catch (err) {
 		console.log("THERE WAS AN ERROR GETTING RECOMMENDED SONGS", err);
@@ -315,7 +253,7 @@ router.get("/recommendedtracks", recommendedTrackLimiter, (req, res) => {
 		});
 	}
 });
- 
+
 module.exports = router;
 
 /*

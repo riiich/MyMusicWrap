@@ -1,5 +1,4 @@
 const router = require("express").Router();
-// const mongoose = require("mongoose");
 const Feedback = require("../schema/feedback");
 
 router.use((req, res, next) => {
@@ -9,14 +8,17 @@ router.use((req, res, next) => {
 });
 
 router.post("/", async (req, res) => {
+    const {feedback, userName, userID, spotifyURL, rating} = req.body;
+
 	try {
         // create a new document and insert into feedback collection
 		const critique = await Feedback.create({
-            name: req.body.userName,
-            comment: req.body.feedback,
-            userID: req.body.userID,
+            name: userName,
+            comment: feedback,
+            userID: userID,
+            spotifyURL: spotifyURL, 
             createdAt: new Date(),
-            rating: req.body.rating,
+            rating: rating,
 		});
  
         res.status(200).json({

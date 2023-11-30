@@ -47,10 +47,12 @@ app.use("/myplaylists", userPlaylists);
 
 const feedback = require("./routes/userFeedback");
 app.use("/feedback", feedback);
-
+  
 mongoose.connection.once("open", () => {
 	console.log("Connected to MongoDB!");
+	
 	app.listen(process.env.PORT, () => {
 		console.log(`Listening on port ${process.env.PORT}`);
 	});
 });
+ 

@@ -10,8 +10,9 @@ export const User = () => {
 				params: { accessToken },
 			});
 			setUser(res.data);
-			sessionStorage.setItem("userName", res.data.name);
-			sessionStorage.setItem("userID", res.data.id);
+			sessionStorage.setItem("userName", res.data?.name);
+			sessionStorage.setItem("userID", res.data?.id);
+			sessionStorage.setItem("userSpotifyURL", res.data?.userSpotify);
 		} catch (err) {
 			console.log("Error getting user info", err);
 		}
@@ -26,8 +27,8 @@ export const User = () => {
 	return (
 		<div className="user-intro">
 			<h3>
-				Hi <img src={user?.image} alt="user pic" width={30} height={30} />
-				{user?.name}
+				Hi &nbsp;<img src={user?.image} alt="user pic" width={30} height={30} />
+				{user?.name}!
 			</h3>
 		</div>
 	);

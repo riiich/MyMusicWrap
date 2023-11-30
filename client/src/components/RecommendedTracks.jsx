@@ -69,9 +69,6 @@ export const RecommendedTracks = ({ recommendedTracks, loading, accessToken, mes
 	useEffect(() => {
 		const addTrackToPlaylist = async () => {
 			try {
-				// console.log(selectedTrackIndex);
-
-				// if (selectedTrackIndex !== null) {
 				await axios.post("http://localhost:3001/myplaylists/addToPlaylist", {
 					accessToken,
 					selectedPlaylistId,
@@ -85,12 +82,7 @@ export const RecommendedTracks = ({ recommendedTracks, loading, accessToken, mes
 			addTrackToPlaylist();
 		}
 
-		// if (accessToken && !playlistsExist[selectedTrackIndex]) {
-		// 	addTrackToPlaylist();
-		// }
 	}, [accessToken, playlistsExist, selectedPlaylistId]);
-
-	// console.log(recommendedTracks);
 
 	return (
 		<div className="recommended-container">
