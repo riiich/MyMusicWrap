@@ -1,12 +1,20 @@
 const router = require('express').Router();
+const UserCount = require("../schema/userCount");
 require('dotenv').config();
 
 // this package provides helper functions to interact with the Spotify Web API
 const SpotifyWebAPI = require('spotify-web-api-node');  
 
-router.use((req, res, next) => {
+router.use(async (req, res, next) => {
     console.log("Authorizing User!");
     
+    try {
+		// every time a user logs in, increment by 1 (this is acting like an analytics to determine how people have used to app)
+		await UserCount.updateOne({ _id: "6568b47543f2747d63f8e826" }, { $inc: { userCount: 1 } });
+	} catch (err) {
+		console.log(err);
+	}
+
     next();
 });
 
@@ -20,14 +28,13 @@ router.post('/', (req, res) => {
     const spotifyAPI = new SpotifyWebAPI(credentials);
 
     const code = req.body.code;
-    // console.log("CODE", code);
     
     spotifyAPI.authorizationCodeGrant(code)
         .then(result => {
             spotifyAPI.setAccessToken(result.body.access_token);
             spotifyAPI.setRefreshToken(result.body.refresh_token);
 
-            // console.log("the refresh token", result.body.refresh_token);
+            console.log("Successfully logged in!");
 
             res.json({
                 accessToken: result.body.access_token,

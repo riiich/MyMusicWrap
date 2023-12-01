@@ -17,8 +17,6 @@ export const UserTopSongs = () => {
 	const [loadingRecommended, setLoadingRecommended] = useState(false);
 	const accessToken = sessionStorage.getItem("accessToken");
 
-	// ************************ IF USER HASN"T SELECTED A TIME-FRAME IN THE ARTIST OR TRACKS, RETURN
-
 	const changeArtistTimeRange = (e) => {
 		sessionStorage.setItem("artist_time_range", e.target.value);
 
@@ -126,7 +124,6 @@ export const UserTopSongs = () => {
 			<div className="user-top-artists">
 				<h1>Your Top 10 Artists</h1>
 				<select
-					classname="short-medium-long-artists"
 					name="selected-artists-time-range"
 					onChange={changeArtistTimeRange}
 				>
@@ -143,7 +140,6 @@ export const UserTopSongs = () => {
 			<div className="user-top-tracks">
 				<h1>Top Tracks in the {sessionStorage.getItem("track_time_range")} term</h1>
 				<select
-					classname="short-medium-long-tracks"
 					name="selected-tracks-time-range"
 					onChange={changeTrackTimeRange}
 				>
@@ -160,6 +156,7 @@ export const UserTopSongs = () => {
 			<div className="user-recommended-tracks">
 				<h1>Recommended Tracks</h1>
 				<button
+					className="recommended-tracks-loading"
 					onClick={() => {
 						retrieveRecommendedTracks(accessToken);
 					}}

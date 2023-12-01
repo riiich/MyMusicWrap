@@ -6,7 +6,7 @@ import { User } from "../components/User";
 export const Home = () => {
     return(
         <div className="home-container">
-            <h1>Home Page</h1>
+            {/* <h1>Home Page</h1> */}
             <User />
             <UserTopSongs />
         </div>

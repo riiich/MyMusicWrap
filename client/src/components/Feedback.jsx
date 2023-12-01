@@ -6,6 +6,7 @@ export const Feedback = () => {
 	const navigate = new useNavigate();
 	const [appFeedback, setAppFeedback] = useState("");
 	const [rating, setRating] = useState(null);
+	const maxCharacterCount = 300;
 
 	const handleFeedback = (e) => {
 		setAppFeedback(e.target.value);
@@ -42,7 +43,7 @@ export const Feedback = () => {
 
 				setTimeout(() => {
 					navigate("/");
-				}, 2000);
+				}, 1500);
 			}
 		} catch (err) {
 			console.log(err);
@@ -53,19 +54,22 @@ export const Feedback = () => {
 		<>
 			<h1>Feedback Page</h1>
 			<div className="user-feedback">
+				<label for="feedback" id="feedback-prompt">
+					Any questions, comments, or suggestions of the application.
+				</label>
 				<div className="feedback-content">
-					<label for="feedback" id="feedback-prompt">
-						Any questions, comments, or suggestions of the application.
-					</label>
 					<textarea
 						id="feedback"
 						name="feedback"
 						cols="50"
 						rows="13"
 						placeholder="       Questions, comments, or suggestions..."
-						maxLength={300}
+						maxLength={maxCharacterCount}
 						onChange={(e) => handleFeedback(e)}
 					></textarea>
+					<p id={appFeedback.length < maxCharacterCount ? "char-count" : "max-char-count"}>
+						{appFeedback.length}/{maxCharacterCount} char
+					</p>
 				</div>
 				<div className="user-rating">
 					<label>How was the app on a scale of 1-5?</label>

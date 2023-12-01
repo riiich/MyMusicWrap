@@ -110,8 +110,8 @@ router.post("/addToPlaylist", postRequests, async (req, res) => {
 				msg: "Successfully added the track in the playlist!",
 			});
 		}
-		else{
-			console.log("no playlist selected! ");
+		else{ 
+			console.log("no playlist selected!");
 		}
 	} catch (err) {
 		console.log("ERROR ADDING TRACK TO PLAYLIST!");

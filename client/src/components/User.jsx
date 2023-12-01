@@ -26,10 +26,15 @@ export const User = () => {
 
 	return (
 		<div className="user-intro">
-			<h3>
-				Hi &nbsp;<img src={user?.image} alt="user pic" width={30} height={30} />
-				{user?.name}!
-			</h3>
+			{sessionStorage.getItem("userName") ? (
+				<h3>
+					Hi &nbsp;
+					<img src={user?.image} alt="user pic" width={30} height={30} />
+					{user?.name}!
+				</h3>
+			) : (
+				""
+			)}
 		</div>
 	);
 };

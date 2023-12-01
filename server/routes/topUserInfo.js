@@ -43,10 +43,10 @@ router.get("/artists", async (req, res) => {
 		.then((data) => {
 			data.body.items.map((item) => {
 				topArtists.push({
-					artist: item.name,
-					image: item.images[0].url,
-					id: item.id,
-					artistURL: item.external_urls.spotify,
+					artist: item?.name,
+					image: item?.images[0]?.url,
+					id: item?.id,
+					artistURL: item?.external_urls?.spotify,
 				});
 
 				// add each genre into a map and its number of occurence in a map
@@ -119,21 +119,21 @@ router.get("/tracks", async (req, res) => {
 				);
 
 				topTracks.push({
-					artists: item.artists, // object: important info: externals_urls{spotify}, id, name
-					id: item.id, // id of song
-					title: item.name, // name of song
-					album: item.album, // album that the song is in
-					image: item.album.images[0].url, // image of the song
-					trackURL: item.external_urls.spotify,
-					albumURL: item.album.external_urls.spotify, // link to the song from Spotify
-					artistProfile: item.album.artists[0].external_urls.spotify, // link to the artist profile on Spotify
-					previewSong: item.preview_url, // 30-second clip of the song
-					trackNumber: item.track_number, // track number in the album
+					artists: item?.artists, // object: important info: externals_urls{spotify}, id, name
+					id: item?.id, // id of song
+					title: item?.name, // name of song
+					album: item?.album, // album that the song is in
+					image: item?.album?.images[0]?.url, // image of the song
+					trackURL: item?.external_urls?.spotify,
+					albumURL: item?.album?.external_urls?.spotify, // link to the song from Spotify
+					artistProfile: item?.album?.artists[0]?.external_urls?.spotify, // link to the artist profile on Spotify
+					previewSong: item?.preview_url, // 30-second clip of the song
+					trackNumber: item?.track_number, // track number in the album
 					duration: {
 						minutes: Math.floor(item.duration_ms / (1000 * 60)),
 						seconds: Math.floor((item.duration_ms / 1000) % 60),
 					}, // song length
-					popularity: item.popularity, // popularity score from 0 - 100
+					popularity: item?.popularity, // popularity score from 0 - 100
 				});
 
 				trackIds.push(item.id);
@@ -219,9 +219,9 @@ router.get("/recommendedtracks", recommendedTrackLimiter, (req, res) => {
 					recommended.push({
 						artists: track?.artists,
 						track_title: track?.name,
-						spotify_url: track?.external_urls.spotify,
+						spotify_url: track?.external_urls?.spotify,
 						id: track?.id,
-						image: track?.album.images[0].url,
+						image: track?.album?.images[0]?.url,
 						previewSong: track?.preview_url,
 						uri: track?.uri,
 						duration: {
@@ -235,7 +235,7 @@ router.get("/recommendedtracks", recommendedTrackLimiter, (req, res) => {
 					res.json({
 						recommended: recommended,
 						status: 200,
-						msg: "Choose a track",
+						msg: "Play a track",
 					});
 				} else {
 					res.json({

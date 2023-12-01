@@ -16,12 +16,12 @@ export const Navbar = () => {
 				<a href="http://localhost:3000/">
 					<img src={require("../images/icon.png")} alt="app_logo" width={50} height={50} />
 				</a>{" "}
-				Spotify Compare
+				SpotifyMe
 			</h1>
 			<div className="links">
 				<Link to="/">Home</Link>
 				{!sessionStorage.getItem("accessToken") ? (
-					<Link to="/login">Login</Link>
+					<Link to="/login">Log in</Link>
 				) : (
 					<>
 						<Link to="/userfeedback">Feedback</Link>

@@ -21,10 +21,15 @@
 	margin: 2rem 1rem 3rem 1rem;
 }
 
+.user-top-artists .top-artists-container img {
+	border: 1px black solid;
+}
+
 .user-top-container .user-top-artists select {
 	border-radius: 7px;
     height: 1.5rem;
     width: 10rem;
+	margin-bottom: 1rem;
 }
 
 .user-top-container .user-top-tracks {
@@ -40,6 +45,7 @@
 	border-radius: 7px;
     height: 1.5rem;
     width: 10rem;
+	margin-bottom: 1rem;
 }
 
 .user-top-container .user-recommended-tracks {
@@ -71,6 +77,7 @@
 	width: 11.5rem;
 	/* color: black; */
 	transition: 0.6s;
+	background-color: rgb(255, 223, 175);
 }
 
 .top-artists-container .single-item:hover {
@@ -135,10 +142,11 @@
 	align-items: center;
 	border: 1px black solid;
 	border-radius: 20px;
-	margin: 2%;
+	margin: 1.5em 1em;
 	padding: 2%;
 	transition: 0.3s;
 	min-width: 0;
+	background-color: rgb(255, 223, 175);
 }
 
 .top-tracks-container .single-item p {
@@ -206,11 +214,8 @@
 }
 
 .top-tracks-container .single-item a:hover {
-	background-color: rgb(241, 227, 227);
-}
-
-.top-tracks-container .single-item img {
-	border-radius: 25%;
+		background-color: rgb(233, 143, 143);
+		box-shadow: 6px 6px 50px 3px rgb(255, 0, 0);
 }
 
 .top-track-artists p:not(:last-child)::after {
@@ -220,6 +225,19 @@
 .top-tracks-container .single-item img {
 	border-radius: 25%;
 	margin-right: 2%;
+	border: 1px black solid;
+}
+
+.user-recommended-tracks .recommended-tracks-loading {
+	border-radius: 7px;
+    height: 1.5rem;
+    width: 5rem;
+	margin-bottom: 1rem;
+	transition: 0.6s;
+}
+
+.user-recommended-tracks .recommended-tracks-loading:hover {
+	box-shadow: 2px 2px 10px 7px rgb(255, 153, 0);
 }
 
 .recommended-container {
@@ -244,6 +262,7 @@
 	padding: 2%;
 	transition: 0.3s;
 	min-width: 0;
+	background-color: rgb(255, 223, 175);
 }
 
 .recommended-container .single-item:nth-child(1) {
@@ -355,13 +374,16 @@
 }
 
 .recommended-container .single-item a:hover {
-	background-color: rgb(241, 227, 227);
-	box-shadow: 6px 6px 10px 3px rgb(0, 255, 55); /* in order: x offset, y offset, blur size, spread size, color */
+	background-color: rgb(142, 212, 151);
+	box-shadow: 6px 6px 30px 5px rgb(0, 255, 55);
+	/* background-color: rgb(241, 227, 227);
+	box-shadow: 6px 6px 10px 3px rgb(0, 255, 55); in order: x offset, y offset, blur size, spread size, color */
 }
 
 .recommended-container .single-item img {
 	border-radius: 25%;
 	margin-right: 2%;
+	border: 1px black solid;
 }
 
 .recommended-container .single-item .recommended-preview-song-button {
@@ -369,6 +391,7 @@
 	height: 2em;
 	z-index: 1;
 	transition: 0.6s;
+	margin-bottom: 0.5em;
 }
 
 .recommended-container .single-item .recommended-preview-song-button:hover {
@@ -551,48 +574,6 @@
 		/* border: 4px white dotted; */
 	}
 }
-
-/* @media screen and (min-width: 350px) and (max-width: 450px) {
-	.user-top-container {
-		width: calc(100vw - 10vw);
-	}
-
-	.recommended-container .preview-add-buttons .recommended-preview-song-button {
-		text-indent: -9999px;
-		line-height: 0;
-	}
-
-	.recommended-preview-song-button::after {
-		content: "▶";
-		color: black;
-		text-indent: 0;
-		display: block;
-		line-height: initial;
-	}
-
-	.recommended-container .preview-add-buttons .recommended-add-song-button {
-		text-indent: -9999px;
-		line-height: 0;
-	}
-
-	.recommended-add-song-button::after {
-		content: "+";
-		font-size: medium;
-		text-indent: 0;
-		display: block;
-		line-height: initial;
-	}
-
-	.recommended-container .song-player {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		padding: 5%;
-		margin: 0 1em 1em 0.5em;
-		width: calc(100vw - 20vw);
-		border: 4px white dotted;
-	}
-} */
 
 @media screen and (min-width: 450px) and (max-width: 800px) {
 	.user-top-container {

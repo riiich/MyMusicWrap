@@ -16,10 +16,10 @@ const AUTH_URL = `https://accounts.spotify.com/authorize?
 export const Login = () => {
 	return (
 		<div>
-			<h1>Login Page</h1>
+			<h1>Please authorize with your Spotify account.</h1>
 
 			<a className="authorize" href={AUTH_URL}>
-				Authorize
+				<button>Authorize</button>
 			</a>
 		</div>
 	);
