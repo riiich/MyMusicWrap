@@ -122,10 +122,11 @@ export const UserTopSongs = () => {
 	return (
 		<div className="user-top-container">
 			<div className="user-top-artists">
-				<h1>Your Top 10 Artists</h1>
+				<h1>Your Top 10 Artists in the {sessionStorage.getItem("artist_time_range")} term</h1>
 				<select
 					name="selected-artists-time-range"
 					onChange={changeArtistTimeRange}
+					disabled={!sessionStorage.getItem("userName") ? true : false}
 				>
 					<option disabled="" selected="">
 						Select a time frame...
@@ -138,10 +139,11 @@ export const UserTopSongs = () => {
 			</div>
 
 			<div className="user-top-tracks">
-				<h1>Top Tracks in the {sessionStorage.getItem("track_time_range")} term</h1>
+				<h1>Your Top Tracks in the {sessionStorage.getItem("track_time_range")} term</h1>
 				<select
 					name="selected-tracks-time-range"
 					onChange={changeTrackTimeRange}
+					disabled={!sessionStorage.getItem("userName") ? true : false}
 				>
 					<option disabled="" selected="">
 						Select a time frame...
@@ -160,7 +162,7 @@ export const UserTopSongs = () => {
 					onClick={() => {
 						retrieveRecommendedTracks(accessToken);
 					}}
-					/*disabled={loadingRecommended}*/
+					disabled={!sessionStorage.getItem("track_time_range") ? true : false}
 				>
 					Load More
 				</button>

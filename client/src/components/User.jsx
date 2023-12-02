@@ -33,7 +33,7 @@ export const User = () => {
 					{user?.name}!
 				</h3>
 			) : (
-				""
+				<p>Please authorize in the top right to use to continue.</p>
 			)}
 		</div>
 	);

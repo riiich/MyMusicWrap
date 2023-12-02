@@ -42,6 +42,10 @@ body {
 	border-radius: 50%;
 }
 
+.user-intro p {
+	margin: 3% 0;
+}
+
 .song-list {
 	display: flex;
 	justify-content: center;
@@ -58,16 +62,22 @@ body {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	position: sticky;
+	top: 0;
+	z-index: 1;
 	margin-bottom: 1vh;
 	padding: 1vh;
 	height: 50px;
-	background: rgb(141, 136, 136);
+	background: rgb(105, 105, 105);
 	border-bottom-left-radius: 10px;
 	border-bottom-right-radius: 10px;
 	border-bottom: 1px rgb(9, 255, 0) solid;
 }
 
 .navbar h1 {
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	flex: 1;
 	margin-left: 20vw;
 }

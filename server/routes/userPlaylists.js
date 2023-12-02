@@ -9,7 +9,7 @@ router.use((req, res, next) => {
 	console.log("Performing an operation with the user's playlist!");
 	next();
 });
-
+  
 // middleware for GET requests
 const getRequests = (req, res, next) => {
 	if (!req.query.accessToken) {
@@ -110,7 +110,7 @@ router.post("/addToPlaylist", postRequests, async (req, res) => {
 				msg: "Successfully added the track in the playlist!",
 			});
 		}
-		else{ 
+		else{  
 			console.log("no playlist selected!");
 		}
 	} catch (err) {

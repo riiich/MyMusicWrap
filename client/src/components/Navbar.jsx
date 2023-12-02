@@ -20,8 +20,9 @@ export const Navbar = () => {
 			</h1>
 			<div className="links">
 				<Link to="/">Home</Link>
+				<Link to="/about">About</Link>
 				{!sessionStorage.getItem("accessToken") ? (
-					<Link to="/login">Log in</Link>
+					<Link to="/login">Log in/Authorize</Link>
 				) : (
 					<>
 						<Link to="/userfeedback">Feedback</Link>

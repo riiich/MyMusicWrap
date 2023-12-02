@@ -2,6 +2,7 @@ import "./styles/App.css";
 import { useState } from "react";
 import { Feedback } from "./components/Feedback";
 import { Navbar } from "./components/Navbar";
+import { About } from "./pages/About";
 import { Footer } from "./components/Footer";
 import { Home } from "./pages/Home";
 import { SearchBar } from "./components/SearchBar";
@@ -40,7 +41,7 @@ function App() {
 				<Routes>
 					<Route path="/" element={<Home />} />
 					<Route path="/login" element={<Login />} />
-					<Route path="/search" element={<SearchBar />} />
+					<Route path="/about" element={<About />} />
 					<Route path="/userfeedback" element={<Feedback />} />
 					<Route path="*" element={<ErrorPage />} />
 				</Routes>
