@@ -18,6 +18,8 @@ export const UserTopSongs = () => {
 	const accessToken = sessionStorage.getItem("accessToken");
 
 	const changeArtistTimeRange = (e) => {
+		if(!sessionStorage.getItem("userName")) return;
+
 		sessionStorage.setItem("artist_time_range", e.target.value);
 
 		setTimeout(() => {
@@ -45,6 +47,8 @@ export const UserTopSongs = () => {
 
 	// change the time frame to get tracks within certain time frames (long(~1+ yrs), medium(~6 months), and short(~4 wks) term)
 	const changeTrackTimeRange = (e) => {
+		if(!sessionStorage.getItem("userName")) return;
+
 		sessionStorage.setItem("track_time_range", e.target.value);
 
 		setTimeout(() => {
@@ -91,7 +95,7 @@ export const UserTopSongs = () => {
 		retrieveTopArtistsFromUser(accessToken);
 		setLoadingArtists(true);
 		console.log("useEffect1 triggered");
-	}, [accessToken]);
+	}, [accessToken, sessionStorage.getItem("userName")]);
 
 	useEffect(() => {
 		if (!accessToken) return;
@@ -126,7 +130,7 @@ export const UserTopSongs = () => {
 				<select
 					name="selected-artists-time-range"
 					onChange={changeArtistTimeRange}
-					disabled={!sessionStorage.getItem("userName") ? true : false}
+					// disabled={!sessionStorage.getItem("userName") ? true : false}
 				>
 					<option disabled="" selected="">
 						Select a time frame...
@@ -143,7 +147,7 @@ export const UserTopSongs = () => {
 				<select
 					name="selected-tracks-time-range"
 					onChange={changeTrackTimeRange}
-					disabled={!sessionStorage.getItem("userName") ? true : false}
+					// disabled={!sessionStorage.getItem("userName") ? true : false}
 				>
 					<option disabled="" selected="">
 						Select a time frame...

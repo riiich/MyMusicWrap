@@ -9,7 +9,7 @@ router.use((req, res, next) => {
 	console.log("Performing an operation with the user's playlist!");
 	next();
 });
-  
+   
 // middleware for GET requests
 const getRequests = (req, res, next) => {
 	if (!req.query.accessToken) {
