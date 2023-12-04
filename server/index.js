@@ -10,7 +10,7 @@ app.use(
 	cors({
 		// origin: "*",
 		// origin: "http://localhost:3000",
-		origin: "https://my-music-wrap.vercel.app/",
+		origin: ["https://my-music-wrap.vercel.app/"],
 		methods: ["GET", "POST"],
 		credentials: true,
 	})
@@ -23,7 +23,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 connectDB();
 
 app.get("/" , (req, res) => {
-	res.send("Hitting the MyMusicWrap endpoint!");
+	res.json({msg: "Hitting the MyMusicWrap endpoint!"});
 });
 
 // returns the user client id and client secret from their spotify account
