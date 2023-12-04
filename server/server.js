@@ -8,7 +8,8 @@ require("dotenv").config();
 
 app.use(
 	cors({
-		origin: "http://localhost:3000",
+		// origin: "http://localhost:3000",
+		origin: "https://my-music-wrap.vercel.app/",
 		methods: ["GET", "POST"],
 	})
 );

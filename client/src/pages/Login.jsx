@@ -1,5 +1,6 @@
 const CLIENT_ID = "addd071529764e90bb548a5b11edc35f"; // can be in the frontend since it's public
-const redirect_uri = "http://localhost:3000/";
+// const redirect_uri = "http://localhost:3000/";
+const redirect_uri = "https://my-music-wrap.vercel.app/";
 const AUTH_URL = `https://accounts.spotify.com/authorize?
 					client_id=${CLIENT_ID}
 					&response_type=code
