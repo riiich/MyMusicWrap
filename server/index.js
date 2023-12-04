@@ -19,14 +19,14 @@ app.use(
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get("/", (req, res) => {
-	res.json({
-		msg: "YOU HAVE REACHED THE SERVER!",
-	});
+app.get("/" , (req, res) => {
+	res.send("Hitting the MyMusicWrap endpoint!");
 });
 
 // attempt to connect to database
 connectDB();
+
+
 
 // returns the user client id and client secret from their spotify account
 const credentials = require("./routes/credentials");
