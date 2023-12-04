@@ -16,7 +16,7 @@ export const Navbar = () => {
 				<a href="http://localhost:3000/">
 					<img src={require("../images/icon.png")} alt="app_logo" width={50} height={50} />
 				</a>{" "}
-				SpotifyMe
+				MyMusicWrap
 			</h1>
 			<div className="links">
 				<Link to="/">Home</Link>

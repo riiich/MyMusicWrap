@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const SpotifyWebAPI = require("spotify-web-api-node");
 const axios = require("axios");
-
+ 
 const spotifyAPI = new SpotifyWebAPI();
  
 // middleware for all routes
@@ -9,7 +9,7 @@ router.use((req, res, next) => {
 	console.log("Performing an operation with the user's playlist!");
 	next();
 });
-   
+    
 // middleware for GET requests
 const getRequests = (req, res, next) => {
 	if (!req.query.accessToken) {
@@ -95,7 +95,7 @@ router.get("/", getRequests, async (req, res) => {
 		res.status(400).json({ msg: "Error getting user playlist!" });
 	}
 });
-    
+
 // adds the song into a certain playlist
 router.post("/addToPlaylist", postRequests, async (req, res) => {
 	try {

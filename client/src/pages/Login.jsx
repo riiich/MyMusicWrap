@@ -1,8 +1,9 @@
 const CLIENT_ID = "addd071529764e90bb548a5b11edc35f"; // can be in the frontend since it's public
+const redirect_uri = "http://localhost:3000/";
 const AUTH_URL = `https://accounts.spotify.com/authorize?
 					client_id=${CLIENT_ID}
 					&response_type=code
-					&redirect_uri=http://localhost:3000/
+					&redirect_uri=${redirect_uri}
 					&scope=streaming
 							%20user-read-email%20user-read-private
 							%20user-library-read%20user-library-modify

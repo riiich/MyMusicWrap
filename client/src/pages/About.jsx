@@ -2,9 +2,9 @@ export const About = () => {
 	return (
 		<div className="about">
 			<div className="about-content">
-				<h1>What is SpotifyMe?</h1>
+				<h1>What is MyMusicWrap?</h1>
 				<p>
-					SpotifyMe was inspired by that one thing we all wait for towards the end of the year,{" "}
+				MyMusicWrap was inspired by that one thing we all wait for towards the end of the year,{" "}
 					<strong>Spotify Wrapped</strong>! Aren't we curious as to how our music tastes and genre
 					changes through the weeks, months, and even throughout the years? I know I am.
 				</p>

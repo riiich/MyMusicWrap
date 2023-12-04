@@ -1,7 +1,7 @@
 export const Footer = () => {
     return (
         <div className="footer">
-            <p>SpotifyMe&trade;</p>
+            <p>MyMusicWrap&trade;</p>
         </div>
     );
 };  
