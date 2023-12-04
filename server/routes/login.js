@@ -18,6 +18,12 @@ router.use(async (req, res, next) => {
     next();
 });
 
+router.get('/', (req, res) => {
+    res.json({
+        msg: "Hit the login endpoint",
+    });
+})
+
 router.post('/', (req, res) => {
     const credentials = {
         clientId: process.env.CLIENT_ID,
