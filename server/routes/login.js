@@ -37,9 +37,6 @@ router.post('/', (req, res) => {
     
     spotifyAPI.authorizationCodeGrant(code)
         .then(result => {
-            spotifyAPI.setAccessToken(result.body.access_token);
-            spotifyAPI.setRefreshToken(result.body.refresh_token);
-
             console.log("Successfully logged in!");
 
             res.json({
