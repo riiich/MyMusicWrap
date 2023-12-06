@@ -31,7 +31,7 @@ router.post('/', (req, res) => {
         clientSecret: process.env.CLIENT_SECRET,
         redirectUri: process.env.REDIRECT_URI,
     };
-
+    console.log("placeholder");
     const spotifyAPI = new SpotifyWebAPI(credentials);
 
     const code = req.body.code;
