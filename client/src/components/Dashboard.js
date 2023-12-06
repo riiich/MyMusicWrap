@@ -10,6 +10,7 @@ export const Dashboard = ({ code }) => {
 	const accessToken = clientCredentials(code); // this access token allows us to do things with spotify api
 	
 	// console.log(sessionCode);
+	console.log("access token");
 	console.log(accessToken);
 
 	if (!accessToken) return;

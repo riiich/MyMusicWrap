@@ -8,8 +8,8 @@ export const Dashboard = ({ code }) => {
 	const sessionCode = sessionStorage.getItem("code");
 	const accessToken = clientCredentials(code); // this access token allows us to do things with spotify api
 
-	console.log(sessionCode);
-	console.log(accessToken);
+	// console.log(sessionCode);
+	// console.log(accessToken);
 
 	if (!accessToken) return;
 	else {

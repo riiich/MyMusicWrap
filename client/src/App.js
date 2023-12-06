@@ -31,8 +31,8 @@ function App() {
 			we made it disappear in credentials.js in the userLogin function
 	*/
 
-	console.log(code);
-	console.log(spotifyCode);
+	// console.log(code);
+	// console.log(spotifyCode);
 
 	return (
 		<div className="App">

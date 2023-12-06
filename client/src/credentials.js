@@ -10,8 +10,8 @@ export const clientCredentials = (code) => {
 	const today = new Date();
 	let currentTime = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
 
-	console.log(spotifyUserCode);
-	console.log(code);
+	// console.log(spotifyUserCode);
+	// console.log(code);
 
 	const userLogin = async (code) => {
 		try {
