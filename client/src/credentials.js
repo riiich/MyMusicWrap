@@ -15,10 +15,11 @@ export const clientCredentials = (code) => {
 
 	const userLogin = async (code) => {
 		try {
-			const response = await axios.post("http://localhost:3001/login", {
+			const response = await axios.post("http://ec2-54-153-81-155.us-west-1.compute.amazonaws.com:3001/login", {
+			// const response = await axios.post("http://localhost:3001/login", {
 				code, // passing the code through the api call
 			});
-			
+
 			console.log(response.data);
 			console.log(response.data.accessToken);
 			console.log(response.data.refreshToken);
@@ -39,7 +40,7 @@ export const clientCredentials = (code) => {
 			sessionStorage.clear();
 			setTimeout(() => {
 				window.location = "/"; // redirects back to home page if there is an error
-			}, 2000);
+			}, 30000);
 		}
 	};
 
@@ -77,7 +78,8 @@ export const clientCredentials = (code) => {
 
 	const userRefresh = async (code) => {
 		try {
-			const response = await axios.post("http://localhost:3001/refresh", {
+			const response = await axios.post("http://ec2-54-153-81-155.us-west-1.compute.amazonaws.com:3001/refresh", {
+			// const response = await axios.post("http://localhost:3001/refresh", {
 				refreshToken, // passing the code through the api call
 			});
 
