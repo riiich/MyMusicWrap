@@ -45,7 +45,7 @@ export const RecommendedTracks = ({ recommendedTracks, loading, accessToken, mes
 	useEffect(() => {
 		const getUserPlaylists = async () => {
 			try {
-				const response = await axios.get("http://ec2-54-153-81-155.us-west-1.compute.amazonaws.com:3001/myplaylists", {
+				const response = await axios.get("https://mymusicwrap.onrender.com/myplaylists", {
 					params: { accessToken },
 				});
 
@@ -69,7 +69,7 @@ export const RecommendedTracks = ({ recommendedTracks, loading, accessToken, mes
 	useEffect(() => {
 		const addTrackToPlaylist = async () => {
 			try {
-				await axios.post("http://ec2-54-153-81-155.us-west-1.compute.amazonaws.com:3001/myplaylists/addToPlaylist", {
+				await axios.post("https://mymusicwrap.onrender.com/myplaylists/addToPlaylist", {
 					accessToken,
 					selectedPlaylistId,
 				});

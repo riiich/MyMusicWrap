@@ -6,7 +6,7 @@ export const User = () => {
 
 	const getUserInfo = async (accessToken) => {
 		try {
-			const res = await axios.get("http://ec2-54-153-81-155.us-west-1.compute.amazonaws.com:3001/user", {
+			const res = await axios.get("https://mymusicwrap.onrender.com/user", {
 				params: { accessToken },
 			});
 			setUser(res.data);

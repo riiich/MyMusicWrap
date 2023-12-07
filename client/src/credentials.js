@@ -15,7 +15,7 @@ export const clientCredentials = (code) => {
 
 	const userLogin = async (code) => {
 		try {
-			const response = await axios.post("http://ec2-54-153-81-155.us-west-1.compute.amazonaws.com:3001/login", {
+			const response = await axios.post("https://mymusicwrap.onrender.com/login", {
 			// const response = await axios.post("http://localhost:3001/login", {
 				code, // passing the code through the api call
 			});
@@ -78,7 +78,7 @@ export const clientCredentials = (code) => {
 
 	const userRefresh = async (code) => {
 		try {
-			const response = await axios.post("http://ec2-54-153-81-155.us-west-1.compute.amazonaws.com:3001/refresh", {
+			const response = await axios.post("https://mymusicwrap.onrender.com/refresh", {
 			// const response = await axios.post("http://localhost:3001/refresh", {
 				refreshToken, // passing the code through the api call
 			});

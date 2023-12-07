@@ -33,7 +33,7 @@ export const UserTopSongs = () => {
 			// if the user hasn't selected a time range, don't do anything
 			if (!topArtistTimeRange) return;
 
-			const response = await axios.get("http://ec2-54-153-81-155.us-west-1.compute.amazonaws.com:3001/mostlistened/artists", {
+			const response = await axios.get("https://mymusicwrap.onrender.com/mostlistened/artists", {
 				params: { accessToken, topArtistTimeRange },
 			});
 
@@ -61,7 +61,7 @@ export const UserTopSongs = () => {
 			if (!topTrackTimeRange) return;
 
 			// console.log(topTrackTimeRange);
-			const response = await axios.get("http://ec2-54-153-81-155.us-west-1.compute.amazonaws.com:3001/mostlistened/tracks", {
+			const response = await axios.get("https://mymusicwrap.onrender.com/mostlistened/tracks", {
 				params: { accessToken, topTrackTimeRange },
 			});
 
@@ -77,7 +77,7 @@ export const UserTopSongs = () => {
 		try {
 			if(!topTrackTimeRange) return;
 
-			const response = await axios.get("http://ec2-54-153-81-155.us-west-1.compute.amazonaws.com:3001/mostlistened/recommendedtracks", {
+			const response = await axios.get("https://mymusicwrap.onrender.com/mostlistened/recommendedtracks", {
 				params: { accessToken },
 			});
 
