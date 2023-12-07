@@ -18,7 +18,7 @@ export const clientCredentials = (code) => {
 			const response = await axios.post("http://localhost:3001/login", {
 				code, // passing the code through the api call
 			});
-
+			
 			console.log(response.data);
 			console.log(response.data.accessToken);
 			console.log(response.data.refreshToken);
