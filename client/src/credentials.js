@@ -25,8 +25,8 @@ export const clientCredentials = (code) => {
 			console.log(response.data.refreshToken);
 			setAccessToken(response.data.accessToken);
 			setRefreshToken(response.data.refreshToken);
-			// setExpiresIn(response.data.expiresIn);
-			setExpiresIn(70);
+			setExpiresIn(response.data.expiresIn);
+			// setExpiresIn(70);
 			console.log(currentTime);
 
 			// *********** WORK ON THE CODE, ACCESS TOKEN, AND REFRESH TOKEN
@@ -40,7 +40,7 @@ export const clientCredentials = (code) => {
 			sessionStorage.clear();
 			setTimeout(() => {
 				window.location = "/"; // redirects back to home page if there is an error
-			}, 30000);
+			}, 2000);
 		}
 	};
 
@@ -86,8 +86,8 @@ export const clientCredentials = (code) => {
 			console.log(response.data);
 			console.log(response.data.accessToken);
 			setAccessToken(response.data.accessToken);
-			// setExpiresIn(response.data.expiresIn);
-			setExpiresIn(90);
+			setExpiresIn(response.data.expiresIn);
+			// setExpiresIn(90);
 			console.log(currentTime);
 		} catch (err) {
 			console.log(err);
