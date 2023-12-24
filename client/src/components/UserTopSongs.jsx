@@ -95,7 +95,7 @@ export const UserTopSongs = () => {
 		retrieveTopArtistsFromUser(accessToken);
 		setLoadingArtists(true);
 		console.log("useEffect1 triggered");
-	}, [accessToken, retrieveTopArtistsFromUser]);
+	}, [accessToken]);
 
 	useEffect(() => {
 		if (!accessToken) return;
