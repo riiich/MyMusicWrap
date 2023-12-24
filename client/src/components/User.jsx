@@ -26,7 +26,7 @@ export const User = () => {
 
 	return (
 		<div className="user-intro">
-			{sessionStorage.getItem("userName") ? (
+			{sessionStorage.getItem("userName") || sessionStorage.getItem("code") ? (
 				<h3>
 					Hi &nbsp;
 					<img src={user?.image} alt="user pic" width={30} height={30} />
