@@ -47,6 +47,19 @@ body {
 	color:rgb(161, 180, 160)
 }
 
+.user-intro a {
+	color: rgb(201, 54, 54);
+	transition: 0.2s;
+}
+
+.user-intro a:hover {
+	color: rgb(253, 36, 36);
+}
+
+.user-intro a:active {
+	text-decoration-color: rgb(255, 255, 255);
+}
+
 .song-list {
 	display: flex;
 	justify-content: center;

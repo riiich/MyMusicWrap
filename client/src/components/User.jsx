@@ -33,7 +33,18 @@ export const User = () => {
 					{user?.name}!
 				</h3>
 			) : (
-				<p>**** Please authorize in the top right to use to continue. ****</p>
+				<>
+					<p>**** Please authorize in the top right to use to continue. ****</p>
+					<p>
+						<small>
+							If you cannot log in to another account, please log out of your current Spotify
+							account{" "}
+							<a href="https://open.spotify.com/" target="_blank" rel="noreferrer">
+								here.
+							</a>
+						</small>
+					</p>
+				</>
 			)}
 		</div>
 	);
