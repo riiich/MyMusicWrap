@@ -39,7 +39,7 @@ export const User = () => {
 						<small>
 							If you cannot log in to another account, please log out of your current Spotify
 							account{" "}
-							<a href="https://open.spotify.com/" target="_blank" rel="noreferrer">
+							<a href="https://spotify.com/" target="_blank" rel="noreferrer">
 								here.
 							</a>
 						</small>
