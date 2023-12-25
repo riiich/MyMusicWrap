@@ -9,7 +9,7 @@ export const Navbar = () => {
 		navigate("/");
 		window.location.reload();
 	};
-
+	// THIS COMMENT WAS MADE AT 729 AM
 	return (
 		<div className="navbar">
 			<i class="fa-solid fa-bars"></i>
