@@ -12,6 +12,7 @@ export const Navbar = () => {
 
 	return (
 		<div className="navbar">
+			<i class="fa-solid fa-bars"></i>
 			<h1>
 				<a href="https://my-music-wrap.vercel.app/">
 					<img src={require("../images/icon.png")} alt="app_logo" width={50} height={50} />
