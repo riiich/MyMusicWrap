@@ -28,7 +28,7 @@ router.post('/', (req, res) => {
     const credentials = {
         clientId: process.env.CLIENT_ID,
         clientSecret: process.env.CLIENT_SECRET,
-        redirectUri: process.env.REDIRECT_URI,
+        redirectUri: "http://localhost:3000/"   //process.env.REDIRECT_URI,
     };
 
     const spotifyAPI = new SpotifyWebAPI(credentials);

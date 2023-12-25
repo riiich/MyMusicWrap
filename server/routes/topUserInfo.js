@@ -172,7 +172,7 @@ router.get("/recommendedtracks", recommendedTrackLimiter, (req, res) => {
 	try {
 		const recommended = []; // use the genres that the user listens to in order to look for recommended songs
 		const mostListenedTrackGenres = []; // store genres from the user's track/song history that appeat more than twice
-		const time = 1500;
+		const time = 500;
 
 		// have to use a setTimeout b/c topTrackGenres is used in other endpoints which make an API call, so it takes time to get the
 		//  data, so if this setTimeout is omitted, it will run this before the API call is finished, resulting in no data in topTrackGenres

@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { HamburgerMenu } from "./HamburgerMenu";
 
 export const Navbar = () => {
 	const navigate = new useNavigate();
@@ -9,25 +10,35 @@ export const Navbar = () => {
 		navigate("/");
 		window.location.reload();
 	};
-	// THIS COMMENT WAS MADE AT 729 AM
+
 	return (
 		<div className="navbar">
-			<i class="fa-solid fa-bars"></i>
 			<h1>
-				<a href="https://my-music-wrap.vercel.app/">
+				<a href="http://localhost:3000/">
 					<img src={require("../images/icon.png")} alt="app_logo" width={50} height={50} />
 				</a>{" "}
-				MyMusicWrap
+				<div className="nav-app-name">MyMusicWrap</div>
 			</h1>
 			<div className="links">
-				<Link to="/">Home</Link>
-				<Link to="/about">About</Link>
 				{!sessionStorage.getItem("accessToken") ? (
 					<Link to="/login">Log in/Authorize</Link>
 				) : (
 					<>
-						<Link to="/userfeedback">Feedback</Link>
-						<button onClick={signOut}>Sign out</button>
+						<div className="logged-in-links">
+							<Link to="/">Home</Link>
+							<Link to="/about">About</Link>
+							<Link to="/userfeedback">Feedback</Link>
+							<button onClick={signOut}>Sign out</button>
+						</div>
+						<div className="toggle-btn open">
+							<HamburgerMenu />
+						</div>
+						<div className="dropdown-menu">
+							<Link to="/">Home</Link>
+							<Link to="/about">About</Link>
+							<Link to="/userfeedback">Feedback</Link>
+							<button onClick={signOut}>Sign out</button>
+						</div>
 					</>
 				)}
 			</div>

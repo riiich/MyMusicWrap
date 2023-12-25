@@ -45,7 +45,7 @@ export const RecommendedTracks = ({ recommendedTracks, loading, accessToken, mes
 	useEffect(() => {
 		const getUserPlaylists = async () => {
 			try {
-				const response = await axios.get("https://mymusicwrap.onrender.com/myplaylists", {
+				const response = await axios.get("http://localhost:3001/myplaylists", {
 					params: { accessToken },
 				});
 
@@ -69,7 +69,7 @@ export const RecommendedTracks = ({ recommendedTracks, loading, accessToken, mes
 	useEffect(() => {
 		const addTrackToPlaylist = async () => {
 			try {
-				await axios.post("https://mymusicwrap.onrender.com/myplaylists/addToPlaylist", {
+				await axios.post("http://localhost:3001/myplaylists/addToPlaylist", {
 					accessToken,
 					selectedPlaylistId,
 				});

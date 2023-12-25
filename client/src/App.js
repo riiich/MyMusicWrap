@@ -5,7 +5,6 @@ import { Navbar } from "./components/Navbar";
 import { About } from "./pages/About";
 import { Footer } from "./components/Footer";
 import { Home } from "./pages/Home";
-import { SearchBar } from "./components/SearchBar";
 import { Login } from "./pages/Login";
 import { ErrorPage } from "./pages/error";
 import { Dashboard } from "./components/Dashboard";
