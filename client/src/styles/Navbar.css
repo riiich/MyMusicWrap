@@ -1,0 +1,327 @@
+/* --------- */
+li {
+	list-style: none;
+}
+a {
+	text-decoration: none;
+	color: rgb(204, 204, 204);
+}
+
+.line1,
+.line2,
+.line3 {
+	width: 30px;
+	height: 4px;
+	background-color: #ffffff;
+	border-radius: 20px;
+	margin: 6px 0;
+	transition: 0.4s;
+}
+
+.nav {
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+    position: sticky;
+	height: 8vh;
+	background: rgb(0, 33, 65);
+}
+
+/* .nav__brand {
+	text-transform: uppercase;
+} */
+
+.nav__menu {
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+	gap: 2rem;
+}
+.nav__toggler {
+	display: none;
+}
+.nav__toggler div {
+	width: 2.5rem;
+	height: 0.2rem;
+	margin: 0.4rem;
+	background: rgb(204, 204, 204);
+	transition: 0.3s ease-in;
+}
+
+/* Active Class */
+.nav__active {
+	transform: translateX(0%);
+}
+
+/* Toggle Icon Animation */
+
+.toggle .line1 {
+	transform: rotate(-45deg) translate(-4px, 9px);
+}
+.toggle .line2 {
+	opacity: 0;
+}
+.toggle .line3 {
+	transform: rotate(45deg) translate(-4px, -9px);
+}
+
+/* -------------------- */
+
+@media screen and (max-width: 500px) {
+	/* .navbar {
+		display: flex;
+		justify-items: center;
+	} */
+
+	/* .navbar .nav-app-name {
+		font-size: large;
+		justify-content: left;
+		height: 20px;
+		width: 20px;
+	} */
+
+	/* .navbar .links a {
+		font-size: xx-small;
+		justify-content: flex-end;
+	} */
+
+	/* .navbar .links .logged-in-links {
+		display: none;
+	}
+
+	.navbar .toggle-btn {
+		display: block;
+	}
+
+	.navbar .dropdown-menu {
+		display: block;
+		flex-direction: row;
+	}
+
+	.navbar img {
+		width: 25px;
+		height: 25px;
+	} */
+
+	/* ---- */
+	.nav__toggler {
+		display: block;
+		cursor: pointer;
+	}
+	.nav__menu {
+		position: fixed;
+		top: 5vh;
+		right: 0;
+		height: 93vh;
+		width: 50vw;
+		background: rgb(0, 33, 65);
+		flex-direction: column;
+		transform: translateX(50%);
+		transition: 0.5s ease-in;
+	}
+	/* ---- */
+}
+
+/* @media screen and (max-width: 600px) {
+	.navbar h1 {
+		font-size: large;
+		justify-content: center;
+		align-items: center;
+		background-image: url("../images/icon.png");
+		height: 20px;
+		width: 20px;
+		text-indent: 100%;
+		white-space: nowrap;
+		overflow: hidden;
+	}
+
+	.navbar .links a {
+		font-size: xx-small;
+		justify-content: flex-end;
+	}
+
+	.navbar .nav-app-name {
+		display: none;
+	}
+
+	.navbar img {
+		width: 25px;
+		height: 25px;
+	}
+} */
+
+/* @media screen and (max-width: 700px) {
+	.navbar h1 {
+		font-size: medium;
+		justify-content: left;
+		height: 20px;
+		width: 20px;
+
+	}
+
+	.navbar img {
+		width: 25px;
+		height: 25px;
+	}
+
+	.bar1,
+	.bar2,
+	.bar3 {
+		width: 25px;
+		height: 3px;
+		background-color: #ffffff;
+		border-radius: 20px;
+		margin: 6px 0;
+		transition: 0.4s;
+	}
+} */
+
+/* @media screen and (max-width: 800px) {
+	.navbar h1 {
+		font-size: larger;
+		justify-content: left;
+		height: 20px;
+		width: 20px;
+
+	}
+
+	.navbar .links a {
+		font-size: xx-small;
+		justify-content: flex-end;
+	}
+
+	.navbar img {
+		width: 25px;
+		height: 25px;
+	}
+} */
+
+/* ============== */
+.navbar {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: sticky;
+	top: 0;
+	z-index: 1;
+	margin-bottom: 1vh;
+	padding: 1vh;
+	height: 50px;
+	background: rgb(105, 105, 105);
+	border-bottom-left-radius: 10px;
+	border-bottom-right-radius: 10px;
+	border-bottom: 1px rgb(9, 255, 0) solid;
+}
+
+.navbar h1 {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex: 1;
+	margin-left: 20vw;
+}
+
+.navbar .links a {
+	flex: 0.5;
+	/* align-self: flex-end; */
+	align-items: center;
+	margin: 0 2vw 0 1vw;
+	color: rgb(0, 0, 0);
+	text-decoration: none;
+	font-weight: bolder;
+}
+
+.navbar .links a:hover {
+	color: rgb(59, 70, 58);
+	text-decoration: underline;
+}
+
+.navbar .links a:active {
+	color: rgb(33, 180, 19);
+	text-decoration: underline;
+}
+
+.navbar button {
+	border-radius: 7px;
+	margin-right: 1rem;
+	padding: 5px;
+	background-color: rgb(230, 100, 100);
+	color: #fffefe;
+}
+
+.navbar button:hover {
+	border-radius: 7px;
+	margin-right: 1rem;
+	padding: 5px;
+	background-color: rgb(231, 45, 45);
+	color: #fffefe;
+}
+
+.navbar button:active {
+	border-radius: 7px;
+	margin-right: 1rem;
+	padding: 5px;
+	background-color: rgb(255, 0, 0);
+	color: #fffefe;
+}
+
+.navbar .toggle-btn {
+	display: none;
+	margin-right: 2rem;
+}
+
+.burger-menu-icon {
+	display: inline-block;
+	cursor: pointer;
+}
+
+.navbar .dropdown-menu {
+	/* display: none; */
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	position: absolute;
+	right: 0;
+	padding: 1rem;
+	top: 4rem;
+	width: 10rem;
+	background-color: rgba(255, 255, 255, 0.5);
+	backdrop-filter: blur(15px);
+	border-radius: 20px;
+}
+
+.navbar .dropdown-menu a {
+	padding: 1rem;
+}
+
+.navbar .dropdown-menu button {
+	margin: 8%;
+	width: 100%;
+}
+
+.bar1,
+.bar2,
+.bar3 {
+	width: 30px;
+	height: 4px;
+	background-color: #ffffff;
+	border-radius: 20px;
+	margin: 6px 0;
+	transition: 0.4s;
+}
+
+/* Rotate first bar */
+.change .bar1 {
+	transform: translate(0, 11px) rotate(-45deg);
+}
+
+/* Fade out the second bar */
+.change .bar2 {
+	opacity: 0;
+}
+
+/* Rotate last bar */
+.change .bar3 {
+	transform: translate(0, -11px) rotate(45deg);
+}

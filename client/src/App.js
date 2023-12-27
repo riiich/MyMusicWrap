@@ -1,4 +1,5 @@
 import "./styles/App.css";
+import "./styles/Navbar.css";
 import { useState } from "react";
 import { Feedback } from "./components/Feedback";
 import { Navbar } from "./components/Navbar";

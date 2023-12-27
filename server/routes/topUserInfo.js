@@ -166,11 +166,11 @@ const delay = (time) => {
 	return new Promise((resolve) => setTimeout(resolve, time));
 };
 
-// this endpoint depends on the artists and tracks endpoints, so it needs to be a bit delayed to retrieve data from
+// this endpoint depends on the artists and tracks endpoints, so it needs to be a bit delayed to retrieve data from 
 //	spotify API to fill topArtistGenres and topTrackGenres
 router.get("/recommendedtracks", recommendedTrackLimiter, (req, res) => {
 	try {
-		const recommended = []; // use the genres that the user listens to in order to look for recommended songs
+		const recommended = []; // use the genres that the user listens to in order to look for recommended songs 
 		const mostListenedTrackGenres = []; // store genres from the user's track/song history that appeat more than twice
 		const time = 500;
 
