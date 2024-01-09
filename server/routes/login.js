@@ -20,6 +20,7 @@ router.use(async (req, res, next) => {
 
 router.get('/', (req, res) => {
     res.json({
+        status: 200,
         msg: "Hit the login endpoint",
     });
 })
