@@ -7,6 +7,13 @@ router.use((req, res, next) => {
 	next();
 });
 
+router.get("/", (req, res) => {
+    res.json({
+        status: 200,
+        msg: "Hitting feedback endpoint!",
+    });
+})
+
 router.post("/", async (req, res) => {
     const {feedback, userName, userID, spotifyURL, rating} = req.body;
 
