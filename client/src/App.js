@@ -1,4 +1,3 @@
-import { SpeedInsights } from "@vercel/speed-insights/next"
 import "./styles/App.css";
 import { useState } from "react";
 import { Feedback } from "./components/Feedback";
@@ -49,7 +48,6 @@ function App() {
 			</Router>
 			<Footer />
  			{!spotifyCode ? <></> : <Dashboard code={spotifyCode} />}
-			<SpeedInsights />
 		</div>
 	);
 }

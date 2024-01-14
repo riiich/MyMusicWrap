@@ -1,20 +1,12 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { SongPlayer } from "./SongPlayer";
-// import { Modal } from "./Modal";
 
 export const RecommendedTracks = ({ recommendedTracks, loading, accessToken, message }) => {
 	const [playlists, setPlaylists] = useState([]);
 	const [playlistsExist, setPlaylistExists] = useState(false);
-	// const [playlistsExist, setPlaylistExists] = useState(Array(recommendedTracks.length).fill(false));
 	const [selectedTrackURI, setSelectedTrackURI] = useState("");
 	const [selectedPlaylistId, setSelectedPlaylistId] = useState({ playlistId: null, trackURI: null });
-	const [selectedTrackIndex, setSelectedTrackIndex] = useState(null);
-	// const [isModal, setIsModal] = useState(false);
-
-	// const setModal = (e) => {
-	// 	setIsModal((prev) => !prev);
-	// };
 
 	const plExists = (e, index) => {
 		try {
@@ -45,6 +37,9 @@ export const RecommendedTracks = ({ recommendedTracks, loading, accessToken, mes
 	useEffect(() => {
 		const getUserPlaylists = async () => {
 			try {
+				// ******************************************
+				// haven't tested it yet, but this vercel one should work now. change it whenever: https://my-music-wrap-server.vercel.app/ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+				// ******************************************
 				const response = await axios.get("https://mymusicwrap.onrender.com/myplaylists", {
 					params: { accessToken },
 				});
@@ -61,9 +56,6 @@ export const RecommendedTracks = ({ recommendedTracks, loading, accessToken, mes
 			getUserPlaylists();
 		}
 
-		// if (accessToken) {
-		// 	getUserPlaylists();
-		// }
 	}, [accessToken, playlistsExist, recommendedTracks]);
 
 	useEffect(() => {
