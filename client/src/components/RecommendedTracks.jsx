@@ -40,7 +40,7 @@ export const RecommendedTracks = ({ recommendedTracks, loading, accessToken, mes
 				// ******************************************
 				// haven't tested it yet, but this vercel one should work now. change it whenever: https://my-music-wrap-server.vercel.app/ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 				// ******************************************
-				const response = await axios.get("https://mymusicwrap.onrender.com/myplaylists", {
+				const response = await axios.get("http://localhost:3001/myplaylists", {
 					params: { accessToken },
 				});
 
@@ -55,13 +55,12 @@ export const RecommendedTracks = ({ recommendedTracks, loading, accessToken, mes
 		if (accessToken && playlistsExist) {
 			getUserPlaylists();
 		}
-
 	}, [accessToken, playlistsExist, recommendedTracks]);
 
 	useEffect(() => {
 		const addTrackToPlaylist = async () => {
 			try {
-				await axios.post("https://mymusicwrap.onrender.com/myplaylists/addToPlaylist", {
+				await axios.post("http://localhost:3001/myplaylists/addToPlaylist", {
 					accessToken,
 					selectedPlaylistId,
 				});
@@ -73,7 +72,6 @@ export const RecommendedTracks = ({ recommendedTracks, loading, accessToken, mes
 		if (accessToken && !playlistsExist) {
 			addTrackToPlaylist();
 		}
-
 	}, [accessToken, playlistsExist, selectedPlaylistId]);
 
 	return (
@@ -85,7 +83,7 @@ export const RecommendedTracks = ({ recommendedTracks, loading, accessToken, mes
 					<div className="single-item" key={item.id}>
 						<div className="recommended-buttons">
 							<a href={item.spotify_url} target="_blank" rel="noopener noreferrer">
-								<img src={item.image} alt="track_img" width={55} height={55} />
+								<img src={item.image} alt="track_img" />
 								<div>
 									<p className="recommended-track-title">
 										<strong>{item.track_title}</strong>

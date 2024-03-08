@@ -26,7 +26,7 @@ export const Feedback = () => {
 				return;
 			}
 
-			const data = await axios.post("https://mymusicwrap.onrender.com/feedback", {
+			const data = await axios.post("http://localhost:3001/feedback", {
 				feedback: appFeedback,
 				userName: sessionStorage?.getItem("userName"),
 				userID: sessionStorage?.getItem("userID"),
