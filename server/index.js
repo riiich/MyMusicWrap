@@ -22,8 +22,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // attempt to connect to database
 connectDB();
 
-app.get("/" , (req, res) => {
-	res.json({msg: "Hitting the MyMusicWrap endpoint!"});
+app.get("/", (req, res) => {
+	res.json({ msg: "Hitting the MyMusicWrap endpoint!" });
 });
 
 // returns the user client id and client secret from their spotify account
@@ -48,12 +48,11 @@ app.use("/myplaylists", userPlaylists);
 
 const feedback = require("./routes/userFeedback");
 app.use("/feedback", feedback);
-  
+
 mongoose.connection.once("open", () => {
 	console.log("Connected to MongoDB!");
-	
+
 	app.listen(process.env.PORT, () => {
 		console.log(`Listening on port ${process.env.PORT}`);
 	});
 });
- 

@@ -18,7 +18,7 @@ export const UserTopSongs = () => {
 	const accessToken = sessionStorage.getItem("accessToken");
 
 	const changeArtistTimeRange = (e) => {
-		if(!sessionStorage.getItem("userName")) return;
+		if (!sessionStorage.getItem("userName")) return;
 
 		sessionStorage.setItem("artist_time_range", e.target.value);
 
@@ -33,7 +33,7 @@ export const UserTopSongs = () => {
 			// if the user hasn't selected a time range, don't do anything
 			if (!topArtistTimeRange) return;
 
-			const response = await axios.get("https://mymusicwrap.onrender.com/mostlistened/artists", {
+			const response = await axios.get("http://localhost:3001/mostlistened/artists", {
 				params: { accessToken, topArtistTimeRange },
 			});
 
@@ -47,7 +47,7 @@ export const UserTopSongs = () => {
 
 	// change the time frame to get tracks within certain time frames (long(~1+ yrs), medium(~6 months), and short(~4 wks) term)
 	const changeTrackTimeRange = (e) => {
-		if(!sessionStorage.getItem("userName")) return;
+		if (!sessionStorage.getItem("userName")) return;
 
 		sessionStorage.setItem("track_time_range", e.target.value);
 
@@ -61,7 +61,7 @@ export const UserTopSongs = () => {
 			if (!topTrackTimeRange) return;
 
 			// console.log(topTrackTimeRange);
-			const response = await axios.get("https://mymusicwrap.onrender.com/mostlistened/tracks", {
+			const response = await axios.get("http://localhost:3001/mostlistened/tracks", {
 				params: { accessToken, topTrackTimeRange },
 			});
 
@@ -75,9 +75,9 @@ export const UserTopSongs = () => {
 
 	const retrieveRecommendedTracks = async (accessToken) => {
 		try {
-			if(!topTrackTimeRange) return;
+			if (!topTrackTimeRange) return;
 
-			const response = await axios.get("https://mymusicwrap.onrender.com/mostlistened/recommendedtracks", {
+			const response = await axios.get("http://localhost:3001/mostlistened/recommendedtracks", {
 				params: { accessToken },
 			});
 
@@ -127,6 +127,11 @@ export const UserTopSongs = () => {
 		<div className="user-top-container">
 			<div className="user-top-artists">
 				<h1>Your Top 10 Artists in the {sessionStorage.getItem("artist_time_range")} term</h1>
+				<img
+					src={require("../images/Spotify_Logo_RGB_White.png")}
+					alt="spotify_logo"
+					class="spotify_logo"
+				/>
 				<select
 					name="selected-artists-time-range"
 					onChange={changeArtistTimeRange}
@@ -144,6 +149,11 @@ export const UserTopSongs = () => {
 
 			<div className="user-top-tracks">
 				<h1>Your Top Tracks in the {sessionStorage.getItem("track_time_range")} term</h1>
+				<img
+					src={require("../images/Spotify_Logo_RGB_White.png")}
+					alt="spotify_logo"
+					class="spotify_logo"
+				/>
 				<select
 					name="selected-tracks-time-range"
 					onChange={changeTrackTimeRange}
@@ -161,6 +171,11 @@ export const UserTopSongs = () => {
 
 			<div className="user-recommended-tracks">
 				<h1>Recommended Tracks</h1>
+				<img
+					src={require("../images/Spotify_Logo_RGB_White.png")}
+					alt="spotify_logo"
+					class="spotify_logo"
+				/>
 				<button
 					className="recommended-tracks-loading"
 					onClick={() => {

@@ -18,7 +18,8 @@ body {
 	padding-bottom: 5rem;
 	position: relative;
 	min-height: 100%;
-	font-family: spotifyFont;
+	/* font-family: spotifyFont; */
+	font-family: sans-serif;
 	/* box-sizing: inherit; */
 	/* background-color: rgb(177, 250, 197); */
 	background-color: #414b3e;
@@ -38,13 +39,13 @@ body {
 	color: white;
 }
 
-.user-intro img {
+/* .user-intro img {
 	border-radius: 50%;
-}
+} */
 
 .user-intro p {
 	margin: 3% 0;
-	color:rgb(161, 180, 160)
+	color: rgb(161, 180, 160);
 }
 
 .user-intro a {
@@ -156,7 +157,7 @@ body {
 		display: flex;
 		justify-items: flex-start;
 	}
-	
+
 	.navbar h1 {
 		font-size: large;
 		justify-content: left;
