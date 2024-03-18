@@ -7,7 +7,7 @@ export const User = () => {
 	const getUserInfo = async (accessToken) => {
 		try {
 			// const res = await axios.get("https://mymusicwrap.onrender.com/user", {
-			const res = await axios.get("http://localhost:3001/user", {
+			const res = await axios.get("https://my-music-wrap-server.vercel.app/user", {
 				params: { accessToken },
 			});
 			setUser(res.data);

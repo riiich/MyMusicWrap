@@ -26,7 +26,7 @@ export const Feedback = () => {
 				return;
 			}
 
-			const data = await axios.post("http://localhost:3001/feedback", {
+			const data = await axios.post("https://my-music-wrap-server.vercel.app/feedback", {
 				feedback: appFeedback,
 				userName: sessionStorage?.getItem("userName"),
 				userID: sessionStorage?.getItem("userID"),
