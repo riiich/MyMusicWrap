@@ -8,20 +8,20 @@
 }
 
 .user-top-artists .spotify_logo {
-	width: 50%;
-	height: 10%;
+	width: 30%;
+	/* height: 10%; */
 	margin-bottom: 20px;
 }
 
 .user-top-tracks .spotify_logo {
-	width: 50%;
-	height: 10%;
+	width: 30%;
+	/* height: 10%; */
 	margin-bottom: 20px;
 }
 
 .user-recommended-tracks .spotify_logo {
-	width: 50%;
-	height: 6%;
+	width: 30%;
+	/* height: 6%; */
 	margin-bottom: 30px;
 }
 
