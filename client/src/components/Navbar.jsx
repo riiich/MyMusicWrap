@@ -13,8 +13,8 @@ export const Navbar = () => {
 	return (
 		<div className="navbar">
 			<h1>
-				<a href="https://my-music-wrap.vercel.app/">
-					<img src={require("../images/icon.png")} alt="app_logo" width={50} height={50} />
+				<a href="http://localhost:3000/">
+					{/* <img src={require("../images/icon.png")} alt="app_logo" width={50} height={50} /> */}
 				</a>{" "}
 				MyMusicWrap
 			</h1>
