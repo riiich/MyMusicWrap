@@ -33,7 +33,7 @@ export const UserTopSongs = () => {
 			// if the user hasn't selected a time range, don't do anything
 			if (!topArtistTimeRange) return;
 
-			const response = await axios.get("https://my-music-wrap-server.vercel.app/mostlistened/artists", {
+			const response = await axios.get("http://localhost:3001/mostlistened/artists", {
 				params: { accessToken, topArtistTimeRange },
 			});
 
@@ -61,7 +61,7 @@ export const UserTopSongs = () => {
 			if (!topTrackTimeRange) return;
 
 			// console.log(topTrackTimeRange);
-			const response = await axios.get("https://my-music-wrap-server.vercel.app/mostlistened/tracks", {
+			const response = await axios.get("http://localhost:3001/mostlistened/tracks", {
 				params: { accessToken, topTrackTimeRange },
 			});
 
@@ -77,7 +77,7 @@ export const UserTopSongs = () => {
 		try {
 			if (!topTrackTimeRange) return;
 
-			const response = await axios.get("https://my-music-wrap-server.vercel.app/mostlistened/recommendedtracks", {
+			const response = await axios.get("http://localhost:3001/mostlistened/recommendedtracks", {
 				params: { accessToken },
 			});
 

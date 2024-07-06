@@ -1,15 +1,15 @@
 import "./styles/App.css";
 import { useState } from "react";
 import { Feedback } from "./components/Feedback";
-import { Navbar } from "./components/Navbar";
+import { NavigationBar } from "./components/Navbar";
 import { About } from "./pages/About";
 import { Footer } from "./components/Footer";
 import { Home } from "./pages/Home";
-import { SearchBar } from "./components/SearchBar";
 import { Login } from "./pages/Login";
 import { ErrorPage } from "./pages/error";
 import { Dashboard } from "./components/Dashboard";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { NextUIProvider } from "@nextui-org/react";
 
 // in the url, it looks for the query parameter 'code' and returns an object of the item after '?'
 const code = new URLSearchParams(window.location.search).get("code");
@@ -35,20 +35,22 @@ function App() {
 	console.log(spotifyCode);
 
 	return (
-		<div className="App">
-			<Router>
-				<Navbar />
-				<Routes>
-					<Route path="/" element={<Home />} />
-					<Route path="/login" element={<Login />} />
-					<Route path="/about" element={<About />} />
-					<Route path="/userfeedback" element={<Feedback />} />
-					<Route path="*" element={<ErrorPage />} />
-				</Routes>
-			</Router>
-			<Footer />
- 			{!spotifyCode ? <></> : <Dashboard code={spotifyCode} />}
-		</div>
+		<NextUIProvider>
+			<div className="App">
+				<Router>
+					<NavigationBar />
+					<Routes>
+						<Route path="/" element={<Home />} />
+						<Route path="/login" element={<Login />} />
+						<Route path="/about" element={<About />} />
+						<Route path="/userfeedback" element={<Feedback />} />
+						<Route path="*" element={<ErrorPage />} />
+					</Routes>
+				</Router>
+				<Footer />
+				{!spotifyCode ? <></> : <Dashboard code={spotifyCode} />}
+			</div>
+		</NextUIProvider>
 	);
 }
 

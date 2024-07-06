@@ -40,7 +40,7 @@ export const RecommendedTracks = ({ recommendedTracks, loading, accessToken, mes
 				// ******************************************
 				// haven't tested it yet, but this vercel one should work now. change it whenever: https://my-music-wrap-server.vercel.app/ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 				// ******************************************
-				const response = await axios.get("https://my-music-wrap-server.vercel.app/myplaylists", {
+				const response = await axios.get("http://localhost:3001/myplaylists", {
 					params: { accessToken },
 				});
 
@@ -60,7 +60,7 @@ export const RecommendedTracks = ({ recommendedTracks, loading, accessToken, mes
 	useEffect(() => {
 		const addTrackToPlaylist = async () => {
 			try {
-				await axios.post("https://my-music-wrap-server.vercel.app/myplaylists/addToPlaylist", {
+				await axios.post("http://localhost:3001/myplaylists/addToPlaylist", {
 					accessToken,
 					selectedPlaylistId,
 				});
