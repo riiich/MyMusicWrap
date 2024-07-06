@@ -78,7 +78,8 @@ export const clientCredentials = (code) => {
 
 	const userRefresh = async (code) => {
 		try {
-			const response = await axios.post("https://mymusicwrap.onrender.com/refresh", {
+			const response = await axios.post("https://my-music-wrap-server.vercel.app/refresh", {
+			// const response = await axios.post("https://mymusicwrap.onrender.com/refresh", {
 				// const response = await axios.post("http://localhost:3001/refresh", {
 				refreshToken, // passing the code through the api call
 			});

@@ -61,6 +61,10 @@ body {
 	text-decoration-color: rgb(255, 255, 255);
 }
 
+.user-intro #wait-msg {
+	color: rgb(190, 5, 5);
+}
+
 .song-list {
 	display: flex;
 	justify-content: center;

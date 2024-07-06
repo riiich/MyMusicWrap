@@ -36,6 +36,7 @@ export const User = () => {
 			) : (
 				<>
 					<p>**** Please authorize in the top right to use to continue. ****</p>
+					<h3 id="wait-msg">IT MAY TAKE SOME TIME TO LOG IN, SO PLEASE WAIT PATIENTLY. THANK YOU!</h3>
 					<p>
 						<small>
 							If you cannot log in to another account, please log out of your current Spotify
