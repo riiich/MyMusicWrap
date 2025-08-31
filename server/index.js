@@ -23,6 +23,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 connectDB();
 
 app.get("/", (req, res) => {
+	console.log("Root endpoint hit!");
 	res.json({ msg: "Hitting the MyMusicWrap endpoint!" });
 });
 
