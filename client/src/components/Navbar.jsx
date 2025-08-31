@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import {
@@ -12,6 +13,7 @@ import {
 
 export const NavigationBar = () => {
 	const navigate = new useNavigate();
+	const [isMenuOpen, setIsMenuOpen] = useState(false);
 
 	const signOut = () => {
 		sessionStorage.clear();
@@ -20,68 +22,78 @@ export const NavigationBar = () => {
 	};
 
 	return (
-		<Navbar isBordered>
-			<NavbarBrand>
-				<h1 className="bg-pink p-5">
-					<a href="http://localhost:3000/">
-						{/* <img src={require("../images/icon.png")} alt="app_logo" width={50} height={50} /> */}
-					</a>{" "}
-					MyMusicWrap
-				</h1>
-			</NavbarBrand>
+		<Navbar isBordered isMenuOpen={isMenuOpen} onMenuOpenChange={setIsMenuOpen} className="bg-gray-dark">
+			<NavbarContent className="lg:hidden pr-3" justify="center">
+				<NavbarBrand>
+					<h1 className="font-bold">
+						<a href="http://localhost:3000/">
+							{/* <img src={require("../images/icon.png")} alt="app_logo" width={50} height={50} /> */}
+							MyMusicWrap
+						</a>{" "}
+					</h1>
+				</NavbarBrand>
+			</NavbarContent>
+			<NavbarContent className="sm:hidden" justify="end">
+				<NavbarMenuToggle aria-label={isMenuOpen ? "Close menu" : "Open menu"} />
+			</NavbarContent>
+
 			<NavbarContent className="hidden sm:flex gap-4" justify="center">
 				<NavbarItem>
 					<Link color="foreground" to="/">
 						Home
-					</Link>0
+					</Link>
 				</NavbarItem>
+
 				<NavbarItem>
 					<Link color="foreground" to="/about">
 						About
 					</Link>
 				</NavbarItem>
+
 				{!sessionStorage.getItem("accessToken") ? (
 					<NavbarItem>
 						<Link to="/login">Log in/Authorize</Link>
 					</NavbarItem>
 				) : (
-					// <>
-					// 	<Link to="/userfeedback">Feedback</Link>
-					// 	<button onClick={signOut}>Sign out</button>
-					// </>
 					<>
 						<NavbarItem>
 							<Link color="foreground" to="/userfeedback">
 								Feedback
 							</Link>
 						</NavbarItem>
+
 						<NavbarItem>
 							<button onClick={signOut}>Sign out</button>
 						</NavbarItem>
 					</>
 				)}
 			</NavbarContent>
-		</Navbar>
 
-		// <div className="navbar">
-		// 	<h1>
-		// 		<a href="http://localhost:3000/">
-		// 			{/* <img src={require("../images/icon.png")} alt="app_logo" width={50} height={50} /> */}
-		// 		</a>{" "}
-		// 		MyMusicWrap
-		// 	</h1>
-		// 	<div className="links">
-		// 		<Link to="/">Home</Link>
-		// 		{/* <Link to="/about">About</Link> */}
-		// 		{!sessionStorage.getItem("accessToken") ? (
-		// 			<Link to="/login">Log in/Authorize</Link>
-		// 		) : (
-		// 			<>
-		// 				<Link to="/userfeedback">Feedback</Link>
-		// 				<button onClick={signOut}>Sign out</button>
-		// 			</>
-		// 		)}
-		// 	</div>
-		// </div>
+			<NavbarMenu className="opacity-90 bg-green" justify="end">
+				<NavbarMenuItem>
+					<Link className="w-full" to="/" size="lg">
+						Home
+					</Link>
+				</NavbarMenuItem>
+
+				<NavbarMenuItem>
+					<Link className="w-full" to="/about" size="lg">
+						About
+					</Link>
+				</NavbarMenuItem>
+
+				{!sessionStorage.getItem("accessToken") ? (
+					<NavbarMenuItem>
+						<Link className="w-full" to="/login" size="lg">
+							Login/Authorize
+						</Link>
+					</NavbarMenuItem>
+				) : (
+					<NavbarMenuItem>
+						<button onClick={signOut}>Sign out</button>
+					</NavbarMenuItem>
+				)}
+			</NavbarMenu>
+		</Navbar>
 	);
 };

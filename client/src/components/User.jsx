@@ -12,6 +12,8 @@ export const User = () => {
 				params: { accessToken },
 			});
 			setUser(res.data);
+
+			// store user info in session storage
 			sessionStorage.setItem("userName", res.data?.name);
 			sessionStorage.setItem("userID", res.data?.id);
 			sessionStorage.setItem("userSpotifyURL", res.data?.userSpotify);
