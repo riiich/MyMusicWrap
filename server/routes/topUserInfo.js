@@ -73,7 +73,7 @@ router.get("/artists", async (req, res) => {
 		})
 		.catch((err) => {
 			console.log("ERROR GETTING USER'S FAVORITE ARTISTS!");
-			console.log(err);
+			console.log("error:", err);
 			res.sendStatus(400);
 		});
 });
