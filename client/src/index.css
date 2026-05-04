@@ -37,11 +37,18 @@
 	}
 
 	body {
-		@apply m-0 min-h-full bg-[#0f1711] text-[#eef6ef] antialiased;
+		@apply m-0 min-h-full bg-[#edf8ee] text-[#102016] antialiased transition-colors duration-300;
 		font-family: "Gotham Modern", sans-serif;
 		background:
-			radial-gradient(circle at top, rgba(74, 222, 128, 0.18), transparent 28%),
-			linear-gradient(180deg, #09110c 0%, #152219 42%, #0f1711 100%);
+			radial-gradient(circle at top left, rgba(34, 197, 94, 0.2), transparent 30%),
+			linear-gradient(180deg, #f7fff7 0%, #dff4e3 48%, #eef8ef 100%);
+	}
+
+	html.dark body {
+		@apply bg-[#0f1711] text-[#eef6ef];
+		background:
+			radial-gradient(circle at top, rgba(190, 242, 100, 0.2), transparent 30%),
+			linear-gradient(180deg, #09110c 0%, #16351f 44%, #0f1711 100%);
 	}
 
 	#root {

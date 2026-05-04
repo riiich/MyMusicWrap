@@ -28,6 +28,13 @@ export const UserTopSongs = () => {
 		() => sessionStorage.getItem("track_time_range") || "",
 	);
 	const accessToken = sessionStorage.getItem("accessToken");
+	const panelClass =
+		"flex min-h-full flex-col items-stretch rounded-[30px] border border-emerald-700/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.97),rgba(226,244,229,0.94)),linear-gradient(135deg,rgba(34,197,94,0.08),transparent_45%)] p-6 shadow-[0_28px_50px_rgba(16,64,30,0.12)] dark:border-lime-200/15 dark:bg-[linear-gradient(180deg,rgba(23,45,29,0.94),rgba(10,24,15,0.96)),linear-gradient(135deg,rgba(190,242,100,0.12),transparent_45%)] dark:shadow-[0_28px_50px_rgba(0,0,0,0.24)]";
+	const eyebrowClass = "mb-2 text-[0.72rem] font-bold uppercase tracking-[0.22em] text-emerald-700 dark:text-lime-300";
+	const headingClass = "font-['Gotham_Display'] text-[clamp(1.35rem,1.6vw,1.85rem)] tracking-[-0.04em] text-[#102016] dark:text-[#f5fff7]";
+	const descriptionClass = "mt-3 leading-7 text-[#486052] dark:text-lime-50/70";
+	const selectClass =
+		"w-full max-w-[16rem] self-start rounded-[18px] border border-emerald-700/10 bg-white/95 px-4 py-3 text-[0.95rem] font-medium text-[#0f1f14] shadow-[inset_0_1px_0_rgba(255,255,255,0.5)] outline-none focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-emerald-400/50 dark:border-lime-200/20 dark:bg-lime-50/95";
 
 	const changeArtistTimeRange = (e) => {
 		if (!sessionStorage.getItem("userName")) return;
@@ -136,15 +143,15 @@ export const UserTopSongs = () => {
 
 	return (
 		<div className="grid grid-cols-1 gap-5 xl:grid-cols-3 lg:grid-cols-2">
-			<section className="flex min-h-full flex-col items-stretch rounded-[30px] border border-emerald-200/15 bg-[linear-gradient(180deg,rgba(21,35,26,0.94),rgba(12,21,16,0.96)),linear-gradient(135deg,rgba(74,222,128,0.08),transparent_45%)] p-6 shadow-[0_28px_50px_rgba(0,0,0,0.24)]">
+			<section className={panelClass}>
 				<div className="text-left">
-					<p className="mb-2 text-[0.72rem] font-bold uppercase tracking-[0.22em] text-emerald-300">
+					<p className={eyebrowClass}>
 						Profile Snapshot
 					</p>
-					<h1 className="font-['Gotham_Display'] text-[clamp(1.35rem,1.6vw,1.85rem)] tracking-[-0.04em] text-[#f5fff7]">
+					<h1 className={headingClass}>
 						Your Top 10 Artists
 					</h1>
-					<p className="mt-3 leading-7 text-emerald-50/70">
+					<p className={descriptionClass}>
 						{topArtistTimeRange
 							? `Based on your ${TIMEFRAME_LABELS[topArtistTimeRange]} listening window`
 							: "Choose a timeframe to load your artist rankings."}
@@ -156,7 +163,7 @@ export const UserTopSongs = () => {
 					className="mb-4 mt-5 w-36 self-start opacity-90"
 				/>
 				<select
-					className="w-full max-w-[16rem] self-start rounded-[18px] border border-emerald-200/20 bg-white/95 px-4 py-3 text-[0.95rem] font-medium text-[#0f1f14] shadow-[inset_0_1px_0_rgba(255,255,255,0.5)] outline-none focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-emerald-400/50"
+					className={selectClass}
 					name="selected-artists-time-range"
 					onChange={changeArtistTimeRange}
 					value={topArtistTimeRange}
@@ -171,15 +178,15 @@ export const UserTopSongs = () => {
 				<ListArtists userInfo={topArtists} loading={loadingArtists} />
 			</section>
 
-			<section className="flex min-h-full flex-col items-stretch rounded-[30px] border border-emerald-200/15 bg-[linear-gradient(180deg,rgba(21,35,26,0.94),rgba(12,21,16,0.96)),linear-gradient(135deg,rgba(74,222,128,0.08),transparent_45%)] p-6 shadow-[0_28px_50px_rgba(0,0,0,0.24)]">
+			<section className={panelClass}>
 				<div className="text-left">
-					<p className="mb-2 text-[0.72rem] font-bold uppercase tracking-[0.22em] text-emerald-300">
+					<p className={eyebrowClass}>
 						On Repeat
 					</p>
-					<h1 className="font-['Gotham_Display'] text-[clamp(1.35rem,1.6vw,1.85rem)] tracking-[-0.04em] text-[#f5fff7]">
+					<h1 className={headingClass}>
 						Your Top Tracks
 					</h1>
-					<p className="mt-3 leading-7 text-emerald-50/70">
+					<p className={descriptionClass}>
 						{topTrackTimeRange
 							? `Pulled from your ${TIMEFRAME_LABELS[topTrackTimeRange]} track history`
 							: "Choose a timeframe to load your most-played tracks."}
@@ -191,7 +198,7 @@ export const UserTopSongs = () => {
 					className="mb-4 mt-5 w-36 self-start opacity-90"
 				/>
 				<select
-					className="w-full max-w-[16rem] self-start rounded-[18px] border border-emerald-200/20 bg-white/95 px-4 py-3 text-[0.95rem] font-medium text-[#0f1f14] shadow-[inset_0_1px_0_rgba(255,255,255,0.5)] outline-none focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-emerald-400/50"
+					className={selectClass}
 					name="selected-tracks-time-range"
 					onChange={changeTrackTimeRange}
 					value={topTrackTimeRange}
@@ -206,15 +213,15 @@ export const UserTopSongs = () => {
 				<ListTracks userInfo={topTracks} loading={loadingTracks} />
 			</section>
 
-			<section className="flex min-h-full flex-col items-stretch rounded-[30px] border border-emerald-200/15 bg-[linear-gradient(180deg,rgba(21,35,26,0.94),rgba(12,21,16,0.96)),linear-gradient(135deg,rgba(74,222,128,0.08),transparent_45%)] p-6 shadow-[0_28px_50px_rgba(0,0,0,0.24)] lg:col-span-2 xl:col-span-1">
+			<section className={`${panelClass} lg:col-span-2 xl:col-span-1`}>
 				<div className="text-left">
-					<p className="mb-2 text-[0.72rem] font-bold uppercase tracking-[0.22em] text-emerald-300">
+					<p className={eyebrowClass}>
 						Discovery Queue
 					</p>
-					<h1 className="font-['Gotham_Display'] text-[clamp(1.35rem,1.6vw,1.85rem)] tracking-[-0.04em] text-[#f5fff7]">
+					<h1 className={headingClass}>
 						Recommended Tracks
 					</h1>
-					<p className="mt-3 leading-7 text-emerald-50/70">
+					<p className={descriptionClass}>
 						Recommendations adapt to your currently selected track timeframe.
 					</p>
 				</div>
@@ -241,7 +248,7 @@ export const UserTopSongs = () => {
 				/>
 			</section>
 			{selectedTrackURI ? (
-				<div className="fixed bottom-10 left-1/2 z-[60] w-[min(860px,calc(100vw-1.5rem))] -translate-x-1/2 rounded-[24px] border border-emerald-200/20 bg-[#0a130d]/92 p-3 shadow-[0_24px_50px_rgba(0,0,0,0.35)] backdrop-blur-[10px]">
+				<div className="fixed bottom-10 left-1/2 z-[60] w-[min(860px,calc(100vw-1.5rem))] -translate-x-1/2 rounded-[24px] border border-emerald-700/10 bg-white/95 p-3 shadow-[0_24px_50px_rgba(16,64,30,0.18)] backdrop-blur-[10px] dark:border-lime-200/20 dark:bg-[#0a130d]/92 dark:shadow-[0_24px_50px_rgba(0,0,0,0.35)]">
 					<SongPlayer accessToken={accessToken} trackURI={selectedTrackURI} />
 				</div>
 			) : null}

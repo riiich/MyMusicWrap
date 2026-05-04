@@ -11,7 +11,7 @@ import {
 	NavbarMenuItem,
 } from "@nextui-org/navbar";
 
-export const NavigationBar = () => {
+export const NavigationBar = ({ isDarkMode, toggleTheme }) => {
 	const navigate = useNavigate();
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
 	const isAuthenticated = Boolean(sessionStorage.getItem("accessToken"));
@@ -28,7 +28,7 @@ export const NavigationBar = () => {
 			isMenuOpen={isMenuOpen}
 			onMenuOpenChange={setIsMenuOpen}
 			maxWidth="xl"
-			className="border-b border-emerald-300/20 bg-[#16241a]/90 text-white shadow-lg shadow-black/20 backdrop-blur"
+			className="border-b border-emerald-700/10 bg-[#f6fff6]/90 text-[#102016] shadow-lg shadow-emerald-950/5 backdrop-blur dark:border-lime-200/20 dark:bg-[#16241a]/90 dark:text-white dark:shadow-black/20"
 		>
 			<NavbarContent className="sm:hidden" justify="start">
 				<NavbarMenuToggle aria-label={isMenuOpen ? "Close menu" : "Open menu"} />
@@ -36,8 +36,8 @@ export const NavigationBar = () => {
 
 			<NavbarContent className="pr-3 sm:pr-0" justify="start">
 				<NavbarBrand>
-					<h1 className="text-lg font-semibold tracking-[0.18em] text-white sm:text-xl">
-						<a href="http://127.0.0.1:3000/" className="transition hover:text-emerald-300">
+					<h1 className="text-lg font-semibold tracking-[0.18em] text-[#102016] sm:text-xl dark:text-white">
+						<a href="http://127.0.0.1:3000/" className="transition hover:text-emerald-600 dark:hover:text-lime-300">
 							MyMusicWrap
 						</a>
 					</h1>
@@ -46,13 +46,13 @@ export const NavigationBar = () => {
 
 			<NavbarContent className="hidden gap-8 sm:flex" justify="center">
 				<NavbarItem>
-					<Link className="text-sm font-medium text-zinc-100 transition hover:text-emerald-300" to="/">
+					<Link className="text-sm font-medium text-[#25462d] transition hover:text-emerald-700 dark:text-lime-50 dark:hover:text-lime-300" to="/">
 						Home
 					</Link>
 				</NavbarItem>
 
 				<NavbarItem>
-					<Link className="text-sm font-medium text-zinc-100 transition hover:text-emerald-300" to="/about">
+					<Link className="text-sm font-medium text-[#25462d] transition hover:text-emerald-700 dark:text-lime-50 dark:hover:text-lime-300" to="/about">
 						About
 					</Link>
 				</NavbarItem>
@@ -60,7 +60,7 @@ export const NavigationBar = () => {
 				{isAuthenticated && (
 					<NavbarItem>
 						<Link
-							className="text-sm font-medium text-zinc-100 transition hover:text-emerald-300"
+							className="text-sm font-medium text-[#25462d] transition hover:text-emerald-700 dark:text-lime-50 dark:hover:text-lime-300"
 							to="/userfeedback"
 						>
 							Feedback
@@ -70,6 +70,15 @@ export const NavigationBar = () => {
 			</NavbarContent>
 
 			<NavbarContent className="ml-auto pr-2 sm:pr-4" justify="end">
+				<NavbarItem>
+					<button
+						type="button"
+						onClick={toggleTheme}
+						className="rounded-full border border-emerald-700/15 bg-white/80 px-4 py-2 text-sm font-semibold text-[#102016] transition hover:-translate-y-0.5 hover:bg-emerald-50 dark:border-lime-200/25 dark:bg-lime-200/15 dark:text-lime-50 dark:hover:bg-lime-200/25"
+					>
+						{isDarkMode ? "Light mode" : "Dark mode"}
+					</button>
+				</NavbarItem>
 				<NavbarItem>
 					{isAuthenticated ? (
 						<button
@@ -89,7 +98,7 @@ export const NavigationBar = () => {
 				</NavbarItem>
 			</NavbarContent>
 
-			<NavbarMenu className="bg-[#1c2b20] pt-6 text-white">
+			<NavbarMenu className="bg-[#f6fff6] pt-6 text-[#102016] dark:bg-[#1c2b20] dark:text-white">
 				<NavbarMenuItem>
 					<Link className="w-full text-base font-medium" to="/">
 						Home
@@ -109,6 +118,16 @@ export const NavigationBar = () => {
 						</Link>
 					</NavbarMenuItem>
 				)}
+
+				<NavbarMenuItem>
+					<button
+						type="button"
+						onClick={toggleTheme}
+						className="mt-2 rounded-full border border-emerald-700/15 bg-white/80 px-5 py-2 text-sm font-semibold text-[#102016] transition hover:bg-emerald-50 dark:border-lime-200/25 dark:bg-lime-200/15 dark:text-lime-50 dark:hover:bg-lime-200/25"
+					>
+						{isDarkMode ? "Light mode" : "Dark mode"}
+					</button>
+				</NavbarMenuItem>
 
 				<NavbarMenuItem>
 					{isAuthenticated ? (

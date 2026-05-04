@@ -72,11 +72,11 @@ export const RecommendedTracks = ({ recommendedTracks, retrieveURI, loading, acc
 		<>
 			<div className="mt-5 flex flex-col gap-4">
 				{loading ? (
-					<p className="rounded-[18px] bg-white/5 px-4 py-4 text-left text-emerald-50/80">
+					<p className="rounded-[18px] bg-emerald-900/5 px-4 py-4 text-left text-[#486052] dark:bg-white/5 dark:text-lime-50/80">
 						Loading recommendations...
 					</p>
 				) : recommendedTracks?.length === 0 ? (
-					<p className="rounded-[18px] bg-white/5 px-4 py-4 text-left text-emerald-50/80">
+					<p className="rounded-[18px] bg-emerald-900/5 px-4 py-4 text-left text-[#486052] dark:bg-white/5 dark:text-lime-50/80">
 						{message || "Choose a track timeframe to load recommendations."}
 					</p>
 				) : (

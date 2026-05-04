@@ -2,11 +2,11 @@ export const ListTracks = ({ userInfo, loading }) => {
 	return (
 		<div className="mt-5 flex flex-col gap-4">
 			{loading ? (
-				<p className="rounded-[18px] bg-white/5 px-4 py-4 text-left text-emerald-50/80">
+				<p className="rounded-[18px] bg-emerald-900/5 px-4 py-4 text-left text-[#486052] dark:bg-white/5 dark:text-lime-50/80">
 					Loading tracks...
 				</p>
 			) : userInfo?.length === 0 ? (
-				<p className="rounded-[18px] bg-white/5 px-4 py-4 text-left text-emerald-50/80">
+				<p className="rounded-[18px] bg-emerald-900/5 px-4 py-4 text-left text-[#486052] dark:bg-white/5 dark:text-lime-50/80">
 					No tracks loaded for this timeframe yet.
 				</p>
 			) : (

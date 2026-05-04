@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Feedback } from "./components/Feedback";
 import { NavigationBar } from "./components/Navbar";
 import { About } from "./pages/About";
@@ -16,6 +16,18 @@ const code = new URLSearchParams(window.location.search).get("code");
 function App() {
 	const [spotifyCode, setSpotifyCode] = useState();
 	const [codeExists, setCodeExists] = useState(false);
+	const [theme, setTheme] = useState(() => localStorage.getItem("theme") || "light");
+	const isDarkMode = theme === "dark";
+
+	const toggleTheme = () => {
+		const nextTheme = isDarkMode ? "light" : "dark";
+		localStorage.setItem("theme", nextTheme);
+		setTheme(nextTheme);
+	};
+
+	useEffect(() => {
+		document.documentElement.classList.toggle("dark", isDarkMode);
+	}, [isDarkMode]);
 
 	// save the code in a state before the code becomes empty from the url
 	if (!codeExists) {
@@ -32,9 +44,9 @@ function App() {
 
 	return (
 		<NextUIProvider>
-			<div className="min-h-screen">
+			<div className={`${theme} min-h-screen`}>
 				<Router>
-					<NavigationBar />
+					<NavigationBar isDarkMode={isDarkMode} toggleTheme={toggleTheme} />
 					<Routes>
 						<Route path="/" element={<Home />} />
 						<Route path="/login" element={<Login />} />
