@@ -3,43 +3,37 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 export const Feedback = () => {
-	const navigate = new useNavigate();
+	const navigate = useNavigate();
 	const [appFeedback, setAppFeedback] = useState("");
-	const [rating, setRating] = useState(null);
+	const [rating, setRating] = useState("");
 	const maxCharacterCount = 300;
 
 	const handleFeedback = (e) => {
 		setAppFeedback(e.target.value);
-		console.log(appFeedback);
 	};
 
 	const handleRating = (e) => {
-		console.log(`User rating: ${e.target.value}`);
 		setRating(e.target.value);
 	};
 
 	const submitFeedback = async () => {
 		try {
-			// alert user if they try to submit without typing anything
 			if (appFeedback.length === 0) {
-				alert("Can't send empty feedback! 🤬🤬🤬🤦‍♂️🤬🤬🤬");
+				alert("Can't send empty feedback.");
 				return;
 			}
 
-			const data = await axios.post("http://localhost:3001", {
+			const data = await axios.post("http://127.0.0.1:3001/feedback", {
 				feedback: appFeedback,
-				userName: sessionStorage?.getItem("userName"),
-				userID: sessionStorage?.getItem("userID"),
-				spotifyURL: sessionStorage?.getItem("userSpotifyURL"),
-				rating: rating,
+				userName: sessionStorage.getItem("userName"),
+				userID: sessionStorage.getItem("userID"),
+				spotifyURL: sessionStorage.getItem("userSpotifyURL"),
+				rating,
 			});
 
 			if (data.data.msg === "Stored") {
 				setAppFeedback("");
-
-				console.log(data.data.msg);
-				console.log("The server got the feedback comment! NICEEEEE!!");
-				setRating(null);
+				setRating("");
 
 				setTimeout(() => {
 					navigate("/");
@@ -54,7 +48,7 @@ export const Feedback = () => {
 		<>
 			<h1>Feedback Page</h1>
 			<div className="user-feedback">
-				<label for="feedback" id="feedback-prompt">
+				<label htmlFor="feedback" id="feedback-prompt">
 					Any questions, comments, or suggestions of the application.
 				</label>
 				<div className="feedback-content">
@@ -65,16 +59,17 @@ export const Feedback = () => {
 						rows="13"
 						placeholder="       Questions, comments, or suggestions..."
 						maxLength={maxCharacterCount}
-						onChange={(e) => handleFeedback(e)}
+						onChange={handleFeedback}
+						value={appFeedback}
 					></textarea>
 					<p id={appFeedback.length < maxCharacterCount ? "char-count" : "max-char-count"}>
 						{appFeedback.length}/{maxCharacterCount} char
 					</p>
 				</div>
 				<div className="user-rating">
-					<label>How was the app on a scale of 1-5?</label>
-					<select name="rate" onChange={(e) => handleRating(e)} value={rating}>
-						<option disabled="" selected="" hidden value={null}>
+					<label htmlFor="rate">How was the app on a scale of 1-5?</label>
+					<select id="rate" name="rate" onChange={handleRating} value={rating}>
+						<option disabled hidden value="">
 							Select a rating
 						</option>
 						<option value="1">1</option>

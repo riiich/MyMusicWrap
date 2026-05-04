@@ -1,3 +1,5 @@
+import dancingPepe from "../images/og-dancing-plant-pepe.gif";
+
 export const About = () => {
 	return (
 		<div className="about">
@@ -42,7 +44,7 @@ export const About = () => {
                     via the <a href="/userfeedback" className="a-feedback">Feedback</a> page.
                 </p>
 			</div>
-			<img src={require("../images/og-dancing-plant-pepe.gif")} alt="pepe" width={300} height={300} />
+			<img src={dancingPepe} alt="pepe" width={300} height={300} />
 		</div>
 	);
 };

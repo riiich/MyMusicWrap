@@ -3,6 +3,7 @@ import axios from "axios";
 import { ListArtists } from "./ListArtists";
 import { ListTracks } from "./ListTracks";
 import { RecommendedTracks } from "./RecommendedTracks";
+import spotifyLogoWhite from "../images/Spotify_Logo_RGB_White.png";
 
 export const UserTopSongs = () => {
 	const [topArtists, setTopArtists] = useState([]);
@@ -127,11 +128,7 @@ export const UserTopSongs = () => {
 		<div className="user-top-container">
 			<div className="user-top-artists">
 				<h1>Your Top 10 Artists in the {sessionStorage.getItem("artist_time_range")} term</h1>
-				<img
-					src={require("../images/Spotify_Logo_RGB_White.png")}
-					alt="spotify_logo"
-					class="spotify_logo"
-				/>
+				<img src={spotifyLogoWhite} alt="spotify_logo" className="spotify_logo" />
 				<select
 					name="selected-artists-time-range"
 					onChange={changeArtistTimeRange}
@@ -149,11 +146,7 @@ export const UserTopSongs = () => {
 
 			<div className="user-top-tracks">
 				<h1>Your Top Tracks in the {sessionStorage.getItem("track_time_range")} term</h1>
-				<img
-					src={require("../images/Spotify_Logo_RGB_White.png")}
-					alt="spotify_logo"
-					class="spotify_logo"
-				/>
+				<img src={spotifyLogoWhite} alt="spotify_logo" className="spotify_logo" />
 				<select
 					name="selected-tracks-time-range"
 					onChange={changeTrackTimeRange}
@@ -171,11 +164,7 @@ export const UserTopSongs = () => {
 
 			<div className="user-recommended-tracks">
 				<h1>Recommended Tracks</h1>
-				<img
-					src={require("../images/Spotify_Logo_RGB_White.png")}
-					alt="spotify_logo"
-					class="spotify_logo"
-				/>
+				<img src={spotifyLogoWhite} alt="spotify_logo" className="spotify_logo" />
 				<button
 					className="recommended-tracks-loading"
 					onClick={() => {
