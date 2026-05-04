@@ -231,7 +231,7 @@ export const UserTopSongs = () => {
 					className="mb-4 mt-5 w-36 self-start opacity-90"
 				/>
 				<button
-					className="mt-4 inline-flex w-fit self-start rounded-full bg-[linear-gradient(135deg,#22c55e,#bef264)] px-5 py-3 font-bold text-[#08130d] transition hover:-translate-y-0.5 hover:brightness-105 disabled:cursor-not-allowed disabled:opacity-55"
+					className="mt-4 inline-flex w-fit self-center rounded-full bg-[linear-gradient(135deg,#22c55e,#bef264)] px-5 py-3 font-bold text-[#08130d] transition hover:-translate-y-0.5 hover:brightness-105 disabled:cursor-not-allowed disabled:opacity-55"
 					onClick={() => {
 						retrieveRecommendedTracks(accessToken, topTrackTimeRange);
 					}}

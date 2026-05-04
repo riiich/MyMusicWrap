@@ -3,22 +3,43 @@ import axios from "axios";
 
 export const RecommendedTracks = ({ recommendedTracks, retrieveURI, loading, accessToken, message }) => {
 	const [playlists, setPlaylists] = useState([]);
-	const [playlistsExist, setPlaylistExists] = useState(false);
-	const [selectedPlaylistId, setSelectedPlaylistId] = useState({ playlistId: null, trackURI: null });
+	const [activePlaylistTrackUri, setActivePlaylistTrackUri] = useState("");
 
-	const plExists = (e, index) => {
+	const getUserPlaylists = async () => {
 		try {
-			console.log(playlistsExist);
+			const response = await axios.get("http://localhost:3001/myplaylists", {
+				params: { accessToken },
+			});
 
-			setPlaylistExists((prev) => !prev);
-			// check to see if the value had any value in it (have to check, otherwise there will be an error relating to json)
-			if (e.target.value) {
-				const parsedInfo = JSON.parse(e.target.value); // in order to use the json, have to parse it back to object b/c it was stringified json
-				setSelectedPlaylistId({
-					playlistId: parsedInfo.playlistId,
-					trackURI: parsedInfo.trackURI,
-				});
-			}
+			setPlaylists(response.data.playlists);
+		} catch (err) {
+			console.log(err);
+		}
+	};
+
+	const showPlaylistDropdown = async (trackURI) => {
+		setActivePlaylistTrackUri((currentURI) => (currentURI === trackURI ? "" : trackURI));
+
+		if (accessToken && playlists.length === 0) {
+			await getUserPlaylists();
+		}
+	};
+
+	const addTrackToPlaylist = async (e) => {
+		try {
+			if (!e.target.value) return;
+
+			const parsedInfo = JSON.parse(e.target.value);
+			const selectedPlaylist = {
+				playlistId: parsedInfo.playlistId,
+				trackURI: parsedInfo.trackURI,
+			};
+
+			await axios.post("http://localhost:3001/myplaylists/addToPlaylist", {
+				accessToken,
+				selectedPlaylistId: selectedPlaylist,
+			});
+			setActivePlaylistTrackUri("");
 		} catch (err) {
 			console.log(err);
 		}
@@ -29,44 +50,8 @@ export const RecommendedTracks = ({ recommendedTracks, retrieveURI, loading, acc
 	};
 
 	useEffect(() => {
-		const getUserPlaylists = async () => {
-			try {
-				// ******************************************
-				// haven't tested it yet, but this vercel one should work now. change it whenever: https://my-music-wrap-server.vercel.app/ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-				// ******************************************
-				const response = await axios.get("http://localhost:3001/myplaylists", {
-					params: { accessToken },
-				});
-
-				setPlaylists(response.data.playlists);
-				setPlaylistExists(true);
-			} catch (err) {
-				console.log(err);
-			}
-		};
-
-		console.log("playlist exists: ", playlistsExist);
-		if (accessToken && playlistsExist) {
-			getUserPlaylists();
-		}
-	}, [accessToken, playlistsExist, recommendedTracks]);
-
-	useEffect(() => {
-		const addTrackToPlaylist = async () => {
-			try {
-				await axios.post("http://localhost:3001/myplaylists/addToPlaylist", {
-					accessToken,
-					selectedPlaylistId,
-				});
-			} catch (err) {
-				console.log(err);
-			}
-		};
-
-		if (accessToken && !playlistsExist) {
-			addTrackToPlaylist();
-		}
-	}, [accessToken, playlistsExist, selectedPlaylistId]);
+		setActivePlaylistTrackUri("");
+	}, [recommendedTracks]);
 
 	return (
 		<>
@@ -119,15 +104,15 @@ export const RecommendedTracks = ({ recommendedTracks, retrieveURI, loading, acc
 									</button>
 									<button
 										className="rounded-2xl border border-[#102016]/10 bg-white/95 px-4 py-3 text-sm font-semibold text-[#102016] transition hover:-translate-y-0.5 hover:bg-[#e9f8ed]"
-										onClick={(e) => plExists(e, i)}
+										onClick={() => showPlaylistDropdown(item?.uri)}
 									>
 										Add song
 									</button>
-									{playlistsExist ? (
+									{activePlaylistTrackUri === item?.uri ? (
 										<select
 											className="w-full rounded-2xl border border-[#102016]/10 bg-white/95 px-4 py-3 text-sm font-semibold text-[#102016]"
 											name="selectedPlaylist"
-											onChange={(e) => plExists(e, i)}
+											onChange={addTrackToPlaylist}
 											defaultValue=""
 										>
 											<option disabled value="">
