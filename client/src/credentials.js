@@ -20,9 +20,6 @@ export const clientCredentials = (code) => {
 				code, // passing the code through the api call
 			});
 
-			console.log(response.data);
-			console.log(response.data.accessToken);
-			console.log(response.data.refreshToken);
 			setAccessToken(response.data.accessToken);
 			setRefreshToken(response.data.refreshToken);
 			setExpiresIn(response.data.expiresIn);

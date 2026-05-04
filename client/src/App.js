@@ -1,4 +1,3 @@
-import "./styles/App.css";
 import { useState } from "react";
 import { Feedback } from "./components/Feedback";
 import { NavigationBar } from "./components/Navbar";
@@ -31,12 +30,9 @@ function App() {
 			we made it disappear in credentials.js in the userLogin function
 	*/
 
-	console.log(code);
-	console.log(spotifyCode);
-
 	return (
 		<NextUIProvider>
-			<div className="App">
+			<div className="min-h-screen">
 				<Router>
 					<NavigationBar />
 					<Routes>
