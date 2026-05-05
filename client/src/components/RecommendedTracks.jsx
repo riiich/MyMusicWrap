@@ -97,20 +97,20 @@ export const RecommendedTracks = ({ recommendedTracks, retrieveURI, loading, acc
 								</a>
 								<div className="flex min-w-[7rem] flex-col justify-center gap-2">
 									<button
-										className="rounded-2xl border border-[#102016]/10 bg-white/95 px-4 py-3 text-sm font-semibold text-[#102016] transition hover:-translate-y-0.5 hover:bg-[#e9f8ed]"
+										className="rounded-2xl border border-[#102016]/10 bg-white/95 px-4 py-3 text-sm font-semibold text-[#102016] transition hover:-translate-y-0.5 hover:bg-[#e9f8ed] dark:border-lime-100/70 dark:bg-lime-200 dark:text-[#102016] dark:shadow-[0_10px_24px_rgba(190,242,100,0.18)] dark:hover:bg-lime-100"
 										onClick={() => getURI(item?.uri)}
 									>
 										Play Song
 									</button>
 									<button
-										className="rounded-2xl border border-[#102016]/10 bg-white/95 px-4 py-3 text-sm font-semibold text-[#102016] transition hover:-translate-y-0.5 hover:bg-[#e9f8ed]"
+										className="rounded-2xl border border-[#102016]/10 bg-white/95 px-4 py-3 text-sm font-semibold text-[#102016] transition hover:-translate-y-0.5 hover:bg-[#e9f8ed] dark:border-lime-100/70 dark:bg-lime-200 dark:text-[#102016] dark:shadow-[0_10px_24px_rgba(190,242,100,0.18)] dark:hover:bg-lime-100"
 										onClick={() => showPlaylistDropdown(item?.uri)}
 									>
 										Add song
 									</button>
 									{activePlaylistTrackUri === item?.uri ? (
 										<select
-											className="w-full rounded-2xl border border-[#102016]/10 bg-white/95 px-4 py-3 text-sm font-semibold text-[#102016]"
+											className="w-full rounded-2xl border border-[#102016]/10 bg-white/95 px-4 py-3 text-sm font-semibold text-[#102016] dark:border-lime-100/70 dark:bg-lime-50 dark:text-[#102016]"
 											name="selectedPlaylist"
 											onChange={addTrackToPlaylist}
 											defaultValue=""

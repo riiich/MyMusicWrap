@@ -44,18 +44,20 @@ function App() {
 
 	return (
 		<NextUIProvider>
-			<div className={`${theme} min-h-screen`}>
+			<div className={`${theme} flex min-h-screen flex-col`}>
 				<Router>
 					<NavigationBar isDarkMode={isDarkMode} toggleTheme={toggleTheme} />
-					<Routes>
-						<Route path="/" element={<Home />} />
-						<Route path="/login" element={<Login />} />
-						<Route path="/about" element={<About />} />
-						<Route path="/userfeedback" element={<Feedback />} />
-						<Route path="*" element={<ErrorPage />} />
-					</Routes>
+					<main className="flex-1">
+						<Routes>
+							<Route path="/" element={<Home />} />
+							<Route path="/login" element={<Login />} />
+							<Route path="/about" element={<About />} />
+							<Route path="/userfeedback" element={<Feedback />} />
+							<Route path="*" element={<ErrorPage />} />
+						</Routes>
+					</main>
+					<Footer />
 				</Router>
-				<Footer />
 				{!spotifyCode ? <></> : <Dashboard code={spotifyCode} />}
 			</div>
 		</NextUIProvider>
