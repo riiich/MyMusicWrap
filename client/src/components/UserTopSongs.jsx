@@ -29,12 +29,12 @@ export const UserTopSongs = () => {
 	);
 	const accessToken = sessionStorage.getItem("accessToken");
 	const panelClass =
-		"flex min-h-full flex-col items-stretch rounded-[30px] border border-emerald-700/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.97),rgba(226,244,229,0.94)),linear-gradient(135deg,rgba(34,197,94,0.08),transparent_45%)] p-6 shadow-[0_28px_50px_rgba(16,64,30,0.12)] dark:border-lime-200/15 dark:bg-[linear-gradient(180deg,rgba(23,45,29,0.94),rgba(10,24,15,0.96)),linear-gradient(135deg,rgba(190,242,100,0.12),transparent_45%)] dark:shadow-[0_28px_50px_rgba(0,0,0,0.24)]";
-	const eyebrowClass = "mb-2 text-[0.72rem] font-bold uppercase tracking-[0.22em] text-emerald-700 dark:text-lime-300";
-	const headingClass = "font-['Gotham_Display'] text-[clamp(1.35rem,1.6vw,1.85rem)] tracking-[-0.04em] text-[#102016] dark:text-[#f5fff7]";
-	const descriptionClass = "mt-3 leading-7 text-[#486052] dark:text-lime-50/70";
+		"flex min-h-full flex-col items-stretch rounded-[30px] border border-white/15 bg-[linear-gradient(180deg,rgba(31,72,42,0.96),rgba(13,34,20,0.96)),linear-gradient(135deg,rgba(190,242,100,0.12),transparent_45%)] p-6 text-white shadow-[0_28px_50px_rgba(16,64,30,0.18)] dark:border-lime-200/15 dark:bg-[linear-gradient(180deg,rgba(23,45,29,0.94),rgba(10,24,15,0.96)),linear-gradient(135deg,rgba(190,242,100,0.12),transparent_45%)] dark:shadow-[0_28px_50px_rgba(0,0,0,0.24)]";
+	const eyebrowClass = "mb-2 text-[0.72rem] font-bold uppercase tracking-[0.22em] text-white/85";
+	const headingClass = "font-['Gotham_Display'] text-[clamp(1.35rem,1.6vw,1.85rem)] tracking-[-0.04em] text-white";
+	const descriptionClass = "mt-3 leading-7 text-white/75";
 	const selectClass =
-		"w-full max-w-[16rem] self-start rounded-[18px] border border-emerald-700/10 bg-white/95 px-4 py-3 text-[0.95rem] font-medium text-[#0f1f14] shadow-[inset_0_1px_0_rgba(255,255,255,0.5)] outline-none focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-emerald-400/50 dark:border-lime-200/20 dark:bg-lime-50/95";
+		"w-full max-w-[16rem] self-start rounded-[18px] border border-white/25 bg-white/15 px-4 py-3 text-[0.95rem] font-medium text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.18)] outline-none focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-white/45 [&_option]:text-[#0f1f14]";
 
 	const changeArtistTimeRange = (e) => {
 		if (!sessionStorage.getItem("userName")) return;
@@ -231,7 +231,7 @@ export const UserTopSongs = () => {
 					className="mb-4 mt-5 w-36 self-start opacity-90"
 				/>
 				<button
-					className="mt-4 inline-flex w-fit self-center rounded-full bg-[linear-gradient(135deg,#22c55e,#bef264)] px-5 py-3 font-bold text-[#08130d] shadow-[0_12px_28px_rgba(34,197,94,0.22)] transition hover:-translate-y-0.5 hover:brightness-105 disabled:cursor-not-allowed disabled:opacity-55 dark:bg-[linear-gradient(135deg,#bef264,#ecfccb)] dark:shadow-[0_14px_32px_rgba(190,242,100,0.24)]"
+					className="mt-4 inline-flex w-fit self-center rounded-full border border-white/25 bg-white/15 px-5 py-3 font-bold text-white shadow-[0_12px_28px_rgba(0,0,0,0.16)] transition hover:-translate-y-0.5 hover:bg-white/25 disabled:cursor-not-allowed disabled:opacity-55"
 					onClick={() => {
 						retrieveRecommendedTracks(accessToken, topTrackTimeRange);
 					}}

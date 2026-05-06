@@ -57,11 +57,11 @@ export const RecommendedTracks = ({ recommendedTracks, retrieveURI, loading, acc
 		<>
 			<div className="mt-5 flex flex-col gap-4">
 				{loading ? (
-					<p className="rounded-[18px] bg-emerald-900/5 px-4 py-4 text-left text-[#486052] dark:bg-white/5 dark:text-lime-50/80">
+					<p className="rounded-[18px] bg-white/10 px-4 py-4 text-left text-white/80">
 						Loading recommendations...
 					</p>
 				) : recommendedTracks?.length === 0 ? (
-					<p className="rounded-[18px] bg-emerald-900/5 px-4 py-4 text-left text-[#486052] dark:bg-white/5 dark:text-lime-50/80">
+					<p className="rounded-[18px] bg-white/10 px-4 py-4 text-left text-white/80">
 						{message || "Choose a track timeframe to load recommendations."}
 					</p>
 				) : (
@@ -72,9 +72,9 @@ export const RecommendedTracks = ({ recommendedTracks, retrieveURI, loading, acc
 									href={item.spotify_url}
 									target="_blank"
 									rel="noopener noreferrer"
-									className="relative flex items-center gap-3 rounded-[24px] border border-white/10 bg-[linear-gradient(180deg,rgba(243,247,244,0.98),rgba(223,234,226,0.96))] px-4 py-4 pl-12 text-[#102016] shadow-[0_14px_26px_rgba(0,0,0,0.14)] transition hover:-translate-y-1 hover:shadow-[0_18px_36px_rgba(34,197,94,0.14)]"
+									className="relative flex items-center gap-3 rounded-[24px] border border-white/15 bg-white/10 px-4 py-4 pl-12 text-white shadow-[0_14px_26px_rgba(0,0,0,0.16)] transition hover:-translate-y-1 hover:bg-white/15 hover:shadow-[0_18px_36px_rgba(0,0,0,0.18)]"
 								>
-									<span className="absolute left-3 top-3 inline-flex h-7 w-7 items-center justify-center rounded-full bg-[linear-gradient(135deg,#22c55e,#86efac)] text-xs font-bold text-[#0a150d]">
+									<span className="absolute left-3 top-3 inline-flex h-7 w-7 items-center justify-center rounded-full bg-white/20 text-xs font-bold text-white ring-1 ring-white/25">
 										{i + 1}
 									</span>
 									<img
@@ -83,10 +83,10 @@ export const RecommendedTracks = ({ recommendedTracks, retrieveURI, loading, acc
 										className="h-16 w-16 min-w-16 flex-shrink-0 rounded-[18px] object-cover shadow-[0_8px_18px_rgba(0,0,0,0.16)]"
 									/>
 									<div className="min-w-0 flex flex-1 flex-col">
-										<p className="block w-full overflow-x-auto whitespace-nowrap pr-1 font-semibold text-[#102016] [scrollbar-color:rgba(34,197,94,0.55)_transparent] [scrollbar-width:thin] [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-[rgba(34,197,94,0.55)] [&::-webkit-scrollbar]:h-1.5">
+										<p className="block w-full overflow-x-auto whitespace-nowrap pr-1 font-semibold text-white [scrollbar-color:rgba(255,255,255,0.55)_transparent] [scrollbar-width:thin] [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-white/55 [&::-webkit-scrollbar]:h-1.5">
 											<strong>{item.track_title}</strong>
 										</p>
-										<div className="mt-1 flex w-full flex-wrap gap-[0.1rem] overflow-x-auto whitespace-nowrap text-sm text-[#486052] [scrollbar-color:rgba(34,197,94,0.55)_transparent] [scrollbar-width:thin] [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-[rgba(34,197,94,0.55)] [&::-webkit-scrollbar]:h-1.5">
+										<div className="mt-1 flex w-full flex-wrap gap-[0.1rem] overflow-x-auto whitespace-nowrap text-sm text-white/75 [scrollbar-color:rgba(255,255,255,0.55)_transparent] [scrollbar-width:thin] [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-white/55 [&::-webkit-scrollbar]:h-1.5">
 											{item?.artists.map((artist) => (
 												<p key={artist.id} className="m-0">
 													&nbsp;{artist.name}
@@ -97,20 +97,20 @@ export const RecommendedTracks = ({ recommendedTracks, retrieveURI, loading, acc
 								</a>
 								<div className="flex min-w-[7rem] flex-col justify-center gap-2">
 									<button
-										className="rounded-2xl border border-[#102016]/10 bg-white/95 px-4 py-3 text-sm font-semibold text-[#102016] transition hover:-translate-y-0.5 hover:bg-[#e9f8ed] dark:border-lime-100/70 dark:bg-lime-200 dark:text-[#102016] dark:shadow-[0_10px_24px_rgba(190,242,100,0.18)] dark:hover:bg-lime-100"
+										className="rounded-2xl border border-white/25 bg-white/15 px-4 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-white/25"
 										onClick={() => getURI(item?.uri)}
 									>
 										Play Song
 									</button>
 									<button
-										className="rounded-2xl border border-[#102016]/10 bg-white/95 px-4 py-3 text-sm font-semibold text-[#102016] transition hover:-translate-y-0.5 hover:bg-[#e9f8ed] dark:border-lime-100/70 dark:bg-lime-200 dark:text-[#102016] dark:shadow-[0_10px_24px_rgba(190,242,100,0.18)] dark:hover:bg-lime-100"
+										className="rounded-2xl border border-white/25 bg-white/15 px-4 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-white/25"
 										onClick={() => showPlaylistDropdown(item?.uri)}
 									>
 										Add song
 									</button>
 									{activePlaylistTrackUri === item?.uri ? (
 										<select
-											className="w-full rounded-2xl border border-[#102016]/10 bg-white/95 px-4 py-3 text-sm font-semibold text-[#102016] dark:border-lime-100/70 dark:bg-lime-50 dark:text-[#102016]"
+											className="w-full rounded-2xl border border-white/25 bg-white/15 px-4 py-3 text-sm font-semibold text-white [&_option]:text-[#102016]"
 											name="selectedPlaylist"
 											onChange={addTrackToPlaylist}
 											defaultValue=""

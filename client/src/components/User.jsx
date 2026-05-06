@@ -17,6 +17,7 @@ export const User = () => {
 			sessionStorage.setItem("userName", res.data?.name);
 			sessionStorage.setItem("userID", res.data?.id);
 			sessionStorage.setItem("userSpotifyURL", res.data?.userSpotify);
+			if (res.data?.image) sessionStorage.setItem("userImage", res.data.image);
 		} catch (err) {
 			console.log("Error getting user info", err);
 		}
