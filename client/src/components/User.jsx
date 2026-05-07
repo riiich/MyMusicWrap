@@ -3,6 +3,10 @@ import { useState, useEffect } from "react";
 
 export const User = () => {
 	const [user, setUser] = useState();
+	const storedUserName = sessionStorage.getItem("userName");
+	const storedUserImage = sessionStorage.getItem("userImage");
+	const displayName = user?.name || storedUserName;
+	const displayImage = user?.image || storedUserImage;
 
 	const getUserInfo = async (accessToken) => {
 		try {
@@ -31,20 +35,20 @@ export const User = () => {
 
 	return (
 		<div className="mb-2">
-			{sessionStorage.getItem("userName") || sessionStorage.getItem("code") ? (
-				<div className="flex flex-col items-start justify-between gap-4 rounded-[28px] border border-emerald-700/10 bg-[linear-gradient(145deg,rgba(255,255,255,0.96),rgba(223,244,227,0.9))] px-6 py-6 text-left shadow-[0_26px_60px_rgba(16,64,30,0.12)] dark:border-lime-200/20 dark:bg-[linear-gradient(145deg,rgba(17,33,23,0.92),rgba(31,70,42,0.9))] dark:shadow-[0_26px_60px_rgba(0,0,0,0.26)] sm:flex-row sm:items-center">
+			{storedUserName || sessionStorage.getItem("code") ? (
+				<div className="flex flex-col items-start justify-between gap-4 rounded-[28px] border border-emerald-900/10 bg-[linear-gradient(145deg,rgba(232,246,226,0.98),rgba(214,235,204,0.98))] px-6 py-6 text-left shadow-[0_24px_48px_rgba(35,86,49,0.12)] dark:border-lime-200/20 dark:bg-[linear-gradient(145deg,rgba(17,33,23,0.92),rgba(31,70,42,0.9))] dark:shadow-[0_26px_60px_rgba(0,0,0,0.26)] sm:flex-row sm:items-center">
 					<div className="max-w-4xl">
 						<p className="mb-1 text-xs font-bold uppercase tracking-[0.24em] text-emerald-700 dark:text-lime-300">Welcome back</p>
 						<h2 className="mb-2 font-['Gotham_Display'] text-3xl tracking-[-0.04em] text-[#102016] dark:text-[#f5fff7] sm:text-4xl">
-							Hi {user?.name || sessionStorage.getItem("userName")}!
+							Hi {displayName}!
 						</h2>
 						<p className="m-0 max-w-3xl leading-7 text-[#486052] dark:text-lime-50/75">
 							Pick a timeframe and explore how your listening habits evolve.
 						</p>
 					</div>
-					{user?.image ? (
+					{displayImage ? (
 						<img
-							src={user.image}
+							src={displayImage}
 							alt="user pic"
 							width={68}
 							height={68}
@@ -53,7 +57,7 @@ export const User = () => {
 					) : null}
 				</div>
 			) : (
-				<div className="flex flex-col items-start gap-4 rounded-[28px] border border-emerald-700/10 bg-[linear-gradient(145deg,rgba(255,255,255,0.96),rgba(223,244,227,0.9))] px-6 py-6 text-left shadow-[0_26px_60px_rgba(16,64,30,0.12)] dark:border-lime-200/20 dark:bg-[linear-gradient(145deg,rgba(17,33,23,0.92),rgba(31,70,42,0.9))] dark:shadow-[0_26px_60px_rgba(0,0,0,0.26)]">
+				<div className="flex flex-col items-start gap-4 rounded-[28px] border border-emerald-900/10 bg-[linear-gradient(145deg,rgba(232,246,226,0.98),rgba(214,235,204,0.98))] px-6 py-6 text-left shadow-[0_24px_48px_rgba(35,86,49,0.12)] dark:border-lime-200/20 dark:bg-[linear-gradient(145deg,rgba(17,33,23,0.92),rgba(31,70,42,0.9))] dark:shadow-[0_26px_60px_rgba(0,0,0,0.26)]">
 					<div>
 						<p className="mb-1 text-xs font-bold uppercase tracking-[0.24em] text-emerald-700 dark:text-lime-300">Get started</p>
 						<h2 className="mb-2 font-['Gotham_Display'] text-3xl tracking-[-0.04em] text-[#102016] dark:text-[#f5fff7] sm:text-4xl">
