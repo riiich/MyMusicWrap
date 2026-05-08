@@ -59,3 +59,31 @@
 code {
 	font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
+
+@keyframes riseIn {
+	from {
+		opacity: 0;
+		transform: translateY(18px) scale(0.98);
+	}
+
+	to {
+		opacity: 1;
+		transform: translateY(0) scale(1);
+	}
+}
+
+@keyframes textGlide {
+	0%,
+	21% {
+		transform: translateX(0);
+	}
+
+	50%,
+	71% {
+		transform: translateX(var(--text-glide-distance));
+	}
+
+	100% {
+		transform: translateX(0);
+	}
+}

@@ -22,6 +22,8 @@ export const UserTopSongs = () => {
 	const [loadingTracks, setLoadingTracks] = useState(false);
 	const [loadingRecommended, setLoadingRecommended] = useState(false);
 	const [selectedTrackURI, setSelectedTrackURI] = useState("");
+	const [isPlayerVisible, setIsPlayerVisible] = useState(false);
+	const [shouldPlayerPlay, setShouldPlayerPlay] = useState(false);
 	const [topArtistTimeRange, setTopArtistTimeRange] = useState(
 		() => sessionStorage.getItem("artist_time_range") || "",
 	);
@@ -35,7 +37,7 @@ export const UserTopSongs = () => {
 	const headingClass = "font-['Gotham_Display'] text-[clamp(1.35rem,1.6vw,1.85rem)] tracking-[-0.04em] text-[#17301d] dark:text-[#f7fff5]";
 	const descriptionClass = "mt-3 leading-7 text-[#355240] dark:text-[#d6e8d2]";
 	const selectClass =
-		"w-full max-w-[16rem] self-start rounded-[18px] border border-emerald-900/10 bg-white/55 px-4 py-3 text-[0.95rem] font-medium text-[#17301d] shadow-[inset_0_1px_0_rgba(255,255,255,0.7)] outline-none focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-emerald-900/15 dark:border-white/25 dark:bg-white/15 dark:text-[#f4fbf1] dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.18)] dark:focus:outline-white/45 [&_option]:text-[#0f1f14]";
+		"w-full max-w-[16rem] self-start rounded-[18px] border border-emerald-900/10 bg-white/55 px-4 py-3 text-[0.95rem] font-medium text-[#17301d] shadow-[inset_0_1px_0_rgba(255,255,255,0.7)] outline-none focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-emerald-900/15 dark:border-white/25 dark:bg-white/15 dark:text-[#f4fbf1] dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.18)] dark:focus:outline-white/45 [&_option]:bg-[#102016] [&_option]:text-[#0f1f14] dark:[&_option]:text-[#f7fff5]";
 
 	const changeArtistTimeRange = (e) => {
 		if (!sessionStorage.getItem("userName")) return;
@@ -124,7 +126,12 @@ export const UserTopSongs = () => {
 
 	// callback function to get the uri from RecommendedTracks component 
 	const getURI = (uri) => {
+		setShouldPlayerPlay(false);
 		setSelectedTrackURI(uri);
+		setIsPlayerVisible(true);
+		window.setTimeout(() => {
+			setShouldPlayerPlay(true);
+		}, 0);
 	}
 
 	useEffect(() => {
@@ -143,7 +150,7 @@ export const UserTopSongs = () => {
 	}, [accessToken, topTrackTimeRange]);
 
 	return (
-		<div className="grid grid-cols-1 gap-5 xl:grid-cols-3 lg:grid-cols-2">
+		<div className="grid grid-cols-1 gap-5 lg:grid-cols-2 xl:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(0,1.45fr)]">
 			<section className={panelClass}>
 				<div className="text-left">
 					<p className={eyebrowClass}>
@@ -264,8 +271,27 @@ export const UserTopSongs = () => {
 				/>
 			</section>
 			{selectedTrackURI ? (
-				<div className="fixed bottom-10 left-1/2 z-[60] w-[min(860px,calc(100vw-1.5rem))] -translate-x-1/2 rounded-[24px] border border-emerald-700/10 bg-white/95 p-3 shadow-[0_24px_50px_rgba(16,64,30,0.18)] backdrop-blur-[10px] dark:border-lime-200/20 dark:bg-[#0a130d]/92 dark:shadow-[0_24px_50px_rgba(0,0,0,0.35)]">
-					<SongPlayer accessToken={accessToken} trackURI={selectedTrackURI} />
+				<div
+					className={`${isPlayerVisible ? "fixed bottom-10 left-1/2 z-[60] w-[min(860px,calc(100vw-1.5rem))] -translate-x-1/2 rounded-[24px] border border-emerald-700/10 bg-white/95 p-3 pt-8 shadow-[0_24px_50px_rgba(16,64,30,0.18)] backdrop-blur-[10px] dark:border-lime-200/20 dark:bg-[#0a130d]/92 dark:shadow-[0_24px_50px_rgba(0,0,0,0.35)]" : "fixed -bottom-[999px] left-0 h-px w-px overflow-hidden opacity-0"}`}
+					aria-hidden={!isPlayerVisible}
+				>
+					<button
+						type="button"
+						onClick={() => {
+							setShouldPlayerPlay(false);
+							setIsPlayerVisible(false);
+						}}
+						aria-label="Close Spotify player"
+						title="Close Spotify player"
+						className="absolute right-3 top-3 inline-flex h-7 w-7 items-center justify-center rounded-full border border-emerald-900/10 bg-white/70 text-lg font-bold leading-none text-[#17301d] transition hover:-translate-y-0.5 hover:bg-white dark:border-white/15 dark:bg-white/10 dark:text-[#f7fff5] dark:hover:bg-white/20"
+					>
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<SongPlayer
+						accessToken={accessToken}
+						trackURI={selectedTrackURI}
+						shouldPlay={shouldPlayerPlay}
+					/>
 				</div>
 			) : null}
 		</div>
