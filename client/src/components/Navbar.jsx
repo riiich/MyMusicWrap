@@ -135,7 +135,7 @@ export const NavigationBar = ({ isDarkMode, toggleTheme }) => {
 				<NavbarBrand>
 					<h1 className="text-lg font-black tracking-[0.18em] text-[#102016] sm:text-xl dark:text-[#eef6ef]">
 						<a
-							href="http://127.0.0.1:3000/"
+							href="https://my-music-wrap.vercel.app/"
 							className="transition hover:text-emerald-600 dark:hover:text-emerald-200"
 						>
 							MyMusicWrap
