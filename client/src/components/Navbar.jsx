@@ -197,7 +197,7 @@ export const NavigationBar = ({ isDarkMode, toggleTheme }) => {
 							animate={{ x: 0 }}
 							exit={{ x: "-100%" }}
 							transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
-							className="fixed left-0 top-16 z-50 flex h-[calc(100vh-4rem)] w-3/4 max-w-sm touch-pan-y flex-col border-r border-emerald-700/10 bg-gradient-to-b from-[#f8fff8] via-[#eef8ef] to-[#dff4e3] px-5 pb-6 pt-6 text-[#102016] shadow-2xl shadow-emerald-950/20 sm:hidden dark:border-emerald-100/10 dark:from-[#16351f] dark:via-[#122b19] dark:to-[#0f1711] dark:text-[#eef6ef]"
+							className="fixed left-0 top-16 z-50 flex h-[calc(100dvh-4rem)] w-3/4 max-w-sm touch-pan-y flex-col border-r border-emerald-700/10 bg-gradient-to-b from-[#f8fff8] via-[#eef8ef] to-[#dff4e3] px-5 pb-6 pt-6 text-[#102016] shadow-2xl shadow-emerald-950/20 sm:hidden dark:border-emerald-100/10 dark:from-[#16351f] dark:via-[#122b19] dark:to-[#0f1711] dark:text-[#eef6ef]"
 						>
 							<div>
 								<button
@@ -211,7 +211,7 @@ export const NavigationBar = ({ isDarkMode, toggleTheme }) => {
 								</button>
 							</div>
 
-							<div className="mt-auto">
+							<div className="mt-auto pb-[calc(env(safe-area-inset-bottom)+2.5rem)]">
 								{isAuthenticated ? (
 									<div className="flex flex-col gap-4 rounded-[24px] border border-emerald-700/10 bg-white/70 p-4 backdrop-blur dark:border-emerald-100/10 dark:bg-white/10">
 										<div className="flex min-w-0 items-center gap-3">
