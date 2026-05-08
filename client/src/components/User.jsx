@@ -42,7 +42,7 @@ export const User = () => {
 						<h2 className="mb-2 font-['Gotham_Display'] text-3xl tracking-[-0.04em] text-[#102016] dark:text-[#f5fff7] sm:text-4xl">
 							Hi {displayName}!
 						</h2>
-						<p className="m-0 max-w-3xl leading-7 text-[#486052] dark:text-lime-50/75">
+						<p className="m-0 max-w-3xl leading-7 text-[#486052] dark:text-white">
 							Pick a timeframe and explore how your listening habits evolve.
 						</p>
 					</div>
