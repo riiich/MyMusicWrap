@@ -5,6 +5,7 @@ import { About } from "./pages/About";
 import { Footer } from "./components/Footer";
 import { Home } from "./pages/Home";
 import { Login } from "./pages/Login";
+import { SharedSnapshot } from "./pages/SharedSnapshot";
 import { ErrorPage } from "./pages/error";
 import { Dashboard } from "./components/Dashboard";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -51,6 +52,7 @@ function App() {
 						<Routes>
 							<Route path="/" element={<Home />} />
 							<Route path="/login" element={<Login />} />
+							<Route path="/share" element={<SharedSnapshot />} />
 							<Route path="/about" element={<About />} />
 							<Route path="/userfeedback" element={<Feedback />} />
 							<Route path="*" element={<ErrorPage />} />
