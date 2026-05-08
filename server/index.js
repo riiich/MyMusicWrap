@@ -10,7 +10,7 @@ app.use(
 	cors({
 		// origin: "*",
 		// origin: "http://localhost:3000",
-		origin: ["https://my-music-wrap.vercel.app", "http://localhost:3000"],
+		origin: ["https://my-music-wrap.vercel.app", "http://localhost:3000", "http://127.0.0.1:3000"],
 		methods: ["GET", "POST"],
 		credentials: true,
 	})
@@ -23,6 +23,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 connectDB();
 
 app.get("/", (req, res) => {
+	console.log("Root endpoint hit!");
 	res.json({ msg: "Hitting the MyMusicWrap endpoint!" });
 });
 

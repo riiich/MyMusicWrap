@@ -1,6 +1,6 @@
 import SpotifyPlayer from "react-spotify-web-playback";
 
-export const SongPlayer = ({ accessToken, trackURI }) => {
+export const SongPlayer = ({ accessToken, trackURI, shouldPlay }) => {
 	if (!accessToken) return null;
 
 	return (
@@ -9,6 +9,7 @@ export const SongPlayer = ({ accessToken, trackURI }) => {
 			token={accessToken}
 			showSaveIcon
 			autoPlay
+			play={shouldPlay}
 			magnifySliderOnHover
 			uris={trackURI ? [trackURI] : []}
 			styles={{
