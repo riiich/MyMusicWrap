@@ -92,7 +92,7 @@ router.get("/tracks", async (req, res) => {
 		// time_range - long_term (several years), medium_term (~last 6 months), short_term (~last 4 weeks)
 		const data = await spotifyAPI.getMyTopTracks({
 			offset: 0,
-			limit: 8,
+			limit: 10,
 			time_range: `${time_range}_term`,
 		});
 
@@ -212,7 +212,7 @@ router.get("/recommendedtracks", recommendedTrackLimiter, (req, res) => {
 						topTrackIds[4],
 					],
 					// min_popularity: 80,
-					limit: 8,
+					limit: 10,
 				});
 
 				data.body.tracks.map((track, i) => {
