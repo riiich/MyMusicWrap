@@ -10,7 +10,7 @@ export const RecommendedTracks = ({ recommendedTracks, retrieveURI, loading, acc
 
 	const getUserPlaylists = async () => {
 		try {
-			const response = await axios.get("http://localhost:3001/myplaylists", {
+			const response = await axios.get("https://mymusicwrap.onrender.com/myplaylists", {
 				params: { accessToken },
 			});
 
@@ -32,7 +32,7 @@ export const RecommendedTracks = ({ recommendedTracks, retrieveURI, loading, acc
 		try {
 			if (!playlistId || !trackURI) return;
 
-			await axios.post("http://localhost:3001/myplaylists/addToPlaylist", {
+			await axios.post("https://mymusicwrap.onrender.com/myplaylists/addToPlaylist", {
 				accessToken,
 				selectedPlaylistId: { playlistId, trackURI },
 			});

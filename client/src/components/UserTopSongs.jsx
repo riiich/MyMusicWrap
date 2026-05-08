@@ -56,7 +56,7 @@ export const UserTopSongs = () => {
 			}
 
 			setLoadingArtists(true);
-			const response = await axios.get("http://localhost:3001/mostlistened/artists", {
+			const response = await axios.get("https://mymusicwrap.onrender.com/mostlistened/artists", {
 				params: { accessToken: token, topArtistTimeRange: timeRange },
 			});
 
@@ -86,7 +86,7 @@ export const UserTopSongs = () => {
 			}
 
 			setLoadingTracks(true);
-			const response = await axios.get("http://localhost:3001/mostlistened/tracks", {
+			const response = await axios.get("https://mymusicwrap.onrender.com/mostlistened/tracks", {
 				params: { accessToken: token, topTrackTimeRange: timeRange },
 			});
 
@@ -109,7 +109,7 @@ export const UserTopSongs = () => {
 			}
 
 			setLoadingRecommended(true);
-			const response = await axios.get("http://localhost:3001/mostlistened/recommendedtracks", {
+			const response = await axios.get("https://mymusicwrap.onrender.com/mostlistened/recommendedtracks", {
 				params: { accessToken: token },
 			});
 
