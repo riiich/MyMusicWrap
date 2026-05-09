@@ -1,30 +1,9 @@
-const LIVE_SHARE_ORIGIN = "https://my-music-wrap.vercel.app";
+const SNAPSHOT_API_BASE_URL = "http://localhost:3001/snapshots";
 
 export const TIMEFRAME_LABELS = {
 	long: "~1+ years",
 	medium: "~6 months",
 	short: "~4 weeks",
-};
-
-export const encodeSnapshot = (snapshot) => {
-	return window.btoa(unescape(encodeURIComponent(JSON.stringify(snapshot))));
-};
-
-export const decodeSnapshot = (encodedSnapshot) => {
-	if (!encodedSnapshot) return null;
-
-	try {
-		const json = decodeURIComponent(escape(window.atob(encodedSnapshot)));
-		return JSON.parse(json);
-	} catch (err) {
-		console.error("Unable to decode shared snapshot", err);
-		return null;
-	}
-};
-
-export const decodeSnapshotFromSearch = (search) => {
-	const encodedSnapshot = new URLSearchParams(search).get("s");
-	return decodeSnapshot(encodedSnapshot);
 };
 
 export const buildShareSnapshot = ({
@@ -41,27 +20,41 @@ export const buildShareSnapshot = ({
 		id: artist?.id,
 		name: artist?.artist,
 		image: artist?.image,
+		spotifyUrl: artist?.artistURL,
 	})),
 	tracks: topTracks.slice(0, 5).map((track) => ({
 		id: track?.id,
 		name: track?.title,
 		image: track?.image,
 		artists: track?.artists?.map((artist) => artist.name) || [],
+		spotifyUrl: track?.trackURL,
 	})),
 });
 
-export const getShareOrigin = () => {
-	const currentOrigin = window.location.origin;
+export const createSharedSnapshot = async (snapshot) => {
+	const response = await fetch(SNAPSHOT_API_BASE_URL, {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify(snapshot),
+	});
 
-	if (currentOrigin.includes("127.0.0.1") || currentOrigin.includes("localhost")) {
-		return currentOrigin;
+	if (!response.ok) {
+		throw new Error("Unable to create shared snapshot.");
 	}
 
-	return LIVE_SHARE_ORIGIN;
+	return response.json();
 };
 
-export const buildShareUrl = (snapshot) => {
-	return `${getShareOrigin()}/share?s=${encodeSnapshot(snapshot)}`;
+export const fetchSharedSnapshot = async (snapshotId) => {
+	const response = await fetch(`${SNAPSHOT_API_BASE_URL}/${snapshotId}`);
+
+	if (!response.ok) {
+		throw new Error("Unable to load shared snapshot.");
+	}
+
+	return response.json();
 };
 
 export const shareSnapshotUrl = async (snapshotUrl) => {

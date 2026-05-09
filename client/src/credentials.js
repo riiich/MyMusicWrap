@@ -15,7 +15,7 @@ export const clientCredentials = (code) => {
 
 	const userLogin = async (code) => {
 		try {
-			const response = await axios.post("http://127.0.0.1:3001/login", {
+			const response = await axios.post("http://localhost:3001/login", {
 			// const response = await axios.post("https://my-music-wrap-server.vercel.app/login", {
 				code, // passing the code through the api call
 			});
@@ -76,7 +76,7 @@ export const clientCredentials = (code) => {
 	const userRefresh = async (code) => {
 		try {
 			// const response = await axios.post("https://my-music-wrap-server.vercel.app/refresh", {
-				const response = await axios.post("http://127.0.0.1:3001/refresh", {
+				const response = await axios.post("http://localhost:3001/refresh", {
 				refreshToken, // passing the code through the api call
 			});
 

@@ -27,6 +27,7 @@ export const UserTopSongs = () => {
 		() => sessionStorage.getItem("track_time_range") || "",
 	);
 	const accessToken = sessionStorage.getItem("accessToken");
+	const isAuthenticated = Boolean(accessToken || sessionStorage.getItem("userName"));
 	const panelClass =
 		"flex min-h-full flex-col items-stretch rounded-[30px] border border-emerald-900/10 bg-[linear-gradient(180deg,rgba(232,246,226,0.98),rgba(214,235,204,0.98))] p-6 text-[#17301d] shadow-[0_24px_48px_rgba(35,86,49,0.12)] dark:border-lime-200/15 dark:bg-[linear-gradient(180deg,rgba(23,45,29,0.94),rgba(10,24,15,0.96)),linear-gradient(135deg,rgba(190,242,100,0.12),transparent_45%)] dark:text-[#f4fbf1] dark:shadow-[0_28px_50px_rgba(0,0,0,0.24)]";
 	const eyebrowClass = "mb-2 text-[0.72rem] font-bold uppercase tracking-[0.22em] text-[#55734b] dark:text-[#ddefd7]";
@@ -144,6 +145,8 @@ export const UserTopSongs = () => {
 		if (!accessToken) return;
 		retrieveRecommendedTracks(accessToken, topTrackTimeRange);
 	}, [accessToken, topTrackTimeRange]);
+
+	if (!isAuthenticated) return null;
 
 	return (
 		<div>

@@ -1,5 +1,6 @@
-import { Link } from "react-router-dom";
-import { decodeSnapshotFromSearch, TIMEFRAME_LABELS } from "../utils/shareSnapshot";
+import { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import { fetchSharedSnapshot, TIMEFRAME_LABELS } from "../utils/shareSnapshot";
 
 const SnapshotList = ({ title, timeframe, items, renderMeta }) => (
 	<section className="rounded-[30px] border border-emerald-900/10 bg-[linear-gradient(180deg,rgba(232,246,226,0.98),rgba(214,235,204,0.98))] p-5 text-[#102016] shadow-[0_24px_48px_rgba(35,86,49,0.12)] dark:border-lime-200/15 dark:bg-[linear-gradient(180deg,rgba(23,45,29,0.94),rgba(10,24,15,0.96))] dark:text-[#f4fbf1] dark:shadow-[0_28px_50px_rgba(0,0,0,0.24)]">
@@ -48,14 +49,57 @@ const SnapshotList = ({ title, timeframe, items, renderMeta }) => (
 );
 
 export const SharedSnapshot = () => {
-	const snapshot = decodeSnapshotFromSearch(window.location.search);
+	const { snapshotId } = useParams();
+	const [snapshot, setSnapshot] = useState(null);
+	const [isLoading, setIsLoading] = useState(true);
+	const [errorMessage, setErrorMessage] = useState("");
 
-	if (!snapshot) {
+	useEffect(() => {
+		let isMounted = true;
+
+		const loadSnapshot = async () => {
+			try {
+				setIsLoading(true);
+				const nextSnapshot = await fetchSharedSnapshot(snapshotId);
+				if (isMounted) setSnapshot(nextSnapshot);
+			} catch (err) {
+				console.error(err);
+				if (isMounted) setErrorMessage("This snapshot link is not valid.");
+			} finally {
+				if (isMounted) setIsLoading(false);
+			}
+		};
+
+		if (snapshotId) {
+			loadSnapshot();
+		} else {
+			setErrorMessage("This snapshot link is not valid.");
+			setIsLoading(false);
+		}
+
+		return () => {
+			isMounted = false;
+		};
+	}, [snapshotId]);
+
+	if (isLoading) {
 		return (
 			<div className="mx-auto flex min-h-[70vh] w-full max-w-3xl flex-col items-center justify-center px-4 text-center">
 				<div className="rounded-[2rem] border border-emerald-900/10 bg-[linear-gradient(145deg,rgba(232,246,226,0.98),rgba(214,235,204,0.98))] px-8 py-10 shadow-[0_26px_60px_rgba(16,64,30,0.12)]">
 					<h1 className="font-['Gotham_Display'] text-3xl text-[#102016]">
-						This snapshot link is not valid.
+						Loading snapshot...
+					</h1>
+				</div>
+			</div>
+		);
+	}
+
+	if (errorMessage || !snapshot) {
+		return (
+			<div className="mx-auto flex min-h-[70vh] w-full max-w-3xl flex-col items-center justify-center px-4 text-center">
+				<div className="rounded-[2rem] border border-emerald-900/10 bg-[linear-gradient(145deg,rgba(232,246,226,0.98),rgba(214,235,204,0.98))] px-8 py-10 shadow-[0_26px_60px_rgba(16,64,30,0.12)]">
+					<h1 className="font-['Gotham_Display'] text-3xl text-[#102016]">
+						{errorMessage || "This snapshot link is not valid."}
 					</h1>
 					<Link
 						to="/"

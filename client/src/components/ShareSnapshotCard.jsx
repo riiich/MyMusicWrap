@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { buildShareSnapshot, buildShareUrl, shareSnapshotUrl } from "../utils/shareSnapshot";
+import { buildShareSnapshot, createSharedSnapshot, shareSnapshotUrl } from "../utils/shareSnapshot";
 
 export const ShareSnapshotCard = ({
 	artistTimeRange,
@@ -8,6 +8,7 @@ export const ShareSnapshotCard = ({
 	topTracks,
 }) => {
 	const [shareStatus, setShareStatus] = useState("");
+	const [isSharing, setIsSharing] = useState(false);
 	const canShare = topArtists.length > 0 || topTracks.length > 0;
 
 	const shareSnapshot = async () => {
@@ -18,10 +19,11 @@ export const ShareSnapshotCard = ({
 			topArtists,
 			topTracks,
 		});
-		const snapshotUrl = buildShareUrl(snapshot);
 
 		try {
-			const nextStatus = await shareSnapshotUrl(snapshotUrl);
+			setIsSharing(true);
+			const { shareUrl } = await createSharedSnapshot(snapshot);
+			const nextStatus = await shareSnapshotUrl(shareUrl);
 			setShareStatus(nextStatus);
 			window.setTimeout(() => setShareStatus(""), 2200);
 		} catch (err) {
@@ -30,6 +32,8 @@ export const ShareSnapshotCard = ({
 			console.error(err);
 			setShareStatus("Unable to share right now.");
 			window.setTimeout(() => setShareStatus(""), 2200);
+		} finally {
+			setIsSharing(false);
 		}
 	};
 
@@ -50,10 +54,10 @@ export const ShareSnapshotCard = ({
 				<button
 					type="button"
 					onClick={shareSnapshot}
-					disabled={!canShare}
+					disabled={!canShare || isSharing}
 					className="rounded-full border border-emerald-900/10 bg-[#102016] px-5 py-3 text-sm font-bold text-white shadow-[0_14px_26px_rgba(16,32,22,0.18)] transition hover:-translate-y-0.5 hover:bg-[#1d3a25] disabled:cursor-not-allowed disabled:opacity-50 dark:border-white/20 dark:bg-[#eef6ef] dark:text-[#102016] dark:hover:bg-white"
 				>
-					Share snapshot
+					{isSharing ? "Creating snapshot..." : "Share snapshot"}
 				</button>
 				{shareStatus ? (
 					<p className="text-sm font-bold text-[#17301d] dark:text-[#f7fff5]">

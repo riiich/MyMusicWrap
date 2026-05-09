@@ -52,7 +52,7 @@ function App() {
 						<Routes>
 							<Route path="/" element={<Home />} />
 							<Route path="/login" element={<Login />} />
-							<Route path="/share" element={<SharedSnapshot />} />
+							<Route path="/share/:snapshotId" element={<SharedSnapshot />} />
 							<Route path="/about" element={<About />} />
 							<Route path="/userfeedback" element={<Feedback />} />
 							<Route path="*" element={<ErrorPage />} />
