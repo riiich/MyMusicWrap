@@ -53,6 +53,19 @@ export const SharedSnapshot = () => {
 	const [snapshot, setSnapshot] = useState(null);
 	const [isLoading, setIsLoading] = useState(true);
 	const [errorMessage, setErrorMessage] = useState("");
+	const [copyStatus, setCopyStatus] = useState("");
+
+	const copySnapshotLink = async () => {
+		try {
+			await navigator.clipboard.writeText(window.location.href);
+			setCopyStatus("Snapshot link copied.");
+		} catch (err) {
+			console.error(err);
+			setCopyStatus("Unable to copy link.");
+		}
+
+		window.setTimeout(() => setCopyStatus(""), 2200);
+	};
 
 	useEffect(() => {
 		let isMounted = true;
@@ -124,12 +137,18 @@ export const SharedSnapshot = () => {
 				<p className="mt-3 max-w-3xl leading-7 text-[#355240] dark:text-[#d6e8d2]">
 					A snapshot of their top artists and tracks from MyMusicWrap.
 				</p>
-				<Link
-					to="/"
+				<button
+					type="button"
+					onClick={copySnapshotLink}
 					className="mt-5 inline-flex rounded-full bg-[#102016] px-6 py-3 text-sm font-bold text-white transition hover:-translate-y-0.5 hover:bg-[#1d3a25] dark:bg-[#eef6ef] dark:text-[#102016] dark:hover:bg-white"
 				>
-					Create your own wrap
-				</Link>
+					Copy snapshot link
+				</button>
+				{copyStatus ? (
+					<p className="mt-3 text-sm font-bold text-[#17301d] dark:text-[#f7fff5]">
+						{copyStatus}
+					</p>
+				) : null}
 			</div>
 			<div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
 				<SnapshotList

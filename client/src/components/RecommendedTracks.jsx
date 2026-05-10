@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { GlidingText } from "./GlidingText";
+import { logoutIfAuthExpired } from "../utils/authSession";
 
 export const RecommendedTracks = ({ recommendedTracks, retrieveURI, loading, accessToken, message }) => {
 	const [playlists, setPlaylists] = useState([]);
@@ -17,6 +18,7 @@ export const RecommendedTracks = ({ recommendedTracks, retrieveURI, loading, acc
 			setPlaylists(response.data.playlists);
 		} catch (err) {
 			console.log(err);
+			logoutIfAuthExpired(err);
 		}
 	};
 
@@ -53,6 +55,7 @@ export const RecommendedTracks = ({ recommendedTracks, retrieveURI, loading, acc
 			}, 2500);
 		} catch (err) {
 			console.log(err);
+			logoutIfAuthExpired(err);
 		}
 	};
 

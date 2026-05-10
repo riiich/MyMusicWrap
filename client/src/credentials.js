@@ -1,137 +1,145 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { useState, useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import axios from "axios";
+import { logoutForExpiredSession } from "./utils/authSession";
+
+const TOKEN_WARNING_SECONDS = 60;	// 1 minute warning before access token expires
+const LOGOUT_COUNTDOWN_MS = 10000;
+
+const formatLocalExpiryTime = (expiresAtSeconds) => {
+	return new Date(expiresAtSeconds * 1000).toLocaleTimeString("en-US", {
+		hour12: false,
+		hour: "2-digit",
+		minute: "2-digit",
+		second: "2-digit",
+	});
+};
+
+const getStoredExpiryTimestamp = () => {
+	const expiresAt = Number(sessionStorage.getItem("accessTokenExpiresAt"));
+
+	return expiresAt || undefined;
+};
 
 export const clientCredentials = (code) => {
-	const [accessToken, setAccessToken] = useState();
-	const [refreshToken, setRefreshToken] = useState();
-	const [expiresIn, setExpiresIn] = useState();
-	const spotifyUserCode = code;
-	const today = new Date();
-	let currentTime = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+	const [accessToken, setAccessToken] = useState(() => sessionStorage.getItem("accessToken") || undefined);
+	const [refreshToken, setRefreshToken] = useState(
+		() => sessionStorage.getItem("refreshToken") || undefined,
+	);
+	const [expiresAt, setExpiresAt] = useState(getStoredExpiryTimestamp);
+	const [showExpiryModal, setShowExpiryModal] = useState(false);
+	const warningTimerRef = useRef(null);
+	const logoutTimerRef = useRef(null);
 
-	// console.log(spotifyUserCode);
-	// console.log(code);
+	const clearAuthTimers = () => {
+		if (warningTimerRef.current) clearTimeout(warningTimerRef.current);
+		if (logoutTimerRef.current) clearTimeout(logoutTimerRef.current);
+	};
 
-	const userLogin = async (code) => {
-		try {
-			const response = await axios.post("http://localhost:3001/login", {
-			// const response = await axios.post("https://my-music-wrap-server.vercel.app/login", {
-				code, // passing the code through the api call
-			});
+	const logoutUser = () => {
+		clearAuthTimers();
+		logoutForExpiredSession();
+	};
 
-			setAccessToken(response.data.accessToken);
-			setRefreshToken(response.data.refreshToken);
-			setExpiresIn(response.data.expiresIn);
-			// setExpiresIn(70);
-			console.log(currentTime);
+	const saveTokenSession = ({
+		accessToken: nextAccessToken,
+		refreshToken: nextRefreshToken,
+		expiresIn: nextExpiresIn,
+	}) => {
+		if (nextAccessToken) {
+			sessionStorage.setItem("accessToken", nextAccessToken);
+			setAccessToken(nextAccessToken);
+		}
 
-			// *********** WORK ON THE CODE, ACCESS TOKEN, AND REFRESH TOKEN
-			setTimeout(() => {
-				sessionStorage.setItem("refreshToken", response.data.refreshToken);
-				window.history.pushState({}, null, "/"); // removes the code from the url
-				window.location.reload();
-			}, 1500);
-		} catch (err) {
-			console.log(err);
-			sessionStorage.clear();
-			setTimeout(() => {
-				window.location = "/"; // redirects back to home page if there is an error
-			}, 2000);
+		if (nextRefreshToken) {
+			sessionStorage.setItem("refreshToken", nextRefreshToken);
+			setRefreshToken(nextRefreshToken);
+		}
+
+		if (nextExpiresIn) {
+			const nextExpiresAt = Math.floor(Date.now() / 1000) + nextExpiresIn;
+			sessionStorage.setItem("accessTokenExpiresAt", String(nextExpiresAt));
+			sessionStorage.setItem("accessTokenExpiresAtLocal", formatLocalExpiryTime(nextExpiresAt));
+			setExpiresAt(nextExpiresAt);
 		}
 	};
 
-	// runs this function every time there is a new url code
+	const refreshAccessToken = async () => {
+		const activeRefreshToken = refreshToken || sessionStorage.getItem("refreshToken");
+
+		if (!activeRefreshToken) {
+			logoutUser();
+			return;
+		}
+
+		try {
+			clearAuthTimers();
+			const response = await axios.post("http://localhost:3001/refresh", {
+				refreshToken: activeRefreshToken,
+			});
+
+			saveTokenSession({
+				accessToken: response.data.accessToken,
+				expiresIn: response.data.expiresIn,
+			});
+			setShowExpiryModal(false);
+		} catch (err) {
+			console.log(err?.response?.data || err);
+			logoutUser();
+		}
+	};
+
+	const userLogin = async (spotifyCode) => {
+		try {
+			const response = await axios.post("http://localhost:3001/login", {
+				// const response = await axios.post("https://my-music-wrap-server.vercel.app/login", {
+				code: spotifyCode,
+			});
+
+			saveTokenSession({
+				accessToken: response.data.accessToken,
+				refreshToken: response.data.refreshToken,
+				expiresIn: response.data.expiresIn,
+			});
+
+			setTimeout(() => {
+				window.history.pushState({}, null, "/");
+				window.location.reload();
+			}, 1500);
+		} catch (err) {
+			console.log(err?.response?.data || err);
+			logoutUser();
+		}
+	};
+
 	useEffect(() => {
-		// fetches the client credentials (client id and client secret from their spotify account)
-		// axios
-		// 	.post("http://localhost:3001/login", {
-		// 		code, // passing the code through the api call
-		// 	})
-		// 	// .then((response) => {
-		// 	// 	return response.json();
-		// 	// })
-		// 	.then((data) => {
-		// 		setAccessToken(data.data.accessToken);
-		// 		setRefreshToken(data.data.refreshToken);
-		// 		// setExpiresIn(res.data.expiresIn);
-		// 		setExpiresIn(70);
-		// 		// console.log(refreshToken);
-		// 		console.log(data.data.msg);
-		// 		console.log(currentTime);
-		// 		setTimeout(() => {
-		// 			window.history.pushState({}, null, "/"); // removes the code from the url
-		// 		}, 2500);
-		// 	})
-		// 	.catch((err) => {
-		// 		console.log(err);
-		// 		setTimeout(() => {
-		// 			window.location = "/"; // redirects back to home page if there is an error
-		// 		}, 2000);
-		// 	});
+		if (!code) return;
 
 		userLogin(code);
 	}, [code]);
 
-	const userRefresh = async (code) => {
-		try {
-			// const response = await axios.post("https://my-music-wrap-server.vercel.app/refresh", {
-				const response = await axios.post("http://localhost:3001/refresh", {
-				refreshToken, // passing the code through the api call
-			});
-
-			console.log(response.data);
-			console.log(response.data.accessToken);
-			setAccessToken(response.data.accessToken);
-			setExpiresIn(response.data.expiresIn);
-			// setExpiresIn(90);
-			console.log(currentTime);
-		} catch (err) {
-			console.log(err);
-			sessionStorage.clear();
-			setTimeout(() => {
-				window.location = "/"; // redirects back to home page if there is an error
-			}, 2000);
-		}
-	};
-
-	// refresh token used when current token is expiring
 	useEffect(() => {
-		// don't do anything if there is no refresh token or expiresIn
-		if (!refreshToken || !expiresIn) return;
+		if (!refreshToken || !expiresAt) return undefined;
 
-		// continuously get new access token when it's about (1 min) to expire
-		const refreshInterval = setInterval(() => {
-			// axios
-			// 	.post("http://localhost:3001/refresh", {
-			// 		refreshToken, // passing the refresh token through the api call
-			// 	})
-			// 	.then((res) => {
-			// 		console.log(currentTime);
-			// 		setAccessToken(res.data.accessToken);
-			// 		// setExpiresIn(res.data.expiresIn);
-			// 		console.log(expiresIn);
-			// 		setExpiresIn(70);
-			// 		console.log("hi1");
-			// 		// sessionStorage.removeItem("accessToken"); // clear the session storage whenever the access token is expired
-			// 		// window.dispatchEvent(new Event("storage"));
-			// 	})
-			// 	// .then((res) => {
-			// 	// 	sessionStorage.setItem("accessToken", res.data.accessToken); // renew the access token to the new acess token
-			// 	// })
-			// 	.catch((err) => {
-			// 		console.log(err);
-			// 		setTimeout(() => {
-			// 			window.location = "/"; // redirects back to home page if there is an error
-			// 		}, 2000);
-			// 	});
-			userRefresh(code);
-		}, (expiresIn - 60) * 1000);
+		clearAuthTimers();
 
-		// clear the interval if there is any error where the refresh token or expiresIn changes before an actual refresh,
-		//   this makes it so that we don't potentially use an incorrect refresh token
-		return () => clearInterval(refreshInterval);
-	}, [refreshToken, expiresIn]);
+		const warningDelay = Math.max(
+			(expiresAt - Math.floor(Date.now() / 1000) - TOKEN_WARNING_SECONDS) * 1000,
+			0,
+		);
 
-	return accessToken;
+		warningTimerRef.current = setTimeout(() => {
+			setShowExpiryModal(true);
+			logoutTimerRef.current = setTimeout(logoutUser, LOGOUT_COUNTDOWN_MS);
+		}, warningDelay);
+
+		return clearAuthTimers;
+	}, [refreshToken, expiresAt]);
+
+	return {
+		accessToken,
+		showExpiryModal,
+		refreshAccessToken,
+		logoutUser,
+	};
 };

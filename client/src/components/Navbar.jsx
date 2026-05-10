@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem } from "@nextui-org/navbar";
+import { clearLocalStorageExceptTheme } from "../utils/storage";
 
 const ThemeIcon = ({ isDarkMode }) => {
 	if (isDarkMode) {
@@ -60,6 +61,7 @@ export const NavigationBar = ({ isDarkMode, toggleTheme }) => {
 
 	const signOut = () => {
 		sessionStorage.clear();
+		clearLocalStorageExceptTheme();
 		navigate("/");
 		window.location.reload();
 	};
@@ -164,14 +166,7 @@ export const NavigationBar = ({ isDarkMode, toggleTheme }) => {
 						>
 							Sign out
 						</button>
-					) : (
-						<Link
-							to="/login"
-							className="rounded-full border border-emerald-200/30 bg-emerald-400 px-5 py-2 text-sm font-bold text-slate-950 transition hover:bg-emerald-300 dark:border-emerald-100/15 dark:bg-[#eef6ef] dark:text-[#102016] dark:hover:bg-white"
-						>
-							Log in
-						</Link>
-					)}
+					) : null}
 				</NavbarItem>
 			</NavbarContent>
 
@@ -237,14 +232,7 @@ export const NavigationBar = ({ isDarkMode, toggleTheme }) => {
 											Sign out
 										</button>
 									</div>
-								) : (
-									<Link
-										to="/login"
-										className="block w-full rounded-full border border-emerald-200/30 bg-emerald-400 px-5 py-3 text-center text-sm font-bold text-slate-950 transition hover:bg-emerald-300 dark:border-emerald-100/15 dark:bg-[#eef6ef] dark:text-[#102016] dark:hover:bg-white"
-									>
-										Log in
-									</Link>
-								)}
+								) : null}
 							</div>
 						</motion.aside>
 					</>

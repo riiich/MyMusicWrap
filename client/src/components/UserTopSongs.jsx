@@ -8,6 +8,7 @@ import spotifyLogoWhite from "../images/Spotify_Logo_RGB_White.png";
 import { SongPlayer } from "./SongPlayer";
 import { ShareSnapshotCard } from "./ShareSnapshotCard";
 import { TIMEFRAME_LABELS } from "../utils/shareSnapshot";
+import { logoutIfAuthExpired } from "../utils/authSession";
 
 export const UserTopSongs = () => {
 	const [topArtists, setTopArtists] = useState([]);
@@ -21,10 +22,10 @@ export const UserTopSongs = () => {
 	const [isPlayerVisible, setIsPlayerVisible] = useState(false);
 	const [shouldPlayerPlay, setShouldPlayerPlay] = useState(false);
 	const [topArtistTimeRange, setTopArtistTimeRange] = useState(
-		() => sessionStorage.getItem("artist_time_range") || "",
+		() => localStorage.getItem("artist_time_range") || "",
 	);
 	const [topTrackTimeRange, setTopTrackTimeRange] = useState(
-		() => sessionStorage.getItem("track_time_range") || "",
+		() => localStorage.getItem("track_time_range") || "",
 	);
 	const accessToken = sessionStorage.getItem("accessToken");
 	const isAuthenticated = Boolean(accessToken || sessionStorage.getItem("userName"));
@@ -40,7 +41,7 @@ export const UserTopSongs = () => {
 		if (!sessionStorage.getItem("userName")) return;
 
 		const nextRange = e.target.value;
-		sessionStorage.setItem("artist_time_range", nextRange);
+		localStorage.setItem("artist_time_range", nextRange);
 		setTopArtistTimeRange(nextRange);
 	};
 
@@ -60,6 +61,7 @@ export const UserTopSongs = () => {
 			setTopArtists(response.data.topArtists);
 		} catch (err) {
 			console.error(err);
+			if (logoutIfAuthExpired(err)) return;
 			setTopArtists([]);
 		} finally {
 			setLoadingArtists(false);
@@ -70,7 +72,7 @@ export const UserTopSongs = () => {
 		if (!sessionStorage.getItem("userName")) return;
 
 		const nextRange = e.target.value;
-		sessionStorage.setItem("track_time_range", nextRange);
+		localStorage.setItem("track_time_range", nextRange);
 		setTopTrackTimeRange(nextRange);
 	};
 
@@ -90,6 +92,7 @@ export const UserTopSongs = () => {
 			setTopTracks(response.data.topTracks);
 		} catch (err) {
 			console.error(err);
+			if (logoutIfAuthExpired(err)) return;
 			setTopTracks([]);
 		} finally {
 			setLoadingTracks(false);
@@ -114,6 +117,7 @@ export const UserTopSongs = () => {
 			setRecommendedTracksMsg(response.data.msg);
 		} catch (err) {
 			console.error(err);
+			if (logoutIfAuthExpired(err)) return;
 			setRecommendedTracks([]);
 			setRecommendedTracksMsg("We couldn't load recommendations right now.");
 		} finally {

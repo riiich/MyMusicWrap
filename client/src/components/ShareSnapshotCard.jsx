@@ -9,7 +9,9 @@ export const ShareSnapshotCard = ({
 }) => {
 	const [shareStatus, setShareStatus] = useState("");
 	const [isSharing, setIsSharing] = useState(false);
-	const canShare = topArtists.length > 0 || topTracks.length > 0;
+	const hasSelectedTimeframes = Boolean(artistTimeRange && trackTimeRange);
+	const hasSnapshotData = topArtists.length > 0 && topTracks.length > 0;
+	const canShare = hasSelectedTimeframes && hasSnapshotData;
 
 	const shareSnapshot = async () => {
 		const snapshot = buildShareSnapshot({
@@ -38,33 +40,38 @@ export const ShareSnapshotCard = ({
 	};
 
 	return (
-		<div className="mb-5 flex flex-col gap-3 rounded-[28px] border border-emerald-900/10 bg-[linear-gradient(135deg,rgba(232,246,226,0.98),rgba(214,235,204,0.92))] p-5 text-left shadow-[0_18px_38px_rgba(35,86,49,0.12)] dark:border-lime-200/15 dark:bg-[linear-gradient(135deg,rgba(19,42,27,0.94),rgba(9,18,12,0.96))] dark:shadow-[0_24px_46px_rgba(0,0,0,0.22)] sm:flex-row sm:items-center sm:justify-between">
-			<div>
-				<p className="mb-1 text-[0.7rem] font-bold uppercase tracking-[0.22em] text-[#55734b] dark:text-[#ddefd7]">
-					Share Your Wrap
-				</p>
-				<h2 className="font-['Gotham_Display'] text-[clamp(1.2rem,2vw,1.65rem)] tracking-[-0.04em] text-[#17301d] dark:text-[#f7fff5]">
-					Send a snapshot of your top artists and tracks.
-				</h2>
-				<p className="mt-2 text-sm leading-6 text-[#355240] dark:text-[#d6e8d2]">
-					Uses your currently loaded artist and track timeframes.
-				</p>
-			</div>
-			<div className="flex flex-col items-start gap-2 sm:items-end">
-				<button
-					type="button"
-					onClick={shareSnapshot}
-					disabled={!canShare || isSharing}
-					className="rounded-full border border-emerald-900/10 bg-[#102016] px-5 py-3 text-sm font-bold text-white shadow-[0_14px_26px_rgba(16,32,22,0.18)] transition hover:-translate-y-0.5 hover:bg-[#1d3a25] disabled:cursor-not-allowed disabled:opacity-50 dark:border-white/20 dark:bg-[#eef6ef] dark:text-[#102016] dark:hover:bg-white"
-				>
-					{isSharing ? "Creating snapshot..." : "Share snapshot"}
-				</button>
-				{shareStatus ? (
-					<p className="text-sm font-bold text-[#17301d] dark:text-[#f7fff5]">
-						{shareStatus}
+		<div className="mb-5 rounded-[28px] border border-emerald-900/10 bg-[linear-gradient(135deg,rgba(232,246,226,0.98),rgba(214,235,204,0.92))] p-5 text-left shadow-[0_18px_38px_rgba(35,86,49,0.12)] dark:border-lime-200/15 dark:bg-[linear-gradient(135deg,rgba(19,42,27,0.94),rgba(9,18,12,0.96))] dark:shadow-[0_24px_46px_rgba(0,0,0,0.22)]">
+			<div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+				<div>
+					<p className="mb-1 text-[0.7rem] font-bold uppercase tracking-[0.22em] text-[#55734b] dark:text-[#ddefd7]">
+						Share Your Wrap
 					</p>
-				) : null}
+					<h2 className="font-['Gotham_Display'] text-[clamp(1.2rem,2vw,1.65rem)] tracking-[-0.04em] text-[#17301d] dark:text-[#f7fff5]">
+						Send a snapshot of your top artists and tracks.
+					</h2>
+					<p className="mt-2 text-sm leading-6 text-[#355240] dark:text-[#d6e8d2]">
+						Uses your currently loaded artist and track timeframes.
+					</p>
+				</div>
+				<div className="flex flex-col items-start gap-2 sm:items-end">
+					<button
+						type="button"
+						onClick={shareSnapshot}
+						disabled={!canShare || isSharing}
+						className="rounded-full border border-emerald-900/10 bg-[#102016] px-5 py-3 text-sm font-bold text-white shadow-[0_14px_26px_rgba(16,32,22,0.18)] transition hover:-translate-y-0.5 hover:bg-[#1d3a25] disabled:cursor-not-allowed disabled:opacity-50 dark:border-white/20 dark:bg-[#eef6ef] dark:text-[#102016] dark:hover:bg-white"
+					>
+						{isSharing ? "Creating snapshot..." : "Share snapshot"}
+					</button>
+					{shareStatus ? (
+						<p className="text-sm font-bold text-[#17301d] dark:text-[#f7fff5]">
+							{shareStatus}
+						</p>
+					) : null}
+				</div>
 			</div>
+			<p className="mt-4 text-xs font-semibold text-[#55734b] dark:text-[#ddefd7]">
+				* Select a time frame for both artists and tracks to share a snapshot.
+			</p>
 		</div>
 	);
 };
