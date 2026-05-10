@@ -23,7 +23,7 @@ export const MobileSidebar = ({
 			transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
 			className="fixed left-0 top-16 z-50 flex h-[calc(100svh-3rem)] max-h-[calc(100svh-3rem)] w-3/4 max-w-sm touch-pan-y flex-col 
 					   justify-between overflow-hidden overscroll-none border-r border-emerald-700/10 bg-gradient-to-b from-[#f8fff8] 
-					   via-[#eef8ef] to-[#dff4e3] px-5 pb-5 pt-5 text-[#102016] shadow-2xl shadow-emerald-950/20 sm:hidden 
+					 via-[#eef8ef] to-[#dff4e3] px-5 pb-5 pt-5 text-[#102016] shadow-2xl shadow-emerald-950/20 sm:hidden 
 					   dark:border-emerald-100/10 dark:from-[#16351f] dark:via-[#122b19] dark:to-[#0f1711] dark:text-[#eef6ef]"
 		>
 			<div className="shrink-0">
@@ -41,7 +41,7 @@ export const MobileSidebar = ({
 			</div>
 
 			{isAuthenticated ? (
-				<div className="shrink-0 pb-[max(4.5rem,env(safe-area-inset-bottom))]">
+				<div className="shrink-0 pb-[max(3rem,env(safe-area-inset-bottom))]">
 					<MobileSidebarProfileCard
 						userName={userName}
 						userImage={userImage}
