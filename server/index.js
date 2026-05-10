@@ -10,7 +10,12 @@ app.use(
 	cors({
 		// origin: "*",
 		// origin: "http://localhost:3000",
-		origin: ["https://my-music-wrap.vercel.app", "http://localhost:3000", "http://127.0.0.1:3000"],
+		origin: [
+			"https://www.mymusicwrap.com",
+			"https://my-music-wrap.vercel.app",
+			"http://localhost:3000",
+			"http://127.0.0.1:3000",
+		],
 		methods: ["GET", "POST"],
 		credentials: true,
 	})
