@@ -76,6 +76,16 @@ export const NavigationBar = ({ isDarkMode, toggleTheme }) => {
 		});
 	}, [isMenuOpen]);
 
+	useEffect(() => {
+		document.body.style.overflow = isMenuOpen ? "hidden" : "";
+		document.documentElement.style.overflow = isMenuOpen ? "hidden" : "";
+
+		return () => {
+			document.body.style.overflow = "";
+			document.documentElement.style.overflow = "";
+		};
+	}, [isMenuOpen]);
+
 	const handleMenuTouchStart = (event) => {
 		const touch = event.touches[0];
 		touchStartRef.current = {
@@ -183,11 +193,7 @@ export const NavigationBar = ({ isDarkMode, toggleTheme }) => {
 							animate={{ opacity: 1 }}
 							exit={{ opacity: 0 }}
 							transition={{ duration: 0.18, ease: "easeOut" }}
-							className="pointer-events-none fixed inset-x-0 bottom-0 top-16 z-40 bg-[#102016]/20 backdrop-blur-[2px] sm:hidden dark:bg-black/35"
-						/>
-						<div
-							aria-hidden="true"
-							className="pointer-events-none fixed bottom-0 right-0 top-16 z-[70] w-1/4 touch-pan-y sm:hidden"
+							className="fixed inset-x-0 bottom-0 top-16 z-40 bg-[#102016]/20 backdrop-blur-[2px] sm:hidden dark:bg-black/35"
 						/>
 						<MobileSidebar
 							isAuthenticated={isAuthenticated}
