@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem } from "@nextui-org/navbar";
 import { clearLocalStorageExceptTheme } from "../utils/storage";
+import { MobileSidebar } from "./MobileSidebar";
 
 const ThemeIcon = ({ isDarkMode }) => {
 	if (isDarkMode) {
@@ -182,59 +183,23 @@ export const NavigationBar = ({ isDarkMode, toggleTheme }) => {
 							animate={{ opacity: 1 }}
 							exit={{ opacity: 0 }}
 							transition={{ duration: 0.18, ease: "easeOut" }}
-							className="fixed inset-x-0 bottom-0 top-16 z-40 bg-[#102016]/20 backdrop-blur-[2px] sm:hidden dark:bg-black/35"
+							className="pointer-events-none fixed inset-x-0 bottom-0 top-16 z-40 bg-[#102016]/20 backdrop-blur-[2px] sm:hidden dark:bg-black/35"
 						/>
-						<motion.aside
-							key="mobile-menu-panel"
-							onTouchStart={handleMenuTouchStart}
+						<div
+							aria-hidden="true"
+							className="pointer-events-none fixed bottom-0 right-0 top-16 z-[70] w-1/4 touch-pan-y sm:hidden"
+						/>
+						<MobileSidebar
+							isAuthenticated={isAuthenticated}
+							isDarkMode={isDarkMode}
+							onSignOut={signOut}
+							onThemeToggle={toggleTheme}
 							onTouchEnd={handleMenuTouchEnd}
-							initial={{ x: "-100%" }}
-							animate={{ x: 0 }}
-							exit={{ x: "-100%" }}
-							transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
-							className="fixed left-0 top-16 z-50 flex h-[calc(100vh-4rem)] w-3/4 max-w-sm touch-pan-y flex-col border-r border-emerald-700/10 bg-gradient-to-b from-[#f8fff8] via-[#eef8ef] to-[#dff4e3] px-5 pb-6 pt-6 text-[#102016] shadow-2xl shadow-emerald-950/20 sm:hidden dark:border-emerald-100/10 dark:from-[#16351f] dark:via-[#122b19] dark:to-[#0f1711] dark:text-[#eef6ef]"
-						>
-							<div>
-								<button
-									type="button"
-									onClick={toggleTheme}
-									aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
-									title={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
-									className="mt-2 inline-flex h-10 w-10 items-center justify-center rounded-full border border-emerald-700/15 bg-white/80 text-[#102016] transition hover:bg-emerald-50 dark:border-emerald-100/15 dark:bg-[#21452a] dark:text-[#eef6ef] dark:hover:bg-[#295634]"
-								>
-									<ThemeIcon isDarkMode={isDarkMode} />
-								</button>
-							</div>
-
-							<div className="mt-auto">
-								{isAuthenticated ? (
-									<div className="flex flex-col gap-4 rounded-[24px] border border-emerald-700/10 bg-white/70 p-4 backdrop-blur dark:border-emerald-100/10 dark:bg-white/10">
-										<div className="flex min-w-0 items-center gap-3">
-											{userImage ? (
-												<img
-													src={userImage}
-													alt="user profile"
-													className="h-12 w-12 flex-shrink-0 rounded-full object-cover ring-2 ring-emerald-700/15 dark:ring-emerald-100/15"
-												/>
-											) : (
-												<div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-emerald-700/15 text-sm font-black dark:bg-emerald-100/15">
-													{userName.charAt(0)}
-												</div>
-											)}
-											<p className="min-w-0 flex-1 truncate pr-2 text-sm font-bold">
-												{userName}
-											</p>
-										</div>
-										<button
-											onClick={signOut}
-											className="w-full rounded-full border border-red-300/30 bg-red-500/90 px-5 py-3 text-sm font-bold text-white transition hover:bg-red-400 dark:border-red-200/20 dark:bg-red-500 dark:text-white dark:hover:bg-red-400"
-										>
-											Sign out
-										</button>
-									</div>
-								) : null}
-							</div>
-						</motion.aside>
+							onTouchStart={handleMenuTouchStart}
+							themeIcon={<ThemeIcon isDarkMode={isDarkMode} />}
+							userImage={userImage}
+							userName={userName}
+						/>
 					</>
 				) : null}
 			</AnimatePresence>
