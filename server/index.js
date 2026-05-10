@@ -9,12 +9,9 @@ require("dotenv").config();
 app.use(
 	cors({
 		// origin: "*",
-		// origin: "http://localhost:3000",
 		origin: [
 			"https://www.mymusicwrap.com",
 			"https://my-music-wrap.vercel.app",
-			"http://localhost:3000",
-			"http://127.0.0.1:3000",
 		],
 		methods: ["GET", "POST"],
 		credentials: true,
@@ -54,6 +51,9 @@ app.use("/myplaylists", userPlaylists);
 
 const feedback = require("./routes/userFeedback");
 app.use("/feedback", feedback);
+
+const sharedSnapshots = require("./routes/sharedSnapshots");
+app.use("/snapshots", sharedSnapshots);
 
 mongoose.connection.once("open", () => {
 	console.log("Connected to MongoDB!");

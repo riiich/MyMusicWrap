@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem } from "@nextui-org/navbar";
+import { clearLocalStorageExceptTheme } from "../utils/storage";
 
 const ThemeIcon = ({ isDarkMode }) => {
 	if (isDarkMode) {
@@ -60,6 +61,7 @@ export const NavigationBar = ({ isDarkMode, toggleTheme }) => {
 
 	const signOut = () => {
 		sessionStorage.clear();
+		clearLocalStorageExceptTheme();
 		navigate("/");
 		window.location.reload();
 	};
@@ -164,14 +166,7 @@ export const NavigationBar = ({ isDarkMode, toggleTheme }) => {
 						>
 							Sign out
 						</button>
-					) : (
-						<Link
-							to="/login"
-							className="rounded-full border border-emerald-200/30 bg-emerald-400 px-5 py-2 text-sm font-bold text-slate-950 transition hover:bg-emerald-300 dark:border-emerald-100/15 dark:bg-[#eef6ef] dark:text-[#102016] dark:hover:bg-white"
-						>
-							Log in
-						</Link>
-					)}
+					) : null}
 				</NavbarItem>
 			</NavbarContent>
 
@@ -197,7 +192,7 @@ export const NavigationBar = ({ isDarkMode, toggleTheme }) => {
 							animate={{ x: 0 }}
 							exit={{ x: "-100%" }}
 							transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
-							className="fixed left-0 top-16 z-50 flex h-[calc(100dvh-4rem)] w-3/4 max-w-sm touch-pan-y flex-col border-r border-emerald-700/10 bg-gradient-to-b from-[#f8fff8] via-[#eef8ef] to-[#dff4e3] px-5 pb-6 pt-6 text-[#102016] shadow-2xl shadow-emerald-950/20 sm:hidden dark:border-emerald-100/10 dark:from-[#16351f] dark:via-[#122b19] dark:to-[#0f1711] dark:text-[#eef6ef]"
+							className="fixed left-0 top-16 z-50 flex h-[calc(100vh-4rem)] w-3/4 max-w-sm touch-pan-y flex-col border-r border-emerald-700/10 bg-gradient-to-b from-[#f8fff8] via-[#eef8ef] to-[#dff4e3] px-5 pb-6 pt-6 text-[#102016] shadow-2xl shadow-emerald-950/20 sm:hidden dark:border-emerald-100/10 dark:from-[#16351f] dark:via-[#122b19] dark:to-[#0f1711] dark:text-[#eef6ef]"
 						>
 							<div>
 								<button
@@ -211,7 +206,7 @@ export const NavigationBar = ({ isDarkMode, toggleTheme }) => {
 								</button>
 							</div>
 
-							<div className="mt-auto pb-[calc(env(safe-area-inset-bottom)+2.5rem)]">
+							<div className="mt-auto">
 								{isAuthenticated ? (
 									<div className="flex flex-col gap-4 rounded-[24px] border border-emerald-700/10 bg-white/70 p-4 backdrop-blur dark:border-emerald-100/10 dark:bg-white/10">
 										<div className="flex min-w-0 items-center gap-3">
@@ -237,14 +232,7 @@ export const NavigationBar = ({ isDarkMode, toggleTheme }) => {
 											Sign out
 										</button>
 									</div>
-								) : (
-									<Link
-										to="/login"
-										className="block w-full rounded-full border border-emerald-200/30 bg-emerald-400 px-5 py-3 text-center text-sm font-bold text-slate-950 transition hover:bg-emerald-300 dark:border-emerald-100/15 dark:bg-[#eef6ef] dark:text-[#102016] dark:hover:bg-white"
-									>
-										Log in
-									</Link>
-								)}
+								) : null}
 							</div>
 						</motion.aside>
 					</>

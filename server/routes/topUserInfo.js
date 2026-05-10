@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const SpotifyWebAPI = require("spotify-web-api-node");
 const rateLimit = require("express-rate-limit");
+const { handleSpotifyRouteError, sendAuthExpired } = require("../utils/spotifyAuthResponse");
 require("dotenv").config();
 
 const spotifyAPI = new SpotifyWebAPI();
@@ -15,10 +16,7 @@ const recommendedTrackLimiter = rateLimit({
 // middleware that sets checks to see if there's an access token provided
 router.use((req, res, next) => {
 	if (!req.query.accessToken) {
-		res.json({
-			status: 401,
-			msg: "An invalid or no access token was provided!",
-		});
+		return sendAuthExpired(res, "No access token was provided. Please log in again.");
 	}
 	console.log(
 		"Retrieving user's top most listened artists and tracks! Also recommending some songs based on top tracks"
@@ -72,9 +70,7 @@ router.get("/artists", async (req, res) => {
 			});
 		})
 		.catch((err) => {
-			console.log("ERROR GETTING USER'S FAVORITE ARTISTS!");
-			console.log("error:", err);
-			res.sendStatus(400);
+			return handleSpotifyRouteError(res, err, "ERROR GETTING USER'S FAVORITE ARTISTS!");
 		});
 });
 
@@ -157,8 +153,7 @@ router.get("/tracks", async (req, res) => {
 			msg: "You have some songs that you enjoy listening to!",
 		});
 	} catch (err) {
-		console.log("ERROR GETTING USER'S FAVORITE SONGS!", err);
-		res.status(500).json({ error: "Internal Server Error..." });
+		return handleSpotifyRouteError(res, err, "ERROR GETTING USER'S FAVORITE SONGS!");
 	}
 });
 
@@ -169,14 +164,14 @@ const delay = (time) => {
 // this endpoint depends on the artists and tracks endpoints, so it needs to be a bit delayed to retrieve data from
 //	spotify API to fill topArtistGenres and topTrackGenres
 router.get("/recommendedtracks", recommendedTrackLimiter, (req, res) => {
-	try {
-		const recommended = []; // use the genres that the user listens to in order to look for recommended songs
-		const mostListenedTrackGenres = []; // store genres from the user's track/song history that appeat more than twice
-		const time = 1500;
+	const recommended = []; // use the genres that the user listens to in order to look for recommended songs
+	const mostListenedTrackGenres = []; // store genres from the user's track/song history that appeat more than twice
+	const time = 1500;
 
-		// have to use a setTimeout b/c topTrackGenres is used in other endpoints which make an API call, so it takes time to get the
-		//  data, so if this setTimeout is omitted, it will run this before the API call is finished, resulting in no data in topTrackGenres
-		setTimeout(async () => {
+	// have to use a setTimeout b/c topTrackGenres is used in other endpoints which make an API call, so it takes time to get the
+	//  data, so if this setTimeout is omitted, it will run this before the API call is finished, resulting in no data in topTrackGenres
+	setTimeout(async () => {
+		try {
 			// console.log(topTrackGenres);
 
 			if (!topTrackGenres) {
@@ -245,13 +240,10 @@ router.get("/recommendedtracks", recommendedTrackLimiter, (req, res) => {
 					});
 				}
 			}
-		}, time);
-	} catch (err) {
-		console.log("THERE WAS AN ERROR GETTING RECOMMENDED SONGS", err);
-		res.status(500).json({
-			msg: "Internal Server Error",
-		});
-	}
+		} catch (err) {
+			return handleSpotifyRouteError(res, err, "THERE WAS AN ERROR GETTING RECOMMENDED SONGS");
+		}
+	}, time);
 });
 
 module.exports = router;

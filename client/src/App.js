@@ -5,10 +5,12 @@ import { About } from "./pages/About";
 import { Footer } from "./components/Footer";
 import { Home } from "./pages/Home";
 import { Login } from "./pages/Login";
+import { SharedSnapshot } from "./pages/SharedSnapshot";
 import { ErrorPage } from "./pages/error";
 import { Dashboard } from "./components/Dashboard";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { NextUIProvider } from "@nextui-org/react";
+import { clearLocalStorageExceptTheme } from "./utils/storage";
 
 // in the url, it looks for the query parameter 'code' and returns an object of the item after '?'
 const code = new URLSearchParams(window.location.search).get("code");
@@ -28,6 +30,12 @@ function App() {
 	useEffect(() => {
 		document.documentElement.classList.toggle("dark", isDarkMode);
 	}, [isDarkMode]);
+
+	useEffect(() => {
+		if (sessionStorage.getItem("accessToken") || sessionStorage.getItem("userName")) return;
+
+		clearLocalStorageExceptTheme();
+	}, []);
 
 	// save the code in a state before the code becomes empty from the url
 	if (!codeExists) {
@@ -51,6 +59,7 @@ function App() {
 						<Routes>
 							<Route path="/" element={<Home />} />
 							<Route path="/login" element={<Login />} />
+							<Route path="/share/:snapshotId" element={<SharedSnapshot />} />
 							<Route path="/about" element={<About />} />
 							<Route path="/userfeedback" element={<Feedback />} />
 							<Route path="*" element={<ErrorPage />} />
@@ -58,7 +67,9 @@ function App() {
 					</main>
 					<Footer />
 				</Router>
-				{!spotifyCode ? <></> : <Dashboard code={spotifyCode} />}
+				{spotifyCode || sessionStorage.getItem("refreshToken") ? (
+					<Dashboard code={spotifyCode} />
+				) : null}
 			</div>
 		</NextUIProvider>
 	);
