@@ -35,7 +35,7 @@ const cleanTracks = (tracks = []) => {
 			? track.artists.slice(0, 8).map((artistName) => cleanText(artistName)).filter(Boolean)
 			: [],
 		spotifyUrl: cleanUrl(track?.spotifyUrl),
-	}));6
+	}));
 };
 
 const cleanTimeRange = (timeRange) => {
@@ -87,9 +87,13 @@ router.post("/", async (req, res) => {
 
 router.get("/:snapshotId", async (req, res) => {
 	try {
-		const snapshot = await SharedSnapshot.findOne(
+		const snapshot = await SharedSnapshot.findOneAndUpdate(
 			{ snapshotId: req.params.snapshotId },
-			{ _id: 0, __v: 0 },
+			{ $inc: { numOfViews: 1 } },
+			{
+				new: true,
+				projection: { _id: 0, __v: 0 },
+			},
 		).lean();
 
 		if (!snapshot) {

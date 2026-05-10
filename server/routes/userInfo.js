@@ -1,6 +1,7 @@
 const router = require("express").Router();
 require("dotenv").config();
 const SpotifyWebAPI = require("spotify-web-api-node");
+const { handleSpotifyRouteError, sendAuthExpired } = require("../utils/spotifyAuthResponse");
 
 const spotifyAPI = new SpotifyWebAPI();
 
@@ -11,6 +12,10 @@ router.use((req, res, next) => {
 });
 
 router.get("/", async (req, res) => {
+	if (!req.query.accessToken) {
+		return sendAuthExpired(res, "No access token was provided. Please log in again.");
+	}
+
 	spotifyAPI.setAccessToken(req.query.accessToken);
 
 	await spotifyAPI
@@ -24,9 +29,7 @@ router.get("/", async (req, res) => {
 			});
 		})
 		.catch((err) => {
-			console.log("ERROR GETTING USER INFO!");
-			console.log(err);
-			res.sendStatus(400);
+			return handleSpotifyRouteError(res, err, "ERROR GETTING USER INFO!");
 		});
 });
 
