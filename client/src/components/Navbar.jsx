@@ -52,6 +52,12 @@ export const NavigationBar = ({ isDarkMode, toggleTheme }) => {
 	const navigate = useNavigate();
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
 	const touchStartRef = useRef({ x: 0, y: 0 });
+	const scrollLockRef = useRef({
+		bodyPosition: "",
+		bodyTop: "",
+		bodyWidth: "",
+		scrollY: 0,
+	});
 	const [mobileAccount, setMobileAccount] = useState({
 		name: sessionStorage.getItem("userName") || "Spotify listener",
 		image: sessionStorage.getItem("userImage") || "",
@@ -77,12 +83,26 @@ export const NavigationBar = ({ isDarkMode, toggleTheme }) => {
 	}, [isMenuOpen]);
 
 	useEffect(() => {
-		document.body.style.overflow = isMenuOpen ? "hidden" : "";
-		document.documentElement.style.overflow = isMenuOpen ? "hidden" : "";
+		if (!isMenuOpen) return undefined;
+
+		const scrollY = window.scrollY;
+		scrollLockRef.current = {
+			bodyPosition: document.body.style.position,
+			bodyTop: document.body.style.top,
+			bodyWidth: document.body.style.width,
+			scrollY,
+		};
+
+		document.body.style.position = "fixed";
+		document.body.style.top = `-${scrollY}px`;
+		document.body.style.width = "100%";
 
 		return () => {
-			document.body.style.overflow = "";
-			document.documentElement.style.overflow = "";
+			const previousLock = scrollLockRef.current;
+			document.body.style.position = previousLock.bodyPosition;
+			document.body.style.top = previousLock.bodyTop;
+			document.body.style.width = previousLock.bodyWidth;
+			window.scrollTo(0, previousLock.scrollY);
 		};
 	}, [isMenuOpen]);
 
