@@ -50,6 +50,9 @@ app.use("/myplaylists", userPlaylists);
 const feedback = require("./routes/userFeedback");
 app.use("/feedback", feedback);
 
+const sharedSnapshots = require("./routes/sharedSnapshots");
+app.use("/snapshots", sharedSnapshots);
+
 mongoose.connection.once("open", () => {
 	console.log("Connected to MongoDB!");
 
