@@ -1,6 +1,6 @@
 export const MobileSidebarProfileCard = ({ userName, userImage, onSignOut }) => {
 	return (
-		<div className="flex flex-col gap-4 rounded-[24px] border border-emerald-700/10 bg-white/80 p-4 text-[#102016] shadow-2xl shadow-emerald-950/15 backdrop-blur dark:border-emerald-100/10 dark:bg-[#203b27]/95 dark:text-[#eef6ef] dark:shadow-black/25">
+		<div className="flex flex-col gap-4 rounded-[24px] border border-emerald-700/10 bg-[#d9f39f]/95 p-4 text-[#102016] shadow-2xl shadow-emerald-950/15 backdrop-blur dark:border-emerald-100/10 dark:bg-[#203b27]/95 dark:text-[#eef6ef] dark:shadow-black/25">
 			<div className="flex min-w-0 items-center gap-3">
 				{userImage ? (
 					<img
@@ -20,7 +20,7 @@ export const MobileSidebarProfileCard = ({ userName, userImage, onSignOut }) => 
 			<button
 				type="button"
 				onClick={onSignOut}
-				className="w-full rounded-full border border-red-300/30 bg-red-500/90 px-5 py-3 text-sm font-bold text-white transition hover:bg-red-400 dark:border-red-200/20 dark:bg-red-500 dark:text-white dark:hover:bg-red-400"
+				className="w-full rounded-full border border-red-300/40 bg-[#f8c6c6] px-5 py-3 text-sm font-bold text-[#761414] transition hover:bg-[#f4b3b3] dark:border-red-200/20 dark:bg-red-500 dark:text-white dark:hover:bg-red-400"
 			>
 				Sign out
 			</button>

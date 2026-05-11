@@ -35,7 +35,7 @@ export const UserTopSongs = () => {
 	const headingClass = "font-['Gotham_Display'] text-[clamp(1.35rem,1.6vw,1.85rem)] tracking-[-0.04em] text-[#17301d] dark:text-[#f7fff5]";
 	const descriptionClass = "mt-3 leading-7 text-[#355240] dark:text-[#d6e8d2]";
 	const selectClass =
-		"w-full max-w-[16rem] self-start rounded-[18px] border border-emerald-900/10 bg-white/55 px-4 py-3 text-[0.95rem] font-medium text-[#17301d] shadow-[inset_0_1px_0_rgba(255,255,255,0.7)] outline-none focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-emerald-900/15 dark:border-white/25 dark:bg-white/15 dark:text-[#f4fbf1] dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.18)] dark:focus:outline-white/45 [&_option]:bg-[#102016] [&_option]:text-[#0f1f14] dark:[&_option]:text-[#f7fff5]";
+		"w-full max-w-[16rem] self-start rounded-[18px] border border-emerald-900/10 bg-white px-4 py-3 text-[0.95rem] font-medium text-[#17301d] shadow-[inset_0_1px_0_rgba(255,255,255,0.9)] outline-none focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-emerald-900/15 [&_option]:bg-white [&_option]:text-[#17301d] dark:border-white/25 dark:bg-[#17271a] dark:text-[#f4fbf1] dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.12)] dark:focus:outline-white/45 dark:[&_option]:bg-[#102016] dark:[&_option]:text-[#f7fff5]";
 
 	const changeArtistTimeRange = (e) => {
 		if (!sessionStorage.getItem("userName")) return;

@@ -40,15 +40,15 @@
 		@apply m-0 min-h-full bg-[#edf8ee] text-[#102016] antialiased transition-colors duration-300;
 		font-family: "Gotham Modern", sans-serif;
 		background:
-			radial-gradient(circle at center, rgba(136, 201, 119, 0.28) 0%, rgba(185, 228, 170, 0.18) 34%, transparent 68%),
-			linear-gradient(180deg, #f7fff7 0%, #dff4e3 48%, #eef8ef 100%);
+			radial-gradient(ellipse at center, rgba(122, 185, 106, 0.22) 0%, rgba(175, 218, 160, 0.12) 44%, transparent 86%),
+			linear-gradient(180deg, #f1fbf1 0%, #d7ead9 48%, #e8f2e9 100%);
 	}
 
 	html.dark body {
 		@apply bg-[#0f1711] text-[#eef6ef];
 		background:
-			radial-gradient(circle at center, rgba(190, 242, 100, 0.24) 0%, rgba(84, 140, 78, 0.16) 34%, transparent 68%),
-			linear-gradient(180deg, #09110c 0%, #16351f 44%, #0f1711 100%);
+			radial-gradient(ellipse at center, rgba(207, 244, 122, 0.24) 0%, rgba(99, 152, 89, 0.15) 44%, transparent 86%),
+			linear-gradient(180deg, #0b130d 0%, #1b4025 44%, #111b13 100%);
 	}
 
 	#root {

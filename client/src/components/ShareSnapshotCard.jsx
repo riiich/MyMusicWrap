@@ -40,7 +40,7 @@ export const ShareSnapshotCard = ({
 	};
 
 	return (
-		<div className="mb-5 rounded-[28px] border border-emerald-900/10 bg-[linear-gradient(135deg,rgba(232,246,226,0.98),rgba(214,235,204,0.92))] p-5 text-left shadow-[0_18px_38px_rgba(35,86,49,0.12)] dark:border-lime-200/15 dark:bg-[linear-gradient(135deg,rgba(19,42,27,0.94),rgba(9,18,12,0.96))] dark:shadow-[0_24px_46px_rgba(0,0,0,0.22)]">
+		<div className="mb-5 rounded-[28px] border border-emerald-900/10 bg-[linear-gradient(135deg,rgba(232,246,226,0.98),rgba(214,235,204,0.92))] p-5 text-left text-[#17301d] shadow-[0_18px_38px_rgba(35,86,49,0.12)] dark:border-lime-200/15 dark:bg-[linear-gradient(180deg,rgba(23,45,29,0.94),rgba(10,24,15,0.96)),linear-gradient(135deg,rgba(190,242,100,0.12),transparent_45%)] dark:text-[#f4fbf1] dark:shadow-[0_28px_50px_rgba(0,0,0,0.24)]">
 			<div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
 				<div>
 					<p className="mb-1 text-[0.7rem] font-bold uppercase tracking-[0.22em] text-[#55734b] dark:text-[#ddefd7]">
@@ -58,12 +58,12 @@ export const ShareSnapshotCard = ({
 						type="button"
 						onClick={shareSnapshot}
 						disabled={!canShare || isSharing}
-						className="rounded-full border border-emerald-900/10 bg-[#102016] px-5 py-3 text-sm font-bold text-white shadow-[0_14px_26px_rgba(16,32,22,0.18)] transition hover:-translate-y-0.5 hover:bg-[#1d3a25] disabled:cursor-not-allowed disabled:opacity-50 dark:border-white/20 dark:bg-[#eef6ef] dark:text-[#102016] dark:hover:bg-white"
+						className="rounded-full border border-emerald-900/10 bg-[#49cc7b] px-5 py-3 text-sm font-bold text-white shadow-[0_14px_26px_rgba(16,32,22,0.18)] transition hover:-translate-y-0.5 hover:bg-[#328f4c] disabled:cursor-not-allowed disabled:opacity-50 dark:border-white/20 dark:bg-[#223a28] dark:text-[#eef6ef] dark:hover:bg-[#2d4b35]"
 					>
 						{isSharing ? "Creating snapshot..." : "Share snapshot"}
 					</button>
 					{shareStatus ? (
-						<p className="text-sm font-bold text-[#17301d] dark:text-[#f7fff5]">
+						<p className="text-sm font-bold text-[#17301d] dark:text-[#eef6ef]">
 							{shareStatus}
 						</p>
 					) : null}
