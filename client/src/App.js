@@ -67,7 +67,7 @@ function App() {
 					</main>
 					<Footer />
 				</Router>
-				{spotifyCode || sessionStorage.getItem("refreshToken") ? (
+				{spotifyCode || sessionStorage.getItem("userID") ? (
 					<Dashboard code={spotifyCode} />
 				) : null}
 			</div>

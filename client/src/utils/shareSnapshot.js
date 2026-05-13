@@ -8,12 +8,14 @@ export const TIMEFRAME_LABELS = {
 
 export const buildShareSnapshot = ({
 	userName,
+	spotifyUserId,
 	artistTimeRange,
 	trackTimeRange,
 	topArtists,
 	topTracks,
 }) => ({
 	userName: userName || "My",
+	spotifyUserId: spotifyUserId || "",
 	artistTimeRange,
 	trackTimeRange,
 	artists: topArtists.slice(0, 5).map((artist) => ({

@@ -23,8 +23,8 @@ const getStoredExpiryTimestamp = () => {
 
 export const clientCredentials = (code) => {
 	const [accessToken, setAccessToken] = useState(() => sessionStorage.getItem("accessToken") || undefined);
-	const [refreshToken, setRefreshToken] = useState(
-		() => sessionStorage.getItem("refreshToken") || undefined,
+	const [spotifyUserId, setSpotifyUserId] = useState(
+		() => sessionStorage.getItem("userID") || undefined,
 	);
 	const [expiresAt, setExpiresAt] = useState(getStoredExpiryTimestamp);
 	const [showExpiryModal, setShowExpiryModal] = useState(false);
@@ -43,7 +43,8 @@ export const clientCredentials = (code) => {
 
 	const saveTokenSession = ({
 		accessToken: nextAccessToken,
-		refreshToken: nextRefreshToken,
+		spotifyUserId: nextSpotifyUserId,
+		userName: nextUserName,
 		expiresIn: nextExpiresIn,
 	}) => {
 		if (nextAccessToken) {
@@ -51,9 +52,13 @@ export const clientCredentials = (code) => {
 			setAccessToken(nextAccessToken);
 		}
 
-		if (nextRefreshToken) {
-			sessionStorage.setItem("refreshToken", nextRefreshToken);
-			setRefreshToken(nextRefreshToken);
+		if (nextSpotifyUserId) {
+			sessionStorage.setItem("userID", nextSpotifyUserId);
+			setSpotifyUserId(nextSpotifyUserId);
+		}
+
+		if (nextUserName) {
+			sessionStorage.setItem("userName", nextUserName);
 		}
 
 		if (nextExpiresIn) {
@@ -65,9 +70,9 @@ export const clientCredentials = (code) => {
 	};
 
 	const refreshAccessToken = async () => {
-		const activeRefreshToken = refreshToken || sessionStorage.getItem("refreshToken");
+		const activeSpotifyUserId = spotifyUserId || sessionStorage.getItem("userID");
 
-		if (!activeRefreshToken) {
+		if (!activeSpotifyUserId) {
 			logoutUser();
 			return;
 		}
@@ -75,7 +80,7 @@ export const clientCredentials = (code) => {
 		try {
 			clearAuthTimers();
 			const response = await axios.post("http://localhost:3001/refresh", {
-				refreshToken: activeRefreshToken,
+				spotifyUserId: activeSpotifyUserId,
 			});
 
 			saveTokenSession({
@@ -98,7 +103,8 @@ export const clientCredentials = (code) => {
 
 			saveTokenSession({
 				accessToken: response.data.accessToken,
-				refreshToken: response.data.refreshToken,
+				spotifyUserId: response.data.spotifyUserId,
+				userName: response.data.userName,
 				expiresIn: response.data.expiresIn,
 			});
 
@@ -119,7 +125,7 @@ export const clientCredentials = (code) => {
 	}, [code]);
 
 	useEffect(() => {
-		if (!refreshToken || !expiresAt) return undefined;
+		if (!spotifyUserId || !expiresAt) return undefined;
 
 		clearAuthTimers();
 
@@ -134,7 +140,7 @@ export const clientCredentials = (code) => {
 		}, warningDelay);
 
 		return clearAuthTimers;
-	}, [refreshToken, expiresAt]);
+	}, [spotifyUserId, expiresAt]);
 
 	return {
 		accessToken,

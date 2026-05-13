@@ -16,6 +16,7 @@ export const ShareSnapshotCard = ({
 	const shareSnapshot = async () => {
 		const snapshot = buildShareSnapshot({
 			userName: sessionStorage.getItem("userName"),
+			spotifyUserId: sessionStorage.getItem("userID"),
 			artistTimeRange,
 			trackTimeRange,
 			topArtists,
