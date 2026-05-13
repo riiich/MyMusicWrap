@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const UserCount = require("../schema/userCount");
+const SpotifyRefreshToken = require("../schema/spotifyRefreshToken");
 require('dotenv').config();
 
 // this package provides helper functions to interact with the Spotify Web API
@@ -25,35 +26,67 @@ router.get('/', (req, res) => {
     });
 })
 
-router.post('/', (req, res) => {
-    const credentials = {
-        clientId: process.env.CLIENT_ID,
-        clientSecret: process.env.CLIENT_SECRET,
-        redirectUri: process.env.REDIRECT_URI,
-    };
+router.post('/', async (req, res) => {
+	const credentials = {
+		clientId: process.env.CLIENT_ID,
+		clientSecret: process.env.CLIENT_SECRET,
+		redirectUri: process.env.LOCAL_REDIRECT_URI,
+	};
 
-    const spotifyAPI = new SpotifyWebAPI(credentials);
+	const spotifyAPI = new SpotifyWebAPI(credentials);
 
-    const code = req.body.code;
-    
-    spotifyAPI.authorizationCodeGrant(code)
-        .then(result => {
-            spotifyAPI.setAccessToken(result.body.access_token);
-            spotifyAPI.setRefreshToken(result.body.refresh_token);
+	const code = req.body.code;
 
-            console.log("Successfully logged in!");
+	try {
+		const result = await spotifyAPI.authorizationCodeGrant(code);
 
-            res.json({
-                accessToken: result.body.access_token,
-                refreshToken: result.body.refresh_token,
-                expiresIn: result.body.expires_in,
-                msg: "Sucessfully retrieved access token!",
-            });
-        })
-        .catch(err => {
-            console.log(err);
-            res.sendStatus(400);
-        })
+		spotifyAPI.setAccessToken(result.body.access_token);
+		if (result.body.refresh_token) {
+			spotifyAPI.setRefreshToken(result.body.refresh_token);
+		}
+
+		const userProfile = await spotifyAPI.getMe();
+		const spotifyUserId = userProfile.body.id;
+		const userName = userProfile.body.display_name || "Spotify listener";
+		const existingToken = await SpotifyRefreshToken.findOne({ spotifyUserId });
+		const refreshToken = result.body.refresh_token || existingToken?.refreshToken;
+
+		if (!refreshToken) {
+			return res.status(400).json({
+				status: 400,
+				msg: "Spotify did not return a refresh token. Please authorize again.",
+			});
+		}
+
+		await SpotifyRefreshToken.findOneAndUpdate(
+			{ spotifyUserId },
+			{
+				$set: {
+					spotifyUserId,
+					userName,
+					refreshToken,
+					trackingEnabled: true,
+				},
+				$setOnInsert: {
+					lastRecentlyPlayedPolledAt: new Date(),
+				},
+			},
+			{ upsert: true, new: true, setDefaultsOnInsert: true }
+		);
+
+		console.log("Successfully logged in!");
+
+		res.json({
+			accessToken: result.body.access_token,
+			spotifyUserId,
+			userName,
+			expiresIn: result.body.expires_in,
+			msg: "Sucessfully retrieved access token!",
+		});
+	} catch (err) {
+		console.log(err);
+		res.sendStatus(400);
+	}
 });
 
 module.exports = router;

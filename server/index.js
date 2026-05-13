@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const connectDB = require("./database/connectDatabase");
+const { startRecentlyPlayedCron } = require("./jobs/recentlyPlayedCron");
 require("dotenv").config();
 
 app.use(
@@ -57,10 +58,14 @@ app.use("/feedback", feedback);
 const sharedSnapshots = require("./routes/sharedSnapshots");
 app.use("/snapshots", sharedSnapshots);
 
+const tracking = require("./routes/tracking");
+app.use("/tracking", tracking);
+
 mongoose.connection.once("open", () => {
 	console.log("Connected to MongoDB!");
 
 	app.listen(process.env.PORT, () => {
 		console.log(`Listening on port ${process.env.PORT}`);
+		startRecentlyPlayedCron();
 	});
 });

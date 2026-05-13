@@ -67,6 +67,7 @@ router.post("/", async (req, res) => {
 		const snapshot = await SharedSnapshot.create({
 			snapshotId,
 			userName: cleanText(req.body.userName, "A listener"),
+			spotifyUserId: cleanText(req.body.spotifyUserId),
 			artistTimeRange: cleanTimeRange(req.body.artistTimeRange),
 			trackTimeRange: cleanTimeRange(req.body.trackTimeRange),
 			artists: cleanArtists(req.body.artists),

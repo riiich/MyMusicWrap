@@ -11,6 +11,11 @@ const SharedSnapshotSchema = new mongoose.Schema({
 		type: String,
 		default: "A listener",
 	},
+	spotifyUserId: {
+		type: String,
+		default: "",
+		index: true,
+	},
 	artistTimeRange: {
 		type: String,
 		default: "",

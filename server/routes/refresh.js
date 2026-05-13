@@ -1,7 +1,6 @@
 const router = require("express").Router();
-const SpotifyWebAPI = require("spotify-web-api-node");
 const { sendAuthExpired } = require("../utils/spotifyAuthResponse");
-require("dotenv").config();
+const { refreshSpotifyAccessToken } = require("../utils/refreshSpotifyAccessToken");
 
 router.use((req, res, next) => {
 	console.log("New Token!");
@@ -9,39 +8,27 @@ router.use((req, res, next) => {
 	next();
 });
 
-router.post("/", (req, res) => {
-	const refreshToken = req.body.refreshToken;
+router.post("/", async (req, res) => {
+	const { spotifyUserId } = req.body;
 
-	if (!refreshToken) {
-		return sendAuthExpired(res, "No refresh token was provided. Please log in again.");
+	if (!spotifyUserId) {
+		return sendAuthExpired(res, "No Spotify user id was provided. Please log in again.");
 	}
- 
-	const credentials = {
-		clientId: process.env.CLIENT_ID,
-		clientSecret: process.env.CLIENT_SECRET,
-		redirectUri: process.env.REDIRECT_URI,
-		refreshToken,
-	};
-	
-	const spotifyAPI = new SpotifyWebAPI(credentials);
 
-	spotifyAPI
-		.refreshAccessToken()
-		.then((result) => {
-			spotifyAPI.setAccessToken(result.body.access_token);
-			
-			res.json({
-				status: 200,
-				accessToken: result.body.access_token,
-				expiresIn: result.body.expires_in,
-				msg: "Access token refreshed.",
-			});
-		})
-		.catch((err) => {
-			console.log("ERROR REFRESHING ACCESS TOKEN!");
-			console.log(err);
-			return sendAuthExpired(res);
+	try {
+		const refreshedSession = await refreshSpotifyAccessToken(spotifyUserId);
+
+		return res.json({
+			status: 200,
+			accessToken: refreshedSession.accessToken,
+			expiresIn: refreshedSession.expiresIn,
+			msg: "Access token refreshed.",
 		});
+	} catch (err) {
+		console.log("ERROR REFRESHING ACCESS TOKEN!");
+		console.log(err);
+		return sendAuthExpired(res);
+	}
 });
 
 module.exports = router;
